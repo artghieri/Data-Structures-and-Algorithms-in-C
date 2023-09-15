@@ -190,17 +190,31 @@ $$4 + \frac{100}{n} + \frac{500}{n^2} \leq c$$
 
 This inequality holds when $n_0$ is any positive integer, and we can choose $c = 4$.
 
-What if we had subtracted the ***lower-order terms*** from the $4n^2$ term instead of adding them? What if we had a small coefficient for the $n^2$ term? The function would still be $\Omega(n^2)$. 
-
-For example, let’s show that $f(x) = n^2/100 + 100n + 500$ is $\Omega(n^2)$. Dividing by $n^2$ gives: 
+What if we had a small coefficient for the $n^2$ term? The function would still be $\Omega(n^2)$. For example, let’s show that $f(x) = n^2/100 + 100n + 500$ is $\Omega(n^2)$. Dividing by $n^2$ gives: 
 
 $$\frac{1}{100} + \frac{100}{n} + \frac{500}{n^2} \leq c$$ 
 
-We can choose any value for $n_0$ that is at least 10,005 and find a positive value for $c$. For example, when $n_0 = 10,005$, we can choose $c = 2.49 \times 10^{-9}$. Yes, that’s a tiny value for $c$, but it is positive. If we select a larger value for $n_0$, we can also increase $c$. For example, if $n_0 = 100,000$, then we can choose $c = 0.0089$. The higher the value of $n_0$, the closer to the coefficient $\frac{1}{100}$ we can choose $c$.
+We can choose any value for $n_0$ that is at least 10,005 and find a positive value for $c$. For example, when $n_0 = 10,005$, we can choose $c = 2.49 \times 10^{-9}$. If we select a larger value for $n_0$, we can also increase $c$. For example, if $n_0 = 100,000$, then we can choose $c = 0.0089$. The higher the value of $n_0$, the closer to the coefficient $\frac{1}{100}$ we can choose $c$.
 
 #
 
 #### $\Theta$-Notation
+
+$\Theta$-Notation characterizes a *tight bound* on the ***asymptotic behavior*** of a function. It says that a function grows *precisely at a certain rate*, based once again on the ***highest-order*** term. Put another way, $\Theta$-Notation characterizes the rate of growth of the function to within a **constant factor from above** and to within a **constant factor from below**. 
+
+These two constant factors *don't need to be equal*. If you can show that a function is both $O(f(n))$ and $\Omega(f(n))$ for some function $f(n)$, then you have shown that the function is $\Theta(f(n))$. For example, $f(x) = 7n^3 + 100n^2 - 20n + 6$ it's a $\Theta(n^3)$
+
+For a given function $g(n)$, we denote by $\Theta(g(n))$ (*theta of g of n/) the set of functions
+
+$$\Theta(g(n)) = \\{ f(n) : \text{ there exist positive constants c1 and c2 and } n_{0} \text{ such that }  0 \leq c1g(n) \leq f(n) \leq c2g(n) \text{ for all n } \geq n_{o} \\}$$
+
+#
+
+For all values of n at and to the right of $n_0$, the value of $f(n)$ lies at or above $c1g(n)$ and at or below $c2g(n)$. In other words, for all $n \geq n_0$, the function $f(n)$ is equal to $g(n)$ to within constant factors. The definitions of $O$-, $\Omega$-, and ‚ $\Theta$-Notations lead to the following theorem.
+
+For any two functions $f(n)$ and $g(n)$, we have $f(n) = \Theta(g(n))$ if and only if
+
+$$f(n) = O(g(n))and f(n) = \Omega(g(n))$$
 
 #
 
