@@ -176,9 +176,9 @@ Regardless of the chosen value for the constant $c$, this inequality is not sati
 
 $\Omega$-Notation characterizes a *lower bound* on the ***asymptotic*** behavior of a function. In other words, it says that a function grows at *least as fast* as a certain rate, based on the ***highest-order term***. 
 
-Because the ***highest-order term*** in the function $f(x) = 7n^3 + 100n^2 - 20n + 6$ grows at least as fast as $n^3$, this function is $\Omega(n^3)$. This function is also $\Omega(n^2) and $\Omega(n)$. More generally, it is $\Omega(n^c)$ for any constant $c \leq 3$. 
+Because the ***highest-order term*** in the function $f(x) = 7n^3 + 100n^2 - 20n + 6$ grows at least as fast as $n^3$, this function is $\Omega(n^3)$. This function is also $\Omega(n^2)$ and $\Omega(n)$. More generally, it is $\Omega(n^c)$ for any constant $c \leq 3$. 
 
-Just as $O$-notation provides an asymptotic upper bound on a function, $\Omega$-Notation provides an ***asymptotic lower bound***. For a given function $g(n), we denote by $\Omegag(n)$ (*pronounced big-omega of g of n*) the set of functions 
+Just as $O$-notation provides an ***asymptotic upper bound*** on a function, $\Omega$-Notation provides an ***asymptotic lower bound***. For a given function $g(n)$, we denote by $\Omega(g(n))$ (*pronounced big-omega of g of n*) the set of functions 
 
 $$\Omega(g(n)) = \\{ f(n) : \text{ there exist positive constants c and } n_{0} \text{ such that }  0 \leq cg(n) \leq f(n) \text{ for all n } \geq n_{o} \\}$$
 
@@ -204,7 +204,7 @@ $\Theta$-Notation characterizes a *tight bound* on the ***asymptotic behavior***
 
 These two constant factors *don't need to be equal*. If you can show that a function is both $O(f(n))$ and $\Omega(f(n))$ for some function $f(n)$, then you have shown that the function is $\Theta(f(n))$. For example, $f(x) = 7n^3 + 100n^2 - 20n + 6$ it's a $\Theta(n^3)$
 
-For a given function $g(n)$, we denote by $\Theta(g(n))$ (*theta of g of n/) the set of functions
+For a given function $g(n)$, we denote by $\Theta(g(n))$ (*theta of g of n*) the set of functions
 
 $$\Theta(g(n)) = \\{ f(n) : \text{ there exist positive constants c1 and c2 and } n_{0} \text{ such that }  0 \leq c1g(n) \leq f(n) \leq c2g(n) \text{ for all n } \geq n_{o} \\}$$
 
@@ -215,31 +215,6 @@ For all values of n at and to the right of $n_0$, the value of $f(n)$ lies at or
 For any two functions $f(n)$ and $g(n)$, we have $f(n) = \Theta(g(n))$ if and only if
 
 $$f(n) = O(g(n))and f(n) = \Omega(g(n))$$
-
-#
-
-#### Example: Insertion Sort
-
-Let’s revisit insertion sort and see how to work with asymptotic notation to characterize its ‚.n2/ worst-case running time 
-
-```c
-void insertionSort(int arr[], int n) {
-  int i, key, j;
-  for (i = 1; i < n; i++) {
-    key = arr[i];
-    j = i - 1;
-  
-    // Move elements of arr[0..i-1], that are greater than key,
-    // to one position ahead of their current position
-    while (j >= 0 && arr[j] > key) {
-      arr[j + 1] = arr[j];
-      j = j - 1;
-    }
-    arr[j + 1] = key;
-  }
-}
-```
-
 
 ## Data Structures
 
