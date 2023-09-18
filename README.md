@@ -306,9 +306,9 @@ Data Types in C classify variables based on the type of data they can hold, ensu
 | Data Type       | Description                | Typical Size (in bytes) | Range                                                   |
 |-----------------|----------------------------|:-------------------------:|---------------------------------------------------------|
 | **int**           | Integer                    | 4                       | -2,147,483,648 to 2,147,483,647                        |
-| **char**          | Character                  | 1                       | -128 to 127 (or 0 to 255 for `unsigned char`)           |
-| **float**         | Single-Precision Floating Point | 4                   | Approximately ±1.2 x 10^-38 to ±3.4 x 10^38            |
-| **double**        | Double-Precision Floating Point | 8                   | Approximately ±2.2 x 10^-308 to ±1.8 x 10^308           |
+| **char**          | Character                  | 1                       | -128 to 127           |
+| **float**         | Single-Precision Floating Point | 4                   |  ± 1.2 x 10^-38 to ±3.4 x 10^38            |
+| **double**        | Double-Precision Floating Point | 8                   |  ± 2.2 x 10^-308 to ±1.8 x 10^308           |
 
 > **Note:* In addition, C also supports four modifiers — two sign specifiers (***signed*** and ***unsigned***) and two size specifiers (***short*** and ***long***).*
 
