@@ -303,10 +303,10 @@ flowchart TB
 
 Data Types in C classify variables based on the type of data they can hold, ensuring efficient memory usage and precise operations. C provides fundamental types like integers, characters, and floating-point numbers, offering versatility in data representation.
 
-| Data Type       | Description                | Typical Size (in bytes) | Range                                                   |
+| Data Type       | Description                | Size (in bytes) | Range                                                   |
 |-----------------|----------------------------|:-------------------------:|---------------------------------------------------------|
 | **int**           | Integer                    | 4                       | -2,147,483,648 to 2,147,483,647                        |
-| **char**          | Character                  | 1                       | -128 to 127           |
+| **char**          | Character                  | 1                       | -128 to 127  (or 0 to 255 for unsigned char)      |
 | **float**         | Single-Precision Floating Point | 4                   |  ± 1.2 x 10^-38 to ±3.4 x 10^38            |
 | **double**        | Double-Precision Floating Point | 8                   |  ± 2.2 x 10^-308 to ±1.8 x 10^308           |
 
