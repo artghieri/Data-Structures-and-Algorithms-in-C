@@ -222,29 +222,98 @@ In this chapter, we explore data structures, the essential components of compute
 
 ### Data Structures
 
+For many problems, the ability to formulate an ***efficient algorithm*** depends on being able to organize the data in an appropriate manner. The term *data structure* is used to denote a particular way of organizing data for particular types of operation.
 
+Data structures are like organizational tools in programming, defining how data is stored and handled. They come in various forms, each tailored for specific tasks. Examples include *arrays*, *trees*, and *graphs*. These structures are vital for crafting efficient solutions in coding.
+ 
 
-#### What are data structures?
+#### Why are They Important in Programming?
 
+A program should undoubtedly give correct results, but along with that it should also run **efficiently**. A program is said to be efficient when it executes in *minimum time* and with *minimum memory space*. In order to write efficient programs we need to apply certain ***data management*** concepts.
 
+The concept of data management is a complex task that includes activities like *data collection*, *organization of data into appropriate structures*, and *developing and maintaining routines for quality assurance*. A data structure is basically a group of data elements that are put together under one name, and which defines a particular way of ***storing*** and ***organizing data*** in a computer so that it can be used efficiently
 
-#### Why are they important in programming?
+Specific data structures are essential ingredients of many efficient algorithms as they enable the programmers to manage huge amounts of data easily and efficiently. Some formal design methods and programming languages emphasize data structures and the algorithms as the key organizing factor in software design. This is because **representing information is fundamental to computer science**. The primary goal of a program or software is not to perform calculations or operations but to *store* and *retrieve information* as fast as possible.
 
+#### Choosing the Right Data Structure
 
+In the world of problem-solving, choosing the right data structure is a fundamental step toward achieving *efficient solutions*. To gauge efficiency, we examine if a solution not only meets the problem's needs but also operates effectively within set **resource constraints**, including ***storage space*** and ***processing time***. And the best solution is the one that requires fewer resources than known alternatives. The ultimate goal is to minimize resource usage, particularly in terms of time, while still adhering to other resource limits.
 
+In today's programming landscape, writing code extends beyond problem-solving; it's about crafting ***efficient solutions***. To accomplish this, programmers embark on a process of problem analysis, where they establish **clear performance objectives**. Subsequently, they meticulously select the data structure that best suits the task at hand.
 
+However, in some cases, program designers lacking a solid grasp of data structure concepts may bypass this crucial analysis phase. Instead, they opt for a data structure they're familiar with. Unfortunately, this choice may not align with the specific problem, potentially leading to subpar performance, such as sluggish operation speeds.
 
+Conversely, if a program meets its performance goals with a data structure that is simple to use, then it makes no sense to apply another complex data structure just to exhibit the programmer’s skill. When selecting a data structure to solve a problem, the following steps must be performed.
 
+1. **Analysis of the problem to determine the basic operations that must be supported.**
+2. **Quantify the resource constraints for each operation.**
+3. **Select the Data Structure that best meets these requirements.**
 
+> ***Note:** In the approach above, the first concern is the data and the operations that are to be performed on them. The second concern is the representation of the data, and the final concern is the implementation of that representation.*
 
+C language supports various data structure types, each with its unique characteristics. Some structures allow adding data items only at the beginning, while others permit insertion at any position. Some enable sequential data access, while others facilitate random access. So, selection of an appropriate data structure for the problem is a crucial decision and may have a major impact on the performance of the program.
 
+#
 
+#### Classification of Data Structures
 
+Classification of Data Structures categorizes them based on their organization and functionality, helping programmers choose the right tool for specific tasks. These categories include *Linear*, *Non-Linear* data structures, each suited to distinct data manipulation requirements. 
 
+**Data structures are generally categorized into two classes: *Primitive* and *Non-Primitive* Data Structures.**
 
+**Primitive and Non-Primitive Data Structures**
 
+Primitive Data Structures are the fundamental data types which are supported by a programming language. Some basic data types are *integer*, *real*, *character*, and *boolean*. The terms ***data type***, ***basic data type***, and ***primitive data type*** are often used interchangeably. 
 
+Non-Primitive data structures, on the other hand, are constructed using primitive data types. They encompass complex structures such as *linked lists*, *stacks*, *trees*, and *graphs*. Non-Primitive data structures can be categorized into two primary types: **Linear Structures**, which follow a linear progression, and **Non-Linear Structures**, characterized by their more intricate relationships between elements.
 
+**Linear and Non-Linear Structures**
+
+If data elements within a structure are organized in a sequential manner, it falls into the category of Linear data structures. Well-known examples encompass arrays, *linked lists*, *stacks*, and *queues*. Linear structures can be stored in memory using two approaches: ***contiguous memory locations*** to maintain a direct linear relationship between elements or ***linked structures*** where connections establish the linear order.
+
+Conversely, when data elements are not arranged in a sequential order, the structure is classified as Non-Linear. Non-Linear data structures lack adjacency relationships among their elements, making them suitable for more complex scenarios. Examples of Non-Linear structures include *trees* and *graphs*, which allow for versatile data organization and retrieval.
+
+```mermaid
+---
+title: Classification of Data Structure
+---
+flowchart TB
+  A("Data Structure") -.-> L(["Primitive Data Structure"])
+  L -.-> N{{"Integer"}}
+  L -.-> O{{"Real"}}
+  L -.-> P{{"Character"}}
+
+  A -.-> M(["Non-Primitive Data Structure"])
+
+  M -.-> C["Non-Linear Structures"]
+  C -.-> D{{"Graphs"}}
+  C -.-> E{{"Trees"}}
+
+  M -.-> B["Linear Structures"]
+  B -.-> J{{"Stack"}}
+  B -.-> K{{"Linked List"}}
+  B -.-> H{{"Array"}}
+  B -.-> I{{"Queue"}}
+
+```
+
+#
+
+### Data Types in C
+
+Data Types in C classify variables based on the type of data they can hold, ensuring efficient memory usage and precise operations. C provides fundamental types like integers, characters, and floating-point numbers, offering versatility in data representation.
+
+| Data Type       | Description                | Typical Size (in bytes) | Range                                                   |
+|-----------------|----------------------------|:-------------------------:|---------------------------------------------------------|
+| **int**           | Integer                    | 4                       | -2,147,483,648 to 2,147,483,647                        |
+| **char**          | Character                  | 1                       | -128 to 127 (or 0 to 255 for `unsigned char`)           |
+| **float**         | Single-Precision Floating Point | 4                   | Approximately ±1.2 x 10^-38 to ±3.4 x 10^38            |
+| **double**        | Double-Precision Floating Point | 8                   | Approximately ±2.2 x 10^-308 to ±1.8 x 10^308           |
+
+> **Note:* In addition, C also supports four modifiers — two sign specifiers (***signed*** and ***unsigned***) and two size specifiers (***short*** and ***long***).*
+
+> [!NOTE]
+> For more reference, check my [Student Guide - The C Language](https://github.com/artghieri/Student-Guide-The-C-Language/blob/main/guide.md)
 
 
 
@@ -260,28 +329,9 @@ In this chapter, we explore data structures, the essential components of compute
 - CORMEN, Thomas H. ; LEISERSON, Charles E. ; RIVEST, Ronald L. ; STEIN, Clifford. **Introduction to Algorithms**. 4th Edition. MIT Press, 2022.
 
 <!-- 
-In plain words:
-
-Big O (O()) describes the upper bound of the complexity.
-Omega (Ω()) describes the lower bound of the complexity.
-Theta (Θ()) describes the exact bound of the complexity.
-Little O (o()) describes the upper bound excluding the exact bound.
-
-http://mermaid.js.org/syntax/quadrantChart.html
-
-**L'Hôpital's rule:**
-
-$$\lim_{x\to 0}{\frac{e^x-1}{2x}}
-\overset{\left[\frac{0}{0}\right]}{\underset{\mathrm{H}}{=}} 
-\lim_{x\to 0}{\frac{e^x}{2}}={\frac{1}{2}}$$
---!>
 
 <!-- 
 # Study Guide: Data Structures in C
-
-## 1. Introduction to Data Structures
-- What are data structures?
-- Why are they important in programming?
 
 ## 2. Data Types in C
 - Integers, floating-point, and characters.
