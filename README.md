@@ -41,7 +41,7 @@ An algorithm for a ***computational problem*** is ***correct*** if, for every pr
 
 #
 
-#### What Kinds of Problems are Solved by Algorithms?
+**What Kinds of Problems are Solved by Algorithms?**
 
 Algorithms are the unsung heroes of the digital age, silently working behind the scenes to tackle a multitude of problems across various domains. Practical applications of algorithms are ubiquitous and include the following examples: 
 
@@ -51,7 +51,7 @@ Algorithms are the unsung heroes of the digital age, silently working behind the
 
 - **Netflix Recommendation Engine:** Ever wondered how Netflix knows exactly what TV shows and movies you'll love? Netflix's recommendation engine employs powerful algorithms that analyze your viewing history, genre preferences, and even the viewing habits of users with similar tastes. It then suggests personalized content that keeps you binge-watching. For instance, when Netflix suggests a new series that becomes your favorite, it's the result of these recommendation algorithms.
 
-#### Algorithms as A Technology
+**Algorithms as A Technology**
 
 In a hypothetical scenario where computers possessed infinite processing speed and memory came at no cost, *would you have any reason to study algorithms?* Surprisingly, the answer is **yes**. Even in such a scenario, you would still like to be certain that your solution method terminates and does so with the correct answer. 
 
@@ -63,7 +63,7 @@ Memory, on the other hand, may seem relatively inexpensive, but it is **neither 
 
 #
 
-#### Efficiency
+**Efficiency**
 
 Different algorithms devised to solve the same problem often differ dramatically in their efficiency. These differences can be much more significant than differences due to hardware and software. Two common ****sorting algorithms***, **Insertion Sort** and **Merge Sort**, offer a striking contrast in terms of efficiency.
 
@@ -71,14 +71,14 @@ Different algorithms devised to solve the same problem often differ dramatically
 
 Efficiency in sorting algorithms can be quantified through their ***time complexity***, often expressed using **Big O** notation. The time complexity provides a mathematical representation of how an algorithm's runtime scales concerning the size of the input data.
 
-#### Insertion Sort Efficiency:
+**Insertion Sort Efficiency:**
 Insertion sort operates with a time complexity of $O(n^2)$ in the worst case. This quadratic growth signifies that as the input size (n) increases, the time required to sort the data grows quadratically. It can be represented as:
 
 $$T_{i}(n) = k_{i} \times n^2$$
 
 $T_{i}(n) \textit{represents the time taken by insertion sort for an input of size n, and } k_{i} \textit{ is another constant factor}$
 
-#### Merge Sort Efficiency:
+**Merge Sort Efficiency:**
 Merge sort, in contrast, exhibits a time complexity of $O(n \times \log_2(n))$ for all cases, including the worst case. This indicates a more efficient growth rate as the input size increases. It can be represented as:
 
 $$T_{m}(n) = k_{m} \times n \times \log_2(n)$$
@@ -95,7 +95,7 @@ To accentuate this difference further, let's assume that **Computer A** benefits
 
 On the other hand, **Computer B** takes a different route. Here, an average programmer has implemented the merge sort algorithm using a high-level language with an inefficient compiler. This results in a code with a time complexity of $50 \times n \times \log_2(n)$ instructions to sort the same dataset.
 
-#### How long will it take for each computer to sort this 10 million-number dataset?
+**How long will it take for each computer to sort this 10 million-number dataset?**
 
 $$\text{Computer A (Insertion Sort):}$$
 
@@ -109,7 +109,7 @@ $$T_{m}(10^7) = \frac{k_{m} \times n \times \log_2(n)}{10^7} \rightarrow \frac{5
 
 Here, it becomes evident that as the input size increases, the *efficiency difference* between Insertion Sort and Merge Sort becomes increasingly pronounced. Merge Sort's linearithmic ( $O(n \times \log_2(n) )$ ) complexity allows it to maintain a consistent advantage over Insertion Sort, especially when dealing with large datasets.
 
-#### Algorithms and other Technologies
+**Algorithms and other Technologies**
 
 In computing, algorithms are as crucial as hardware and advanced technologies. Even in the age of machine learning and data science, algorithms underpin most operations, from hardware design to user interfaces and networking. 
 
@@ -117,19 +117,19 @@ Efficient algorithms are essential, especially as computers tackle larger proble
 
 #
 
-#### Analyzing Algorithms
+**Analyzing Algorithms**
 
 Analyzing an algorithm involves predicting the resources it requires, such as *memory*, *communication bandwidth*, *energy consumption*, and most commonly, ***computational time***. By evaluating multiple candidate algorithms for a problem, we can identify the *most efficient one*, often eliminating inferior alternatives. This process requires a model of the technology on which the algorithm runs, including the associated resources and their costs.
 
 The **RAM** **(Random-Access Machine)** model is the primary framework for *algorithm analysis*. In this model, instructions execute sequentially with constant time for each operation, closely resembling real computers. It covers *common instructions*, *data types*, and *control flow*. While it simplifies some real-world complexities, like *memory hierarchy*, it offers reliable performance predictions. Analyzing algorithms in the **RAM** model can be challenging, requiring mathematical tools, but it aids in selecting efficient algorithms for various tasks.
 
-#### Worst-Case, Average-Case, Best-Case, and Amortized Time Complexity
+**Worst-Case, Average-Case, Best-Case, and Amortized Time Complexity**
 
-**Worst-Case Running Time:** This denotes the behavior of an algorithm with respect to the **worst possible case** of the input instance. The* worst-case running time* of an algorithm is an ***upper bound*** on the running time for any input. Therefore, having the knowledge of *worst-case running time* gives us an assurance that the algorithm will never go beyond this time limit.
+**Worst-Case Running Time:** This denotes the behavior of an algorithm with respect to the **worst possible case** of the input instance. The *worst-case running time* of an algorithm is an ***upper bound*** on the running time for any input. Therefore, having the knowledge of worst-case running time gives us an assurance that the algorithm will never go beyond this time limit.
 
-**Average-Case Running Time:** The *average-case running time* of an algorithm is an estimate of the running time for an ***average*** input. It specifies the expected behavior of the algorithm when the input is randomly drawn from a given distribution. *Average-case running time* assumes that all inputs of a given size are equally likely.
+**Average-Case Running Time:** The *average-case running time* of an algorithm is an estimate of the running time for an ***average*** input. It specifies the expected behavior of the algorithm when the input is randomly drawn from a given distribution. Average-case running time assumes that all inputs of a given size are equally likely.
 
-**Best-Case Running Time:** The term ***best-case performance*** is used to analyze an algorithm under optimal conditions. For example, the best case for a simple linear search on an array occurs when the desired element is the first in the list. However, while developing and choosing an algorithm to solve a problem, we hardly base our decision on the best-case performance. It is always recommended to improve the *average performance* and the *worst-case performance* of an algorithm.
+**Best-Case Running Time:** The term ***best-case performance*** is used to analyze an algorithm under optimal conditions. For example, the best case for a simple linear search on an array occurs when the desired element is the first in the list. However, while developing and choosing an algorithm to solve a problem, we hardly base our decision on the best-case performance. It is always recommended to improve the ***average performance*** and the ***worst-case performance*** of an algorithm.
 
 **Amortized Running Time:** Amortized running time refers to the time required to perform a sequence of (related) operations averaged over all the operations performed. Amortized analysis guarantees the average performance of each operation in the worst case.
 
@@ -137,7 +137,7 @@ The **RAM** **(Random-Access Machine)** model is the primary framework for *algo
 
 When we analyze algorithms for large inputs, we focus on their ***asymptotic efficiency*** – *how their running time scales as input size approaches infinity*. In practice, algorithms with superior asymptotic efficiency are usually the best choice, except for exceptionally small inputs. This approach helps us understand the long-term performance characteristics of algorithms.
 
-#### $O$-Notation
+**$O$-Notation**
 
 $O$-Notation characterizes an *upper bound* on the ***asymptotic*** behavior of a function. In other words, it says that a function grows no faster than a certain rate, based on the highest-order term.
 
@@ -181,7 +181,7 @@ Regardless of the chosen value for the constant $c$, this inequality is not sati
 
 #
 
-#### $\Omega$-Notation
+**$\Omega$-Notation**
 
 $\Omega$-Notation characterizes a *lower bound* on the ***asymptotic*** behavior of a function. In other words, it says that a function grows at *least as fast* as a certain rate, based on the ***highest-order term***. 
 
@@ -207,7 +207,7 @@ We can choose any value for $n_0$ that is at least 10,005 and find a positive va
 
 #
 
-#### $\Theta$-Notation
+**$\Theta$-Notation**
 
 $\Theta$-Notation characterizes a *tight bound* on the ***asymptotic behavior*** of a function. It says that a function grows *precisely at a certain rate*, based once again on the ***highest-order*** term. Put another way, $\Theta$-Notation characterizes the rate of growth of the function to within a **constant factor from above** and to within a **constant factor from below**. 
 
@@ -238,7 +238,7 @@ For many problems, the ability to formulate an ***efficient algorithm*** depends
 Data structures are like organizational tools in programming, defining how data is stored and handled. They come in various forms, each tailored for specific tasks. Examples include *arrays*, *trees*, and *graphs*. These structures are vital for crafting efficient solutions in coding.
  
 
-#### Why are They Important in Programming?
+**Why are They Important in Programming?**
 
 A program should undoubtedly give correct results, but along with that it should also run **efficiently**. A program is said to be efficient when it executes in *minimum time* and with *minimum memory space*. In order to write efficient programs we need to apply certain ***data management*** concepts.
 
@@ -246,7 +246,7 @@ The concept of data management is a complex task that includes activities like *
 
 Specific data structures are essential ingredients of many efficient algorithms as they enable the programmers to manage huge amounts of data easily and efficiently. Some formal design methods and programming languages emphasize data structures and the algorithms as the key organizing factor in software design. This is because **representing information is fundamental to computer science**. The primary goal of a program or software is not to perform calculations or operations but to *store* and *retrieve information* as fast as possible.
 
-#### Choosing the Right Data Structure
+**Choosing the Right Data Structure**
 
 In the world of problem-solving, choosing the right data structure is a fundamental step toward achieving *efficient solutions*. To gauge efficiency, we examine if a solution not only meets the problem's needs but also operates effectively within set **resource constraints**, including ***storage space*** and ***processing time***. And the best solution is the one that requires fewer resources than known alternatives. The ultimate goal is to minimize resource usage, particularly in terms of time, while still adhering to other resource limits.
 
@@ -266,40 +266,43 @@ C language supports various data structure types, each with its unique character
 
 #
 
-#### Operations On Data Structures
+**Operations On Data Structures**
 
 This section discusses the different operations that can be performed on the various data structures previously mentioned.
 
-**Traversing:** It means to access each data item exactly once so that it can be processed. For example, to print the names of all the students in a class.
+**Traversing:** It means to access each data item exactly once so that it can be processed.   
+**Example: To print the names of all the students in a class.**
 
-**Searching:** It is used to find the location of one or more data items that satisfy the given constraint. Such a data item may or may not be present in the given collection of data items. For example, to find the names of all the students who secured 100 marks in mathematics.
+**Searching:** It's used to locate data items that may or may not be present in the given collection, satisfying a given constraint.  
+**Example: To find the names of all the students who secured 100 marks in mathematics.**
 
-**Inserting:** It is used to add new data items to the given list of data items. For example, to add the details of a new student who has recently joined the course.
+**Inserting:** It is used to add new data items to the given list of data items.  
+**Example: To add the details of a new student who has recently joined the course.**
 
-**Deleting:** It means to remove (delete) a particular data item from the given collection of data items. For example, to delete the name of a student who has left the course.
+**Deleting:** It means to remove (*delete*) a particular data item from the given collection of data items.  
+**Example: To delete the name of a student who has left the course.**
 
-**Sorting:** Data items can be arranged in some order like ascending order or descending order depending on the type of application. For example, arranging the names of students in a class in an alphabetical order, or calculating the top three winners by arranging the participants’ scores in descending order and then extracting the top three.
+**Sorting:** Data items can be arranged in some order like *ascending order* or *descending order* depending on the type of application.  
+**Example: Calculating the top three winners by arranging the participants’ scores in descending order and then extracting the top three.**
 
 **Merging:** Lists of two sorted data items can be combined to form a single list of sorted data items.
 
-Many a time, two or more operations are applied simultaneously in a given situation. For example, if we want to delete the details of a student whose name is X, then we first have to search the list of students to find whether the record of X exists or not and if it exists then at which location, so that the details can be deleted from that particular location.
+Frequently, multiple operations need to be applied simultaneously in a given situation. For instance, consider the scenario where we need to delete the details of a student with the name "X". In this case, we must first conduct a search within the list of students to determine whether the record of "X" exists and, if so, identify its location. Subsequently, we can proceed to delete the details from that specific location.
 
 #
 
-#### Classification of Data Structures
+**Classification of Data Structures**
 
 Classification of Data Structures categorizes them based on their organization and functionality, helping programmers choose the right tool for specific tasks. These categories include *Linear*, *Non-Linear* data structures, each suited to distinct data manipulation requirements. 
 
 **Data structures are generally categorized into two classes: *Primitive* and *Non-Primitive* Data Structures.**
 
-**Primitive and Non-Primitive Data Structures**
-
+**Primitive and Non-Primitive Data Structures**  
 Primitive Data Structures are the fundamental data types which are supported by a programming language. Some basic data types are *integer*, *real*, *character*, and *boolean*. The terms ***data type***, ***basic data type***, and ***primitive data type*** are often used interchangeably. 
 
 Non-Primitive data structures, on the other hand, are constructed using primitive data types. They encompass complex structures such as *linked lists*, *stacks*, *trees*, and *graphs*. Non-Primitive data structures can be categorized into two primary types: **Linear Structures**, which follow a linear progression, and **Non-Linear Structures**, characterized by their more intricate relationships between elements.
 
-**Linear and Non-Linear Structures**
-
+**Linear and Non-Linear Structures**  
 If data elements within a structure are organized in a sequential manner, it falls into the category of Linear data structures. Well-known examples encompass arrays, *linked lists*, *stacks*, and *queues*. Linear structures can be stored in memory using two approaches: ***contiguous memory locations*** to maintain a direct linear relationship between elements or ***linked structures*** where connections establish the linear order.
 
 Conversely, when data elements are not arranged in a sequential order, the structure is classified as Non-Linear. Non-Linear data structures lack adjacency relationships among their elements, making them suitable for more complex scenarios. Examples of Non-Linear structures include *trees* and *graphs*, which allow for versatile data organization and retrieval.
@@ -333,7 +336,7 @@ flowchart TB
 
 A data type determines the set of values that a data item can take and the operations that can be performed on it.
 
-#### Integers, Floating-point, and Characters.
+**Integers, Floating-point, and Characters.**
 
 The C language classifies variables based on the type of data they can hold, ensuring efficient memory usage and precise operations. Thus, C provides fundamental types such as integers, characters, and floating-point numbers, offering versatility in data representation.
 
@@ -351,11 +354,11 @@ For instance, the **char** data type is of **one byte** and is used to store *si
 
 These ranges provide a general idea of the value limits for each of the principal data types in C. However, it's important to note that the actual range may vary depending on the specific system and compiler.
 
-#### Data Type Compatibility
+**Data Type Compatibility**
 
 Data type compatibility is a vital concept, especially in languages like C, where precise control over data representation and memory management is crucial. It essentially deals with how different data types interact with each other in a program. It governs how variables of various types can be used together, ensuring that operations are carried out correctly and safely.
 
-#### Example of Data Type Compatibility:
+**Example of Data Type Compatibility:**
 
 Let's consider a simple example to illustrate data type compatibility in C:
 
