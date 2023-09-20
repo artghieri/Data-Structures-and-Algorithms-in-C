@@ -297,27 +297,63 @@ flowchart TB
 
 ```
 
-#
+## Data Types in C
 
-### Data Types in C
+Data type determines the set of values that a data item can take and the operations that can be performed on the item. 
 
-Data Types in C classify variables based on the type of data they can hold, ensuring efficient memory usage and precise operations. C provides fundamental types like integers, characters, and floating-point numbers, offering versatility in data representation.
+#### Integers, Floating-point, and Characters.
+
+C classify variables based on the type of data they can hold, ensuring efficient memory usage and precise operations. C provides fundamental types like *integers*, *characters*, and *floating-point numbers*, offering versatility in data representation.
+
+For instance, the **char data type** is of *one byte** and is used to store *single characters*. Note that C does not provide any data type for **storing text**, this is because text is made up of individual characters.
+
 
 | Data Type       | Description                | Size (in bytes) | Range                                                   |
 |-----------------|----------------------------|:-------------------------:|---------------------------------------------------------|
-| **int**           | Integer                    | 4                       | $\pm \\: -2.147 \times 10^9  \text{ to } \pm \\: 2.147 \times 10^9$                        |
-| **char**          | Character                  | 1                       | $-128 \text{ to } 127$  (or $0 \text{ to } 255$ for unsigned char)      |
+| **int**           | Integer                         | 4                   | $\pm \\: -2.147 \times 10^9  \text{ to } \pm \\: 2.147 \times 10^9$                        |
+| **char**          | Character                       | 1                   | $-128 \text{ to } 127$  (or $0 \text{ to } 255$ for unsigned char)      |
 | **float**         | Single-Precision Floating Point | 4                   |  $\pm  \\: 1.2 \times 10^{-38} \text{ to } \pm \\: 3.4 \times 10^{38}$            |
 | **double**        | Double-Precision Floating Point | 8                   |  $\pm  \\: 2.2 \times 10^{-308} \text{ to } \pm \\: 1.8 \times 10^{308}$           |
 
 > **Note:* In addition, C also supports four modifiers — two sign specifiers (***signed*** and ***unsigned***) and two size specifiers (***short*** and ***long***).*
 
+These ranges provide a general idea of the value limits for each of the principal data types in C. However, it's important to note that the actual range may vary depending on the specific system and compiler.
+
 > [!NOTE]
 > For more reference, check my [Student Guide - The C Language](https://github.com/artghieri/Student-Guide-The-C-Language/blob/main/guide.md)
 
+#### Data Type Compatibility
 
+Data type compatibility is a vital concept, especially in languages like C, where precise control over data representation and memory management is crucial. It essentially deals with how different data types interact with each other in a program. It governs how variables of various types can be used together, ensuring that operations are carried out correctly and safely.
 
+#### Example of Data Type Compatibility:
 
+Let's consider a simple example to illustrate data type compatibility in C:
+
+```c
+#include <stdio.h>
+
+int main() {
+int integerVariable = 42;
+double doubleVariable = 3.14159265359;
+
+double result = integerVariable + doubleVariable;
+
+printf("Result: %lf\n", result);
+
+return 0;
+}
+```
+
+In this C program, we have an **int** variable and a **double** variable. We want to add these two variables together and store the result in the result variable, which is also of type double.
+
+Here's what's happening in terms of data type compatibility:
+
+- The int variable is implicitly converted to a double when it's added to ***doubleVariable***. This is an example of implicit type conversion to ensure that both operands have a compatible type for the addition operation.
+- The result of the addition, which is a double, is then stored in the result variable.
+- Finally, we print the result using the %lf format specifier because it's of type double.
+
+This example demonstrates how data type compatibility allows for operations involving different data types. C's rules for type conversion ensure that the code compiles and produces the expected result without requiring explicit type casting. 
 
 ---
 
@@ -328,14 +364,12 @@ Data Types in C classify variables based on the type of data they can hold, ensu
 - TENENBAUM, Aaron M. ; LANGSAM, Yedidyah ; AUGENSTEIN, Moshe J. **Data Structures Using C**. Facsimile Edition. Pearson, 1989.
 - CORMEN, Thomas H. ; LEISERSON, Charles E. ; RIVEST, Ronald L. ; STEIN, Clifford. **Introduction to Algorithms**. 4th Edition. MIT Press, 2022.
 
-<!-- 
+## Arrays
+
+
 
 <!-- 
 # Study Guide: Data Structures in C
-
-## 2. Data Types in C
-- Integers, floating-point, and characters.
-- Pointers and dynamic memory allocation.
 
 ## 3. Arrays
 - Declaration and initialization of arrays.
