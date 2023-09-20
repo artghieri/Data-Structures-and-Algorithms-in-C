@@ -270,20 +270,15 @@ C language supports various data structure types, each with its unique character
 
 This section discusses the different operations that can be performed on the various data structures previously mentioned.
 
-**Traversing:** It means to access each data item exactly once so that it can be processed.   
-**Example: To print the names of all the students in a class.**
+**Traversing:** It means to access each data item exactly once so that it can be processed. For example, to print the names of all the students in a class.
 
-**Searching:** It's used to locate data items that may or may not be present in the given collection, satisfying a given constraint.  
-**Example: To find the names of all the students who secured 100 marks in mathematics.**
+**Searching:** It's used to locate data items that may or may not be present in the given collection, satisfying a given constraint. For example, to find the names of all the students who secured 100 marks in mathematics.
 
-**Inserting:** It is used to add new data items to the given list of data items.  
-**Example: To add the details of a new student who has recently joined the course.**
+**Inserting:** It is used to add new data items to the given list of data items. For example, to add the details of a new student who has recently joined the course.
 
-**Deleting:** It means to remove (*delete*) a particular data item from the given collection of data items.  
-**Example: To delete the name of a student who has left the course.**
+**Deleting:** It means to remove (*delete*) a particular data item from the given collection of data items. For example, to delete the name of a student who has left the course.
 
-**Sorting:** Data items can be arranged in some order like *ascending order* or *descending order* depending on the type of application.  
-**Example: Calculating the top three winners by arranging the participants’ scores in descending order and then extracting the top three.**
+**Sorting:** Data items can be arranged in some order like *ascending order* or *descending order* depending on the type of application. For example, calculating the top three winners by arranging the participants’ scores in descending order and then extracting the top three.**
 
 **Merging:** Lists of two sorted data items can be combined to form a single list of sorted data items.
 
