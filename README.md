@@ -123,6 +123,15 @@ Analyzing an algorithm involves predicting the resources it requires, such as *m
 
 The **RAM** **(Random-Access Machine)** model is the primary framework for *algorithm analysis*. In this model, instructions execute sequentially with constant time for each operation, closely resembling real computers. It covers *common instructions*, *data types*, and *control flow*. While it simplifies some real-world complexities, like *memory hierarchy*, it offers reliable performance predictions. Analyzing algorithms in the **RAM** model can be challenging, requiring mathematical tools, but it aids in selecting efficient algorithms for various tasks.
 
+#### Worst-Case, Average-Case, Best-Case, and Amortized Time Complexity
+
+**Worst-Case Running Time:** This denotes the behavior of an algorithm with respect to the **worst possible case** of the input instance. The* worst-case running time* of an algorithm is an ***upper bound*** on the running time for any input. Therefore, having the knowledge of *worst-case running time* gives us an assurance that the algorithm will never go beyond this time limit.
+
+**Average-Case Running Time:** The *average-case running time* of an algorithm is an estimate of the running time for an ***average*** input. It specifies the expected behavior of the algorithm when the input is randomly drawn from a given distribution. *Average-case running time* assumes that all inputs of a given size are equally likely.
+
+**Best-Case Running Time:** The term ***best-case performance*** is used to analyze an algorithm under optimal conditions. For example, the best case for a simple linear search on an array occurs when the desired element is the first in the list. However, while developing and choosing an algorithm to solve a problem, we hardly base our decision on the best-case performance. It is always recommended to improve the *average performance* and the *worst-case performance* of an algorithm.
+
+**Amortized Running Time:** Amortized running time refers to the time required to perform a sequence of (related) operations averaged over all the operations performed. Amortized analysis guarantees the average performance of each operation in the worst case.
 
 ### Asymptotic Notation
 
@@ -136,7 +145,7 @@ Consider, for example, the function $f(x) = 3n^3 - 2n^2 + 5n + 1$ . Its highest-
 
 Here is the formal definition of $O$-Notation. For a given function $g(n)$, we denote by $O(g(n))$ (*pronounced big-oh of g of n*) the *set of functions*):
 
-$$O(g(n)) = \\{ f(n) : \text{ there exist positive constants c and } n_{0} \text{ such that }  0 \leq f(n) \leq cg(n) \text{ for all n } \geq n_{o} \\}$$
+$$O(g(n)) = \\{ f(n) : \text{ there exist positive constants c and } n_{0} \text{ such that }  0 \leq f(n) \leq cg(n), \forall \text{  n } \geq n_{o} \\}$$
 
 #
 
@@ -180,7 +189,7 @@ Because the ***highest-order term*** in the function $f(x) = 7n^3 + 100n^2 - 20n
 
 Just as $O$-notation provides an ***asymptotic upper bound*** on a function, $\Omega$-Notation provides an ***asymptotic lower bound***. For a given function $g(n)$, we denote by $\Omega(g(n))$ (*pronounced big-omega of g of n*) the set of functions 
 
-$$\Omega(g(n)) = \\{ f(n) : \text{ there exist positive constants c and } n_{0} \text{ such that }  0 \leq cg(n) \leq f(n) \text{ for all n } \geq n_{o} \\}$$
+$$\Omega(g(n)) = \\{ f(n) : \text{ there exist positive constants c and } n_{0} \text{ such that }  0 \leq cg(n) \leq f(n), \forall \text{  n } \geq n_{o} \\}$$
 
 #
 
@@ -206,7 +215,7 @@ These two constant factors *don't need to be equal*. If you can show that a func
 
 For a given function $g(n)$, we denote by $\Theta(g(n))$ (*theta of g of n*) the set of functions
 
-$$\Theta(g(n)) = \\{ f(n) : \text{ there exist positive constants c1 and c2 and } n_{0} \text{ such that }  0 \leq c1g(n) \leq f(n) \leq c2g(n) \text{ for all n } \geq n_{o} \\}$$
+$$\Theta(g(n)) = \\{ f(n) : \text{ there exist positive constants c1 and c2 and } n_{0} \text{ such that }  0 \leq c1g(n) \leq f(n) \leq c2g(n), \forall \text{ n } \geq n_{o} \\}$$
 
 #
 
@@ -214,7 +223,9 @@ For all values of n at and to the right of $n_0$, the value of $f(n)$ lies at or
 
 For any two functions $f(n)$ and $g(n)$, we have $f(n) = \Theta(g(n))$ if and only if
 
-$$f(n) = O(g(n))and f(n) = \Omega(g(n))$$
+$$f(n) = O(g(n)) \text{ and } f(n) = \Omega(g(n))$$
+
+<br>
 
 ## Understanding the Fundamentals of Data Structures
 
@@ -252,6 +263,26 @@ Conversely, if a program meets its performance goals with a data structure that 
 > ***Note:** In the approach above, the first concern is the data and the operations that are to be performed on them. The second concern is the representation of the data, and the final concern is the implementation of that representation.*
 
 C language supports various data structure types, each with its unique characteristics. Some structures allow adding data items only at the beginning, while others permit insertion at any position. Some enable sequential data access, while others facilitate random access. So, selection of an appropriate data structure for the problem is a crucial decision and may have a major impact on the performance of the program.
+
+#
+
+#### Operations On Data Structures
+
+This section discusses the different operations that can be performed on the various data structures previously mentioned.
+
+**Traversing:** It means to access each data item exactly once so that it can be processed. For example, to print the names of all the students in a class.
+
+**Searching:** It is used to find the location of one or more data items that satisfy the given constraint. Such a data item may or may not be present in the given collection of data items. For example, to find the names of all the students who secured 100 marks in mathematics.
+
+**Inserting:** It is used to add new data items to the given list of data items. For example, to add the details of a new student who has recently joined the course.
+
+**Deleting:** It means to remove (delete) a particular data item from the given collection of data items. For example, to delete the name of a student who has left the course.
+
+**Sorting:** Data items can be arranged in some order like ascending order or descending order depending on the type of application. For example, arranging the names of students in a class in an alphabetical order, or calculating the top three winners by arranging the participants’ scores in descending order and then extracting the top three.
+
+**Merging:** Lists of two sorted data items can be combined to form a single list of sorted data items.
+
+Many a time, two or more operations are applied simultaneously in a given situation. For example, if we want to delete the details of a student whose name is X, then we first have to search the list of students to find whether the record of X exists or not and if it exists then at which location, so that the details can be deleted from that particular location.
 
 #
 
@@ -297,15 +328,16 @@ flowchart TB
 
 ```
 
+
 ## Data Types in C
 
-Data type determines the set of values that a data item can take and the operations that can be performed on the item. 
+A data type determines the set of values that a data item can take and the operations that can be performed on it.
 
 #### Integers, Floating-point, and Characters.
 
-C classify variables based on the type of data they can hold, ensuring efficient memory usage and precise operations. C provides fundamental types like *integers*, *characters*, and *floating-point numbers*, offering versatility in data representation.
+The C language classifies variables based on the type of data they can hold, ensuring efficient memory usage and precise operations. Thus, C provides fundamental types such as integers, characters, and floating-point numbers, offering versatility in data representation.
 
-For instance, the **char data type** is of *one byte** and is used to store *single characters*. Note that C does not provide any data type for **storing text**, this is because text is made up of individual characters.
+For instance, the **char** data type is of **one byte** and is used to store *single characters*. Note that C does not provide any data type for ***storing text***, this is because text is made up of individual characters.
 
 
 | Data Type       | Description                | Size (in bytes) | Range                                                   |
@@ -318,9 +350,6 @@ For instance, the **char data type** is of *one byte** and is used to store *sin
 > **Note:* In addition, C also supports four modifiers — two sign specifiers (***signed*** and ***unsigned***) and two size specifiers (***short*** and ***long***).*
 
 These ranges provide a general idea of the value limits for each of the principal data types in C. However, it's important to note that the actual range may vary depending on the specific system and compiler.
-
-> [!NOTE]
-> For more reference, check my [Student Guide - The C Language](https://github.com/artghieri/Student-Guide-The-C-Language/blob/main/guide.md)
 
 #### Data Type Compatibility
 
@@ -355,6 +384,31 @@ Here's what's happening in terms of data type compatibility:
 
 This example demonstrates how data type compatibility allows for operations involving different data types. C's rules for type conversion ensure that the code compiles and produces the expected result without requiring explicit type casting. 
 
+> [!NOTE]
+> For more reference about Data Types and The C Language, check my [Student Guide - The C Language](https://github.com/artghieri/Student-Guide-The-C-Language/blob/main/guide.md)
+
+## Arrays
+
+#### Declaration and initialization of arrays.
+#### Accessing elements of an array.
+#### Common operations on arrays.
+
+## Structures
+
+#### Declaration of structures.
+#### Defining and accessing structure members.
+#### Using structures to represent complex data.
+
+## Pointers
+
+#### Basic pointer concepts.
+#### Pointers to structures.
+#### Dynamic memory allocation with malloc and free.
+
+
+
+
+
 ---
 
 ## Conclusion
@@ -364,27 +418,12 @@ This example demonstrates how data type compatibility allows for operations invo
 - TENENBAUM, Aaron M. ; LANGSAM, Yedidyah ; AUGENSTEIN, Moshe J. **Data Structures Using C**. Facsimile Edition. Pearson, 1989.
 - CORMEN, Thomas H. ; LEISERSON, Charles E. ; RIVEST, Ronald L. ; STEIN, Clifford. **Introduction to Algorithms**. 4th Edition. MIT Press, 2022.
 
-## Arrays
 
 
 
 <!-- 
 # Study Guide: Data Structures in C
 
-## 3. Arrays
-- Declaration and initialization of arrays.
-- Accessing elements of an array.
-- Common operations on arrays.
-
-## 4. Structures
-- Declaration of structures.
-- Defining and accessing structure members.
-- Using structures to represent complex data.
-
-## 5. Pointers
-- Basic pointer concepts.
-- Pointers to structures.
-- Dynamic memory allocation with malloc and free.
 
 ## 6. Recursion
 - Recursive Binary Search
