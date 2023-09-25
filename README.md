@@ -215,11 +215,11 @@ These two constant factors *don't need to be equal*. If you can show that a func
 
 For a given function $g(n)$, we denote by $\Theta(g(n))$ (*theta of g of n*) the set of functions
 
-$$\Theta(g(n)) = \\{ f(n) : \text{ there exist positive constants c1 and c2 and } n_{0} \text{ such that }  0 \leq c1g(n) \leq f(n) \leq c2g(n), \forall \text{ n } \geq n_{o} \\}$$
+$$\Theta(g(n)) = \\{ f(n) : \text{ there exist positive constants } c_1 \text{ and }c_2 \text{ and } n_{0} \text{ such that }  0 \leq c_{1}g(n) \leq f(n) \leq c_{2}g(n), \forall \text{ n } \geq n_{o} \\}$$
 
 #
 
-For all values of n at and to the right of $n_0$, the value of $f(n)$ lies at or above $c1g(n)$ and at or below $c2g(n)$. In other words, for all $n \geq n_0$, the function $f(n)$ is equal to $g(n)$ to within constant factors. The definitions of $O$-, $\Omega$-, and ‚ $\Theta$-Notations lead to the following theorem.
+For all values of n at and to the right of $n_0$, the value of $f(n)$ lies at or above $c_{1}g(n)$ and at or below $c_{2}g(n)$. In other words, for all $n \geq n_0$, the function $f(n)$ is equal to $g(n)$ to within constant factors. The definitions of $O$-, $\Omega$-, and  $\Theta$-Notations lead to the following theorem.
 
 For any two functions $f(n)$ and $g(n)$, we have $f(n) = \Theta(g(n))$ if and only if
 
@@ -360,13 +360,14 @@ Let's consider a simple example to illustrate data type compatibility in C:
 ```c
 #include <stdio.h>
 
-int main() {
+int main(void)
+{
 int integerVariable = 42;
 double doubleVariable = 3.14159265359;
 
 double result = integerVariable + doubleVariable;
 
-printf("Result: %lf\n", result);
+printf("Result:" %lf\n, result);
 
 return 0;
 }
@@ -387,21 +388,242 @@ This example demonstrates how data type compatibility allows for operations invo
 
 ## Arrays
 
-#### Declaration and initialization of arrays.
-#### Accessing elements of an array.
-#### Common operations on arrays.
+In this chapter, we will discuss arrays. An *array* is a user-defined data type that stores related information together. All the information stored in an *array* belongs to the **same data type**. So, in this chapter, we will learn how arrays are defined, declared, initialized, and accessed. We will also discuss the different operations that can be performed on array elements and the different types of arrays such as two-dimensional arrays, multi-dimensional arrays, and sparse matrices.
+
+**An Array as a Concept**
+
+Consider a situation in which we have 20 students in a class and we have been asked to write a program that reads and prints the marks of all the 20 students. 
+
+Now to read the values of these 20 variables, we must have 20 read statements. Similarly, to print the value of these variables, we need 20 write statements. If it is just a matter of 20 variables, then it might be acceptable for the user to follow this approach. But would it be possible to follow this approach if we have to read and print the marks of students,
+
+- **In the entire course (say 100 students)**
+- **In the entire college (say 500 students)**
+- **In the entire university (say 10,000 students)**
+
+The answer is no, definitely **not**! To process a large amount of data, we need a data structure known as an ***array***.
+
+An array is a collection of similar data elements. These data elements have the same data type. The elements of the array are stored in consecutive memory locations and are referenced by an index (also known as the *subscript*). The subscript is an ordinal number which is used to identify an element of the array.
+
+```c
+#include <stdio.h>  
+
+int main(void)  
+{
+// Declare an integer array named "students" with 5 elements and initialize it with these values.
+int students[5] = {10, 8, 7, 5, 10};  
+
+// Print the value of the element at index 2 (third element) of the "students" array.
+printf("%d", students[2]);  
+return 0;  
+}
+```
+
+#
+
+
+**Declaration and Initialization of Arrays.**
+
+In programming, every variable must be declared before it is used, and the same concept applies to array variables. Before using an array, it must be declared. Declaring an array involves specifying the following information:
+
+- **Data Type**: This indicates the kind of values the array can store, such as *int*, *char*, *float*, or *double*.
+- **Name**: An identifier used to uniquely identify the array.
+- **Size**: The maximum number of elements that can be stored in the array.
+
+**Arrays are declared using the following syntax:**
+
+```c
+datatype name[size];
+```
+
+The data type can be either*int*, *char*, *float*, *double* or any other valid data type. The number within brackets indicates the *size* of the array.  
+For example, if we declare:
+
+```c
+int marks[5];
+```
+
+Then the statement declares marks to be an array **containing 10 elements**. In C, the array index starts from zero. The first element will be stored in **marks[0]**, second element in **marks[1]**, and so on. Therefore, the ***last element***, that is the 5th element, will be stored in **marks[9]**. 
+
+> ***Note:** Note that 0, 1, 2, 3 written within square brackets are the subscripts.*
+
+**In the memory, each element of the array will be stored as shown:**
+
+<table>
+  <tr>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">1st</td>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">2nd</td>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">3rd</td>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">4th</td>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">5th</td>
+  </tr>
+</table>
+
+#
+
+**Accessing Elements of an Array.**
+
+To access all the elements, we must use a loop. In other words, we can access all the elements of an array by incrementing the value of the subscript into the array within a loop.
+
+```c
+// Declare an integer array named "marks" with a size of 5 elements
+int marks[5];
+
+// Initialize each element of the "marks" array to 0 using a loop
+for (int i = 0; i < 5; ++i)
+{
+    marks[i] = 0;
+}
+```
+
+> ***Note:** The subscript must be an integral value or an expression that evaluates to an integral value.*
+
+The first element of the array **marks[5]** can be accessed by writing **marks[0**]. To process all the elements of the array, we use a loop that accesses each individual element of the array and sets its value to 0. 
+
+In the for loop, first, the value of **marks[0]** is set to 0, then the value of the ***index*** i is incremented, and the next value, **marks[1**], is set to 0. This procedure continues until all 5 elements of the array are set to 0.
+
+**Array marks after executing the code given:**
+
+<table>
+  <tr>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">0</td>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">0</td>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">0</td>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">0</td>
+    <td style="text-align:center; background-color:#3498db; color:white; width: 120px; height: 80px; font-size: 10px;">0</td>
+  </tr>
+</table>
+
+
+> ***Note:** There is no single statement that can read, access, or print all the elements of an array. To do this, we have to use a loop to execute the same statement with different index values.*
+
+
+**Storing Values in Arrays**
+
+When declaring an array, we allocate space for its elements without storing values. Three methods exist for storing values in an array: initializing elements during declaration, inputting values for individual elements from the keyboard, or assigning values to individual elements.
+
+```mermaid
+graph LR
+    A(Storing values in an array)
+    B(Initialize elements during declaration)
+    C(Input values for individual elements from the keyboard)
+    D(Assign values to individual elements)
+
+    A --> B
+    A --> C
+    A --> D
+
+```
+
+**Initializing Arrays During Declaration**
+
+Arrays can be initialized at the time of declaration, just like any other variable. When initializing an array, you must provide a value for every element within the array. This is done by specifying the values within curly braces, separated by commas, in the following format:
+
+```c
+type array_name[size] = {list of values};
+```
+
+It's important to ensure that the number of values matches the number of elements in the array; specifying more values than there are elements will result in a compiler error.
+
+```c
+int marks[5] = {90, 82, 78, 95, 88};
+```
+
+In this example, an array named marks is declared with enough space to store five elements. The first element, **marks[0]**, is assigned the value 90, the second element, **marks[1]**, is assigned 82, and so on. 
+
+**Inputting Values from the Keyboard**
+
+Arrays can be initialized by inputting values from the keyboard using loops, such as **while/do–while** or **for** loops. 
+
+```c
+int i, marks[10];
+i = 0;
+
+while (i < 10)
+{
+  printf("Enter a value for element %d: ", i);
+  
+  scanf("%d", &marks[i]); // Input value for the current element
+  i++;  // Increment index i
+}
+```
+
+For instance, a loop iterates through the array elements, starting from index 0 and inputting values for each element. This process continues for arrays with indices ranging from 0 to 9. 
+
+```mermaid
+graph TD
+    A["Start"]
+    B["Initialize index i to 0"]
+    C["Input value for element at index i"]
+    D["Is i < 10?"]
+    F["Increment i"]
+    G["Repeat loop"]
+    I["End"]
+
+    A --> B
+    B --> C
+    C --> D
+    D -->|Yes| F
+    D -->|No| I
+    F --> G
+    G --> C
+```
+
+**Assigning Values to Individual Elements**
+
+The third method involves assigning values to individual elements of the array using the assignment operator. You can assign any value that matches the data type of the array to an individual array element.
+
+```c
+marks[0] = 10
+```
+
+To copy the contents of one array into another, you must copy the value of each individual element from the first array to the corresponding element in the second array.
+
+```c
+#include <stdio.h>
+
+int main() {
+int firstArray[5] = {1, 2, 3, 4, 5};
+int secondArray[5];
+
+// Copy the values from firstArray to secondArray
+for (int i = 0; i < 5; i++) {
+  secondArray[i] = firstArray[i];
+}
+return 0;
+}
+```
+
+> ***Note:** It's important to note that we cannot assign one array directly to another array, even if the two arrays have the same type and size.* 
+
+#
+
+**Common Operations on Arrays.**
+
+There are a number of operations that can be preformed on arrays. These operations include:
+
+- **Traversal:** Iterating through all elements of the array to perform an operation on each.
+- **Search:** Looking for a particular value within the array.
+- **Insertion:** Adding a new element into the array.
+- **Deletion:** Removing an element from the array.
+- **Sorting:** Arranging the elements of the array in a specific order.
+- **Merging:** Combining two or more arrays into a single array.
+- **Copying:** Creating a copy of an array with the same or different size.  
+
+> [!NOTE]
+> For more reference, check ["Operations on array in C"](https://www.studymite.com/blog/operation-on-arrays-in-c-1).
+
 
 ## Structures
 
-#### Declaration of structures.
-#### Defining and accessing structure members.
-#### Using structures to represent complex data.
+**Declaration of structures.**
+**Defining and accessing structure members.**
+**Using structures to represent complex data.**
 
 ## Pointers
 
-#### Basic pointer concepts.
-#### Pointers to structures.
-#### Dynamic memory allocation with malloc and free.
+**Basic pointer concepts.**
+**Pointers to structures.**
+**Dynamic memory allocation with malloc and free.**
 
 
 
