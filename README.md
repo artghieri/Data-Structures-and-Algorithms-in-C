@@ -141,9 +141,9 @@ When we analyze algorithms for large inputs, we focus on their ***asymptotic eff
 
 $O$-Notation characterizes an *upper bound* on the ***asymptotic*** behavior of a function. In other words, it says that a function grows no faster than a certain rate, based on the highest-order term.
 
-Consider, for example, the function $f(x) = 3n^3 - 2n^2 + 5n + 1$ . Its highest-order term is $3n^3$, and so we say that this function’s rate of growth is $n^3$. Because this function grows no faster than $n^3$ , we can write that it is $O(n^3)$. More generally, it is $O(n^c)$ for any constant $c \gg 3$.
+Consider, for example, the function $f(x) = 3n^3 - 2n^2 + 5n + 1$ . Its highest-order term is $3n^3$, and so we say that this function’s rate of growth is $n^3$. Because this function grows no faster than $n^3$ , we can write that it is $O(n^3)$. More generally, it is $O(n^c)$ for any constant $c \gg 3$. Here is the formal definition of $O$-Notation. 
 
-Here is the formal definition of $O$-Notation. For a given function $g(n)$, we denote by $O(g(n))$ (*pronounced big-oh of g of n*) the *set of functions*):
+For a given function $g(n)$, we denote by $O(g(n))$ (*pronounced big-oh of g of n*) the *set of functions*):
 
 $$O(g(n)) = \\{ f(n) : \text{ there exist positive constants c and } n_{0} \text{ such that }  0 \leq f(n) \leq cg(n), \forall \text{  n } \geq n_{o} \\}$$
 
@@ -159,25 +159,30 @@ Consequently, the function $g(n)$ itself must be ***asymptotically nonnegative**
 You might be surprised that we defined $O$-notation in terms of sets. Indeed, you might expect that we would write $f(n) \in O(g(n))$ to indicate that $f(n)$ belongs to the set $O(g(n))$. Instead, we usually write $f(n) = O(g(n))$ and say
 $f(n)$ is big-oh of $g(n)$ to express the same notion. 
 
-Let’s explore an example of how to use the formal definition of $O$-Notation to justify our practice of discarding lower-order terms and ignoring the constant coefficient of the highest-order term: We'll show that $f(x) = 4n^2 + 100n + 500 = O(n^2)$. 
+Let’s explore an example of how to use the formal definition of $O$-Notation to justify our practice of discarding lower-order terms and ignoring the constant coefficient of the highest-order term: 
 
-We need to find positive constants $c$ and $n_0$ such that $f(x) = 4n^2 + 100n + 500 \leq (O(n^2)$ for all $n \geq n_0$. 
+We'll show that $f(x) = 4n^2 + 100n + 500 = O(n^2)$. 
+
+We need to find positive constants $c$ and $n_0$ such that $f(x) = 4n^2 + 100n\leq O(n^2)$ for all $n \geq n_0$. 
+
+By definition, we have:
+
+$$0 \leq 4n^2 + 100n\leq cn^2$$
 
 Dividing both sides of the inequality by $n^2$ yields: 
 
-$$4 + \frac{100}{n} + \frac{500}{n^2} \leq c$$ 
+$$0 \leq 4 + \frac{100}{n} \leq c$$ 
 
-This inequality holds true for various choices of $c$ and $n_0$. For instance, if we set $n_0 = 1$, then this inequality is satisfied when $c = 604$). Alternatively, with $n_0 = 10$, $c = 19$ is valid.
+Now to determine the value of $c$, we see that $4 + \frac{100}{n}$ is maximum when $n = 1$. Therefore, $c = 104$.
 
-Now, let's utilize the formal definition of $O$-notation to establish that the function $f(x) = n^3 - 100n^2$ does not belong to the set $O(n^2)$.
+To determine the value of $n_0$:
 
-If $n^3 - 100n^2 = O(n^2)$, ***there would exist positive constants*** $c$ and $n_0$ such that $n^3 - 100n^2 \leq cn^2$ for all $n \geq n_0$. 
+$$0 \leq 4 + \frac{100}{n_0} \leq 104$$ 
 
-Again, dividing both sides of the inequality by $n^2$ results in:
+$$-4{n_0} \leq 100 \leq 100{n_0}$$ 
 
-$$n - 100 \leq c$$
+This implies, $n_0 = 1$. Hence, $0 \leq 4n^2 + 100n \leq n^2 \\: \forall \text{  n } \geq n_{0} = 1 \\}$
 
-Regardless of the chosen value for the constant $c$, this inequality is not satisfied for any value of $n$ > $c + 100$.
 
 #
 
@@ -431,14 +436,14 @@ In programming, every variable must be declared before it is used, and the same 
 
 **Arrays are declared using the following syntax:**
 
-```c
+```sql
 datatype name[size];
 ```
 
 The data type can be either*int*, *char*, *float*, *double* or any other valid data type. The number within brackets indicates the *size* of the array.  
 For example, if we declare:
 
-```c
+```sql
 int marks[5];
 ```
 
@@ -518,13 +523,13 @@ graph LR
 
 Arrays can be initialized at the time of declaration, just like any other variable. When initializing an array, you must provide a value for every element within the array. This is done by specifying the values within curly braces, separated by commas, in the following format:
 
-```c
+```sql
 type array_name[size] = {list of values};
 ```
 
 It's important to ensure that the number of values matches the number of elements in the array; specifying more values than there are elements will result in a compiler error.
 
-```c
+```sql
 int marks[5] = {90, 82, 78, 95, 88};
 ```
 
@@ -572,7 +577,7 @@ graph TD
 
 The third method involves assigning values to individual elements of the array using the assignment operator. You can assign any value that matches the data type of the array to an individual array element.
 
-```c
+```sql
 marks[0] = 10
 ```
 
@@ -581,16 +586,37 @@ To copy the contents of one array into another, you must copy the value of each 
 ```c
 #include <stdio.h>
 
-int main() {
+int main()
+{
 int firstArray[5] = {1, 2, 3, 4, 5};
 int secondArray[5];
 
 // Copy the values from firstArray to secondArray
-for (int i = 0; i < 5; i++) {
+for (int i = 0; i < 5; i++)
   secondArray[i] = firstArray[i];
-}
 return 0;
 }
+```
+
+In this example, the loop accesses each element of the first array and simultaneously assigns its value to the corresponding element of the second array. The index value i is incremented to access the next element in succession
+
+```mermaid
+graph LR
+    A["Start"]
+    B["Initialize index i to 0"]
+    C["Copy value from firstArray[i] to secondArray[i]"]
+    D["Is i < 5?"]
+    F["Increment i"]
+    G["Repeat loop"]
+    I["End"]
+
+    A --> B
+    B --> C
+    C --> D
+    D -->|Yes| F
+    D -->|No| I
+    F --> G
+    G --> C
 ```
 
 > ***Note:** It's important to note that we cannot assign one array directly to another array, even if the two arrays have the same type and size.* 
@@ -611,6 +637,47 @@ There are a number of operations that can be preformed on arrays. These operatio
 
 > [!NOTE]
 > For more reference, check ["Operations on array in C"](https://www.studymite.com/blog/operation-on-arrays-in-c-1).
+
+**Two-Dimensional Arrays**
+
+Up until now, our discussions have focused on **one-dimensional arrays**. These arrays are organized *linearly* in a *single direction*. However, in certain situations, we encounter the need to store data in a more structured manner, resembling grids or tables.
+
+This is where the concept of one-dimensional arrays extends into **two-dimensional data structures**. A two-dimensional array is defined using two *subscripts*: the first subscript indicates the **row**, and the second denotes the **column**. In the world of programming, a two-dimensional array is essentially treated as an array of one-dimensional arrays.
+
+
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+|:-----------:|:-----------:|:-------------:|:-------------:|
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+
+**Declaring Two-dimensional Arrays**
+
+Any array must be declared before being used. The declaration statement tells the compiler the name of the array, the data type of each element in the array, and the size of each dimension. 
+
+**A two-dimensional array is declared as:**
+
+```sql
+datatype array_name[row_size][column_size];
+```
+
+For example, if we want to store the marks obtained by three students in five different subjects, we can declare a two-dimensional array as:
+
+```c
+int marks[3][4];
+```
+
+In the above statement, a two-dimensional array called marks has been declared that has 3 rows and 4 columns. The first element of the array is denoted by **marks[0][0]**, the second element as **marks[0][1]**, and so on. Here, **marks[0][0]** stores the marks obtained by the first student in the first subject, **marks[1][0]** stores the marks obtained by the second student in the first subject.
+
+This two-dimensional array can store a grid of data, making it suitable for situations where you need to organize information in rows and columns.
+
+| | Collumn 0 | Collumn 1 | Collumn 2 |
+| :--: | :--: | :--: | :--: | 
+| Row 0 | [0][0] | [0][1] | [0][2] |
+| Row 1 | [1][0] | [1][1] | [1][2] |
+| Row 2 | [2][0] | [2][1] | [2][2] |
+
+
+
 
 
 ## Structures
