@@ -676,6 +676,82 @@ This two-dimensional array can store a grid of data, making it suitable for situ
 | Row 1 | [1][0] | [1][1] | [1][2] |
 | Row 2 | [2][0] | [2][1] | [2][2] |
 
+Although we have shown a ***two-dimensional array***, in the memory, these elements actually will be stored **sequentially**. There are two ways of storing a two-dimensional array in the memory. The first way is the **row major order** and the second is the **column major order**. Let us see how the elements of a 2D array are stored in a row major order. 
+
+Here, the elements of the first row are stored before the elements of the second and third rows. That is, the elements of the array are stored row by row where n elements of the first row will occupy the first n locations.
+
+<table>
+  <tr>
+      <td>(0,0)</td>
+      <td>(0,1)</td>
+      <td>(0,2)</td>
+      <td>(0,3)</td>
+      <td>(1,0)</td>
+      <td>(1,1)</td>
+      <td>(1,2)</td>
+      <td>(1,3)</td>
+      <td>(2,0)</td>
+      <td>(2,1)</td>
+      <td>(2,2)</td>
+      <td>(2,3)</td>
+  </tr>
+</table>
+
+> ***Note:** Elements of a 3 x 4 2D array in row major order*
+
+However, when we store the elements in a column major order, the elements of the first column are stored before the elements of the second and third column. That is, the elements of the array are stored column by column where m elements of the first column will occupy the first m locations. 
+   
+<table>
+  <tr>
+      <td>(0,0)</td>
+      <td>(1,0)</td>
+      <td>(2,0)</td>
+      <td>(3,0)</td>
+      <td>(0,1)</td>
+      <td>(1,1)</td>
+      <td>(2,1)</td>
+      <td>(3,1)</td>
+      <td>(0,2)</td>
+      <td>(1,2)</td>
+      <td>(2,2)</td>
+      <td>(3,2)</td>
+  </tr>
+</table>
+
+> ***Note:** Elements of a 4 x 3 2D array in column major order*
+
+**Initializing Two-dimensional Arrays**
+
+Like in the case of other variables, declaring a two-dimensional array only reserves space for the array in the memory. No values are stored in it. A two-dimensional array is initialized in the same way as a one-dimensional array is initialized. For example:
+
+```c
+int marks[2][3] = { {90,87,78}, {68, 62, 71} };
+```
+
+In the above example, each row is defined as a one-dimensional array of three elements that are enclosed in braces. Note that the commas are used to separate the elements in the row as well as to separate the elements of two rows.
+
+**Operations On Two-Dimensional Arrays**
+
+Two-dimensional arrays can be used to implement the mathematical concept of matrices. In mathematics, a matrix is a grid of numbers organized into rows and columns. Using two-dimensional arrays, we can perform the following operations on an $m \times n$ matrix:
+
+**Transpose:** The transpose of an $m \times n$ $matrix A$ is a new $matrix B$ with dimensions $n \times m$, where each element $B_{(i,j)}$ of $B$ is equal to the element $A_{(j,i)}$ of $A$.
+
+**Sum:** Two matrices that are compatible with each other can be added together, storing the result in the third matrix. Two matrices are said to be compatible when they have the same number of rows and columns. The elements of two matrices can be added by writing:
+$$Ci,j = A_{(j,i)} + B_{(i,j)}$$
+
+**Difference:** Two matrices that are compatible with each other can be subtracted, storing the result in the third matrix. Two matrices are said to be compatible when they have the same number of rows and columns. The elements of two matrices can be subtracted by writing:
+$$C_{(j,i)} = A_{(j,i)}- B_{(i,j)}$$
+
+**Product:** Two matrices can be multiplied with each other if the number of columns in the first matrix is equal to the number of rows in the second matrix. Therefore, $matrix A_{m \times n}$ can be multiplied with a $matrix B_{p \times q}$ if $n = p$. The dimension of the product matrix is a $matrix C_{m \times q}$ The elements of two matrices can be multiplied by writing:
+$$C_{(j,i)}= Σ(A_{(j,i)} * B_{(i,j)}) for k = 1 to n$$
+
+
+#
+
+
+
+
+
 
 
 
