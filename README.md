@@ -946,7 +946,7 @@ struct Point
 {
   double x;
   double y;
-}
+};
 
 struct Point p = {1.0, 2.5};
 struct Point q = {3.7};
