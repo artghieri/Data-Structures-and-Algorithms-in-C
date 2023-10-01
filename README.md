@@ -807,7 +807,7 @@ The three-dimensional array will contain $2 \times 2 \times 3 = 12$ elements.
 
 Sparse matrix is a matrix that has large number of elements with a zero value. In order to efficiently utilize the memory, specialized algorithms and data structures that take advantage of the sparse structure should be used. If we apply the operations using standard matrix structures and algorithms to sparse matrices, then the execution will slow down and the matrix will consume large amount of memory. Sparse data can be easily compressed, which in turn can significantly reduce memory usage.
 
-There are two principal types of sparse matrices. In the first type of sparse matrix, all elements above the main diagonal have a **zero value**. This type of sparse matrix is also called a (lower) triagonal matrix because all the elements with a non-zero value appear below the diagonal.
+**There are two principal types of sparse matrices:**
 
 In a lower-triangular matrix, $A_{(i \times j)} = 0$ where $i < j$. $A_n n \times n$ lower-triangular matrix A has **one non-zero** element in the first row, two non-zero elements in the second row and likewise n non-zero elements in the nth row. 
 
@@ -850,14 +850,181 @@ In an upper-triangular matrix, $A_{(i \times j)} = 0$ where $i > j$. $A_n n \tim
 </table>
 
 
-
 ## Structures
 
-**Declaration of structures.**
+A structure is quite similar to a record, as it helps organize and store related information about an entity. Think of a structure as a custom data type that allows you to group various pieces of information, even if they have different data types, into one package. Unlike an array, which can only handle data of the same type, a structure gives you the flexibility to combine variables of different data types. 
 
-**Defining and accessing structure members.**
+In simpler terms, it's like having a container for multiple variables, each with its own data type and a unique name for easy access within the structure.
 
-**Using structures to represent complex data.**
+**Declaration of Structures.**
+
+A structure is declared using the keyword ***struct*** followed by the structure name. All the variables of the structure are declared within the structure. A structure type is generally declared by using
+the following syntax:
+
+```c
+struct struct-name
+{
+  dataype variable-name
+  (...)
+}
+```
+
+For instance, in scenarios involving **2D graphics** or **geometry**, you often need to manage points with both horizontal **(x)** and vertical **(y)** coordinates. To streamline this process, you can create a C structure called Point. This structure combines the x and y coordinates into a single data type, simplifying the handling of 2D spatial data in your program.
+
+```c
+struct Point
+{
+    double x;
+    double y;
+};
+```
+
+Now the structure has become a ***user-defined data type***. Each variable name declared within a structure is called a **member** of the structure. The structure declaration, however, does not allocate any memory or consume storage space. It just gives a template that conveys to the C compiler how the structure would be laid out in the memory and also gives the details of member names. 
+
+Like any other data type, memory is allocated for the structure when we declare a variable of the structure.
+
+```mermaid
+classDiagram
+class Point{
+    - double: x
+    - double: y
+}
+```
+
+> ***Note:** Template of the Point Struct*
+
+For example, we can define a variable of Point by writing:
+
+```c
+struct Point p
+
+// Here, struct Point is a data type and p is a variable.
+```
+
+> ***Note:** Structure type and variable declaration of a structure can be either local or global depending on their placement in the code*
+
+Last but not the least, structure member names and names of the structure follow the same rules as laid down for the names of ordinary variables. However, care should be taken to ensure that the name of structure and the name of a structure member should not be the same. 
+
+**Typedef Declarations**
+
+The **typedef** (derived from type definition) keyword enables the programmer to create a new data type name by using an existing data type. By using typedef, no new data is created, rather an alternate name is given to a known data type. The general syntax of using the typedef keyword is given as: 
+
+```c
+typedef existing_data_type new_data_type;
+```
+
+Note that typedef statement does not occupy any memory; it simply defines a new type. When we precede a struct name with the typedef keyword, then the struct becomes a new type. It is used to make the construct shorter with more meaningful names for types already defined by C or for types that you have declared. For example, consider the following declaration:
+
+```c
+typedef struct Point
+{
+  double x;
+  double y;
+}
+```
+
+Now that you have preceded the structure’s name with the typedef keyword, student becomes a new data type. Therefore, now you can straightaway declare the variables of this new data type
+as you declare the variables of type int, float, char, double, etc. To declare a variable of structure Point, you may write:
+
+```c
+Point p;
+```
+
+#
+
+**Initializing and Accessing Structures Members.**
+
+A structure can be initialized in the same way as other data types are initialized. Initializing a structure means assigning some constants to the members of the structure. When the user does
+not explicitly initialize the structure, then C automatically does it. For int and float members, the values are initialized to zero, and char and string members are initialized to '\0' by default.
+
+The initializers are enclosed in braces and are separated by commas. However, care must be taken to ensure that the initializers match their corresponding types in the structure definition.
+
+The general syntax to initialize a structure variable is as follows:
+
+```c
+struct Point
+{
+  double x;
+  double y;
+}p = {1.0, 2.5}, q = {3.7};
+```
+
+```c
+struct Point
+{
+  double x;
+  double y;
+}
+
+struct Point p = {1.0, 2.5};
+```
+
+This is a illustration of how the values will be assigned to individual fields of the structure:
+
+```mermaid
+classDiagram
+  class p["Point p"]
+  p: 1.0
+  p: 2.5
+
+  class q["Point q"]
+  q: 3.7
+  q: 0.0
+
+```
+
+When all the members of a structure are not initialized, it is called partial initialization. In case of partial initialization, first few members of the structure are initialized and those that are
+uninitialized are assigned default values.
+
+#
+
+Each member of a structure can be used just like a normal variable, but its name will be a bit longer. A structure member variable is generally accessed using a '.' (dot) operator. The syntax
+of accessing a structure or a member of a structure can be given as:
+
+```c
+struct_var.member_name
+```
+
+The dot operator is used to select a particular member of the structure. For example, to assign values to the individual data members of the structure variable **p**:
+
+```c
+p.x = 4.5;
+p.y = 1.9;
+```
+
+To input values for data members of the structure variable **p**:
+
+```c
+scanf("%lf, &(p.x);
+```
+
+Similarly, to print the values of structure variable **p**:
+
+```c
+printf("%lf\n, p.x);
+```
+
+Memory is allocated only when we declare the variables of the structure. In other words, the memory is allocated only when we instantiate the structure. In the absence of any variable, structure
+definition is just a template that will be used to reserve memory when a variable of type struct is declared.
+
+Once the variables of a structure are defined, we can perform a few operations on them. For example, we can use the assignment operator (=) to assign the values of one variable to another.
+
+**Self-Referenced Structures**
+
+Self-referential structures are those structures that contain a reference to the data of its same type. That is, a self-referential structure, in addition to other data, contains a pointer to a data that is
+of the same type as that of the structure. For example, consider the structure node given below.
+
+```c
+struct node
+{
+  int val;
+	 struct node *next;
+};
+```
+
+Here, the structure node will contain two types of data: an integer val and a pointer next. You must be wondering why we need such a structure. Actually, self-referential structure is the foundation
+of other data structures. We will be using them throughout this guide and their purpose will be clearer to you when we discuss linked lists, trees, and graphs.
+
 
 ## Pointers
 
