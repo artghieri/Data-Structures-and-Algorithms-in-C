@@ -760,7 +760,7 @@ A multi-dimensional array can contain as many indices as needed and as the requi
 
 > ***Note:** A multi-dimensional array is declared and initialized the same way we declare and initialize one- and two-dimensional arrays.*
 
-For instance, consider a three-dimensional array defined as int $A[2][2][3]$. Calculate the number of elements in the array. Also, show the memory representation of the array in the row major order and the column major order.
+For instance, consider a three-dimensional array defined as int $A[2][2][2]$. Calculate the number of elements in the array. Also, show the memory representation of the array in the row major order and the column major order.
 
 A three-dimensional array consists of pages. Each page, in turn, contains m rows and n columns
 
@@ -769,16 +769,12 @@ A three-dimensional array consists of pages. Each page, in turn, contains m rows
   <tr>
     <td>(0,0,0)</td>
     <td>(0,0,1)</td>
-    <td>(0,0,2)</td>
     <td>(0,1,0)</td>
     <td>(0,1,1)</td>
-    <td>(0,1,2)</td>
     <td>(1,0,0)</td>
     <td>(1,0,1)</td>
-    <td>(1,0,2)</td>
     <td>(1,1,0)</td>
     <td>(1,1,1)</td>
-    <td>(1,1,2)</td>
   </tr>
 </table>
 
@@ -790,18 +786,14 @@ A three-dimensional array consists of pages. Each page, in turn, contains m rows
     <td>(0,1,0)</td>
     <td>(0,0,1)</td>
     <td>(0,1,1)</td>
-    <td>(0,0,2)</td>
-    <td>(0,1,2)</td>
     <td>(1,0,0)</td>
     <td>(1,1,0)</td>
     <td>(1,0,1)</td>
     <td>(1,1,1)</td>
-    <td>(1,0,2)</td>
-    <td>(1,1,2)</td>
   </tr>
 </table>
 
-The three-dimensional array will contain $2 \times 2 \times 3 = 12$ elements.
+The three-dimensional array will contain $2 \times 2 \times 2 = 8$ elements.
 
 ## Sparce Matrices
 
@@ -957,6 +949,7 @@ struct Point
 }
 
 struct Point p = {1.0, 2.5};
+struct Point q = {3.7};
 ```
 
 This is a illustration of how the values will be assigned to individual fields of the structure:
@@ -981,13 +974,13 @@ uninitialized are assigned default values.
 Each member of a structure can be used just like a normal variable, but its name will be a bit longer. A structure member variable is generally accessed using a '.' (dot) operator. The syntax
 of accessing a structure or a member of a structure can be given as:
 
-```c
+```julia
 struct_var.member_name
 ```
 
 The dot operator is used to select a particular member of the structure. For example, to assign values to the individual data members of the structure variable **p**:
 
-```c
+```julia
 p.x = 4.5;
 p.y = 1.9;
 ```
@@ -995,13 +988,13 @@ p.y = 1.9;
 To input values for data members of the structure variable **p**:
 
 ```c
-scanf("%lf, &(p.x);
+scanf("%lf", &(p.x);
 ```
 
 Similarly, to print the values of structure variable **p**:
 
 ```c
-printf("%lf\n, p.x);
+printf("%lf\n", p.x);
 ```
 
 Memory is allocated only when we declare the variables of the structure. In other words, the memory is allocated only when we instantiate the structure. In the absence of any variable, structure
@@ -1018,7 +1011,7 @@ of the same type as that of the structure. For example, consider the structure n
 struct node
 {
   int val;
-	 struct node *next;
+	struct node *next;
 };
 ```
 
