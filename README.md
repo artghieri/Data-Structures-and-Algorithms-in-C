@@ -734,38 +734,137 @@ In the above example, each row is defined as a one-dimensional array of three el
 
 Two-dimensional arrays can be used to implement the mathematical concept of matrices. In mathematics, a matrix is a grid of numbers organized into rows and columns. Using two-dimensional arrays, we can perform the following operations on an $m \times n$ matrix:
 
-**Transpose:** The transpose of an $m \times n$ $matrix A$ is a new $matrix B$ with dimensions $n \times m$, where each element $B_{(i,j)}$ of $B$ is equal to the element $A_{(j,i)}$ of $A$.
+**Transpose:** The transpose of an $m \times n$ $matrix A$ is a new $matrix B$ with dimensions $n \times m$, where each element $B_{(i \times j)}$ of $B$ is equal to the element $A_{(j \times i)}$ of $A$.
+
+$$B_{(i \times j)} = A_{(j \times i)}$$
 
 **Sum:** Two matrices that are compatible with each other can be added together, storing the result in the third matrix. Two matrices are said to be compatible when they have the same number of rows and columns. The elements of two matrices can be added by writing:
-$$Ci,j = A_{(j,i)} + B_{(i,j)}$$
+$$C_{(j \times i)} = A_{(j \times i)} + B_{(i \times j)}$$
 
 **Difference:** Two matrices that are compatible with each other can be subtracted, storing the result in the third matrix. Two matrices are said to be compatible when they have the same number of rows and columns. The elements of two matrices can be subtracted by writing:
-$$C_{(j,i)} = A_{(j,i)}- B_{(i,j)}$$
+$$C_{(j \times i)} = A_{(j \times i)}- B_{(i \times j)}$$
 
 **Product:** Two matrices can be multiplied with each other if the number of columns in the first matrix is equal to the number of rows in the second matrix. Therefore, $matrix A_{m \times n}$ can be multiplied with a $matrix B_{p \times q}$ if $n = p$. The dimension of the product matrix is a $matrix C_{m \times q}$ The elements of two matrices can be multiplied by writing:
-$$C_{(j,i)}= Σ(A_{(j,i)} * B_{(i,j)}) for k = 1 to n$$
+$$C_{(j \times i)}= Σ(A_{(j \times i)} * B_{(i \times j)}) \\: for \\: k = 1 \\: to \\: n$$
 
 
-#
+## Multi-Dimensional Arrays
 
+A multi-dimensional array in simple terms is an array of arrays. As we have one index in a onedimensional array, two indices in a two-dimensional array, in the same way, we have $n$ indices in an n-dimensional array or multi-dimensional array. 
 
+Conversely, an n–dimensional array is specified using $n$ indices. An n-dimensional $m_1 \times m_2 \times m_3 \times \cdots \times m_n$ array is a collection of $m_1 \times m_2 \times m_3 \times \cdots \times m_n$ elements. In a multi-dimensional array, a particular element is specified by using n subscripts as $A[I_1][I_2][I_3]...[I_n]$, where:
 
+$$I_1 <= M_1 \\: , \\: I_2 <= M_2 \\: , \\: I_3 <= M_3 \\: , \\:  ... \\: I_n <= M_n$$
 
+A multi-dimensional array can contain as many indices as needed and as the requirement of memory increases with the number of indices used. However, in practice, we hardly use more than three indices in any program. 
 
+> ***Note:** A multi-dimensional array is declared and initialized the same way we declare and initialize one- and two-dimensional arrays.*
 
+For instance, consider a three-dimensional array defined as int $A[2][2][3]$. Calculate the number of elements in the array. Also, show the memory representation of the array in the row major order and the column major order.
+
+A three-dimensional array consists of pages. Each page, in turn, contains m rows and n columns
+
+**Row Major Order**
+<table>
+  <tr>
+    <td>(0,0,0)</td>
+    <td>(0,0,1)</td>
+    <td>(0,0,2)</td>
+    <td>(0,1,0)</td>
+    <td>(0,1,1)</td>
+    <td>(0,1,2)</td>
+    <td>(1,0,0)</td>
+    <td>(1,0,1)</td>
+    <td>(1,0,2)</td>
+    <td>(1,1,0)</td>
+    <td>(1,1,1)</td>
+    <td>(1,1,2)</td>
+  </tr>
+</table>
+
+**Column Major Order**
+
+<table>
+  <tr>
+    <td>(0,0,0)</td>
+    <td>(0,1,0)</td>
+    <td>(0,0,1)</td>
+    <td>(0,1,1)</td>
+    <td>(0,0,2)</td>
+    <td>(0,1,2)</td>
+    <td>(1,0,0)</td>
+    <td>(1,1,0)</td>
+    <td>(1,0,1)</td>
+    <td>(1,1,1)</td>
+    <td>(1,0,2)</td>
+    <td>(1,1,2)</td>
+  </tr>
+</table>
+
+The three-dimensional array will contain $2 \times 2 \times 3 = 12$ elements.
+
+## Sparce Matrices
+
+Sparse matrix is a matrix that has large number of elements with a zero value. In order to efficiently utilize the memory, specialized algorithms and data structures that take advantage of the sparse structure should be used. If we apply the operations using standard matrix structures and algorithms to sparse matrices, then the execution will slow down and the matrix will consume large amount of memory. Sparse data can be easily compressed, which in turn can significantly reduce memory usage.
+
+There are two principal types of sparse matrices. In the first type of sparse matrix, all elements above the main diagonal have a **zero value**. This type of sparse matrix is also called a (lower) triagonal matrix because all the elements with a non-zero value appear below the diagonal.
+
+In a lower-triangular matrix, $A_{(i \times j)} = 0$ where $i < j$. $A_n n \times n$ lower-triangular matrix A has **one non-zero** element in the first row, two non-zero elements in the second row and likewise n non-zero elements in the nth row. 
+
+<table>
+  <tr>
+      <td>5</td> <!-- Non-zero element -->
+      <td>0</td> <!-- Zero element -->
+      <td>0</td> <!-- Zero element -->
+  </tr>
+  <tr>
+      <td>3</td> <!-- Non-zero element -->
+      <td>7</td> <!-- Non-zero element -->
+      <td>0</td> <!-- Zero element -->
+  </tr>
+  <tr>
+      <td>1</td> <!-- Non-zero element -->
+      <td>4</td> <!-- Non-zero element -->
+      <td>9</td> <!-- Non-zero element -->
+  </tr>
+</table>
+
+In an upper-triangular matrix, $A_{(i \times j)} = 0$ where $i > j$. $A_n n \times n$ upper-triangular matrix A has **n non-zero** elements in the first row, n–1 non-zero elements in the second row and likewise one non-zero element in the nth row.
+
+<table>
+  <tr>
+      <td>5</td> <!-- Non-zero element -->
+      <td>3</td> <!-- Non-zero element -->
+      <td>1</td> <!-- Non-zero element -->
+  </tr>
+  <tr>
+      <td>0</td> <!-- Zero element -->
+      <td>7</td> <!-- Non-zero element -->
+      <td>4</td> <!-- Non-zero element -->
+  </tr>
+  <tr>
+      <td>0</td> <!-- Zero element -->
+      <td>0</td> <!-- Zero element -->
+      <td>9</td> <!-- Non-zero element -->
+  </tr>
+</table>
 
 
 
 ## Structures
 
 **Declaration of structures.**
+
 **Defining and accessing structure members.**
+
 **Using structures to represent complex data.**
 
 ## Pointers
 
 **Basic pointer concepts.**
+
 **Pointers to structures.**
+
 **Dynamic memory allocation with malloc and free.**
 
 
