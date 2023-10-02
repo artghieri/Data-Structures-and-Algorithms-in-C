@@ -926,10 +926,7 @@ Point p;
 
 **Initializing and Accessing Structures Members.**
 
-A structure can be initialized in the same way as other data types are initialized. Initializing a structure means assigning some constants to the members of the structure. When the user does
-not explicitly initialize the structure, then C automatically does it. For int and float members, the values are initialized to zero, and char and string members are initialized to '\0' by default.
-
-The initializers are enclosed in braces and are separated by commas. However, care must be taken to ensure that the initializers match their corresponding types in the structure definition.
+A structure can be initialized in the same way as other data types are initialized. Initializing a structure means assigning some constants to the members of the structure. The initializers are enclosed in braces and are separated by commas. However, care must be taken to ensure that the initializers match their corresponding types in the structure definition.
 
 The general syntax to initialize a structure variable is as follows:
 
@@ -1021,11 +1018,134 @@ of other data structures. We will be using them throughout this guide and their 
 
 ## Pointers
 
-**Basic pointer concepts.**
+Every variable in C has a name and a value associated with it. When a variable is declared, a specific block of memory within the computer is allocated to hold the value of that variable. The size of the allocated block depends on the data type.
 
-**Pointers to structures.**
+Consider the following statement.
 
-**Dynamic memory allocation with malloc and free.**
+```c
+int x;
+```
+
+When this statement executes, the compiler sets aside **2 bytes of memory** to hold the value 10. It also sets up a symbol tabl in which it adds the symbol **x** and the **relative address in the memory** where those 2 bytes were set aside. Thus, every variable in C has a value and also a **memory location (commonly known as address) associated with it**.
+
+Actually, **pointers are nothing but memory addresses**. A pointer is a variable that contains the memory location of another variable. Therefore, a pointer is a variable that represents the **location of a data item**, such as a variable or an array element. Pointers are frequently used in C*, as they have a number of *useful applications. These applications include:
+
+- Pointers are used to pass information back and forth between functions.
+- Pointers enable programmers to return multiple data items from a function via function arguments.
+- Pointers provide an alternate way to access the individual elements of an array.
+- Pointers are used to pass arrays and strings as function arguments (discussed in subsequent chapters).
+- Pointers are used to create complex data structures, such as trees, linked lists, linked stacks, linked queues, and graphs.
+- Pointers are used for the dynamic memory allocation of a variable (refer to Appendix A for memory allocation in C programs).
+
+**Declaring Pointer Variables**
+
+The general syntax of declaring pointer variables can be given as below.
+
+```c
+dataype *ptr_name;
+```
+
+Here, ***data_type*** is the data type of the value that the pointer will point to. For example,
+
+```c
+int *ptr;
+```
+
+In each of the above statements, a pointer variable is declared to point to a variable of the specified data type. It's worth noting that all pointers, even if they point to different data types, will occupy the same amount of space in memory. However, the exact amount of space they occupy depends on the platform where the code is executed
+
+```c
+int x, *ptr;
+
+x = 10;
+ptr = &x;
+```
+
+In the above statement, **ptr** is the name of the pointer variable. The **\*** informs the compiler that **ptr** is a pointer variable and the int specifies that it will store the address of an integer variable.
+
+An integer pointer variable, therefore, *points to* an integer variable. In the last statement, **ptr** is assigned the address of **x**. The **&** operator retrieves the ddress of **x**, and copies that to the contents of the pointer **ptr**.
+
+We can 'dereference' a pointer, meaning we can access the value of the variable it points to by using the unary * operator, as in *ptr. For example, *ptr = 10 assigns the value 10 to the variable pointed to by ptr, which in this case is equivalent to setting the value of x to 10.
+
+```c
+#include <stdio.h>
+
+int main()
+{
+  int num, *pnum;
+  pnum = &num;
+
+  printf("\n Enter the number : ");
+  scanf("%d", &num);
+  printf("\n The number that was entered is : %d", *pnum);
+  return 0;
+}
+```
+
+**Output**
+
+```julia
+Enter the number : 10
+The number that was entered is : 10
+```
+
+#
+
+**Null Pointers**
+
+In some cases, we may prefer to have a null pointer which is a special pointer value and does not point to any value. This means that a null pointer does not point to any valid memory address.
+
+To declare a **null pointer**, you may use the predefined constant **NULL** which is defined in several standard header files including **<stdio.h>**, **<stdlib.h>**, and **<string.h>**. After including any of these files in your program, you can write
+
+```c
+int *ptr = NULL;
+```
+
+You can always check whether a given pointer variable stores the address of some variable or contains **NULL** by writing,
+
+```c
+if (ptr == NULL)
+{
+  statement block;
+}
+```
+
+**Pointer to Pointers**
+
+The pointers in turn point to data or even to other pointers. To declare pointers to pointers, just add an asterisk * for each level of reference
+
+For example, consider the following code:
+
+```c
+int x;
+int *px, **ppx;
+
+int x = 10;
+px = &x;
+ppx = &px;
+```
+
+```mermaid
+classDiagram 
+	direction LR
+	class x["X"]
+		x: 10
+		x: MemoryAdress(1002)
+	
+	class px["PX"]
+		px: 1002
+		px: MemoryAdress(2004)
+	
+	class ppx["PPX"]
+		ppx: 2004
+		ppx: MemoryAdress(4008)
+	
+	x <-- px
+	px <-- ppx 
+```
+
+## Recursion
+
+
 
 
 
