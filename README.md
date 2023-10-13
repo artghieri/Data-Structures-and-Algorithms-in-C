@@ -985,7 +985,7 @@ p.y = 1.9;
 To input values for data members of the structure variable **p**:
 
 ```c
-scanf("%lf", &(p.x);
+scanf("%lf", &(p.x));
 ```
 
 Similarly, to print the values of structure variable **p**:
@@ -1008,7 +1008,7 @@ of the same type as that of the structure. For example, consider the structure n
 struct node
 {
   int val;
-	struct node *next;
+  struct node *next;
 };
 ```
 
@@ -1113,7 +1113,7 @@ if (ptr == NULL)
 
 The pointers in turn point to data or even to other pointers. To declare pointers to pointers, just add an asterisk * for each level of reference
 
-For example, consider the following code:
+**For example, consider the following code:**
 
 ```c
 int x;
@@ -1145,9 +1145,43 @@ classDiagram
 
 ## Recursion
 
+**Recursive Binary Search**
+  - Implementation of binary search using recursion.
+  - Comparison with iterative binary search.
+  - Efficiency of recursive binary search.
 
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
+int binarySearch(int begin, int end, int *array);
 
+int main()
+{
+	
+	return 0;
+}
+
+int binarySearch(int begin, int end, int *array)
+{
+}
+```
+
+#
+
+**Fibonacci Sequence**
+  - Calculating Fibonacci numbers using recursion.
+  - The Fibonacci recurrence relation.
+  - Efficiency considerations in recursive implementation.
+
+#
+
+ **Recursive Factorial**
+  - Calculating the factorial of a number using recursion.
+  - Illustration of the call stack concept.
+  - Comparison with iterative approach.
+
+## Linked Lists 
 
 
 
@@ -1166,20 +1200,6 @@ classDiagram
 <!-- 
 # Study Guide: Data Structures in C
 
-
-## 6. Recursion
-- Recursive Binary Search
-  - Implementation of binary search using recursion.
-  - Comparison with iterative binary search.
-  - Efficiency of recursive binary search.
-- Fibonacci Sequence
-  - Calculating Fibonacci numbers using recursion.
-  - The Fibonacci recurrence relation.
-  - Efficiency considerations in recursive implementation.
-- Recursive Factorial
-  - Calculating the factorial of a number using recursion.
-  - Illustration of the call stack concept.
-  - Comparison with iterative approach.
 
 ## 7. Linked Lists
 - Introduction to linked lists.
