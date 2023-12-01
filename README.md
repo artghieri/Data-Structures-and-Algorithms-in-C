@@ -795,7 +795,7 @@ A three-dimensional array consists of pages. Each page, in turn, contains m rows
 
 The three-dimensional array will contain $2 \times 2 \times 2 = 8$ elements.
 
-## Sparce Matrices
+## Sparse Matrices
 
 Sparse matrix is a matrix that has large number of elements with a zero value. In order to efficiently utilize the memory, specialized algorithms and data structures that take advantage of the sparse structure should be used. If we apply the operations using standard matrix structures and algorithms to sparse matrices, then the execution will slow down and the matrix will consume large amount of memory. Sparse data can be easily compressed, which in turn can significantly reduce memory usage.
 
