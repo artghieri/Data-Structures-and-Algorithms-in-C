@@ -1145,41 +1145,155 @@ classDiagram
 
 ## Recursion
 
-**Recursive Binary Search**
-  - Implementation of binary search using recursion.
-  - Comparison with iterative binary search.
-  - Efficiency of recursive binary search.
+A *Recursive Function* is defined as a function that calls itself to solve a **smaller version of its task until a final call is made** which does not require a call to itself. Since a recursive function
+repeatedly calls itself, it makes use of the system stack to temporarily store the return address and local variables of the calling function. Every recursive solution has two major cases:
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
+- ***Base case***, in which the problem is simple enough to be solved directly without making any further calls to the same function.
+- ***Recursive case***, in which first the problem at hand is divided into simpler sub-parts. Second the function calls itself but with sub-parts of the problem obtained in the first step. Third, the
+result is obtained by combining the solutions of simpler sub-parts.
 
-int binarySearch(int begin, int end, int *array);
+Therefore, recursion is defining large and complex problems in terms of smaller and more easily solvable problems. In recursive functions, a complex problem is defined in terms of simpler problems and the simplest problem is given explicitly. 
 
-int main()
-{
+Let us take an example of calculating factorial of a number. To calculate $n!$, we multiply the number with factorial of the number that is 1 less than that number. 
+
+$$n! = n \\ \times \\ (n–1)!$$
+
+Let us say we need to find the value of $5!$
+
+$$5! = 5 \\ \times \\ 4 \\ \times \\ 3 \\ \times \\ 2 \\ \times \\ 1 = 120$$
+
+Similarly, we can further expand and rephrase the sentence from above as follows:
 	
-	return 0;
-}
+|  **Problem**							|  **Solution** |
+| :---								| :---	|
+|  $5!$								| $5 \\ \times \\ 4 \\ \times \\ 3 \\ \times \\ 2 \\ \times \\ 1$ |
+|  $5 \\ \times \\ 4!$						| $5 \\ \times \\ 4 \\ \times \\ 3 \\ \times \\ 2 \\ \times \\ 1$ |	
+|  $5 \\ \times \\ 4 \\ \times 3!$				| $5 \\ \times \\ 4 \\ \times \\ 3 \\ \times \\ 2 \\ \times \\ 1$ |			
+|  $5 \\ \times \\ 4 \\ \times \\ 3 \\ \times 2!$		| $5 \\ \times \\ 4 \\ \times \\ 3 \\ \times \\ 2 \\ \times \\ 1$ |		
+|  $5 \\ \times \\ 4 \\ \times \\ 3 \\ \times 2 \\ \times 1! $	| $5 \\ \times \\ 4 \\ \times \\ 3 \\ \times \\ 2 \\ \times \\ 1$ |
 
-int binarySearch(int begin, int end, int *array)
-{
-}
-```
+> ***Note:** The factorial of 0 and 1 is defined to be 1.*
 
-#
+Now if you look at the problem carefully, you can see that we can write a recursive function to calculate the factorial of a number. Every recursive function must have a base case and a recursive case. For the factorial function:
 
-**Fibonacci Sequence**
-  - Calculating Fibonacci numbers using recursion.
-  - The Fibonacci recurrence relation.
-  - Efficiency considerations in recursive implementation.
+- ***Base case*** is when $n = 1$, because if $n = 1$, the result will be $1$ as $1! = 1$.
+- ***Recursive case*** of the factorial function will call itself but with a smaller value of n, this case can be given as:
+
+$$factorial(n) = n \\ \times \\ factorial (n–1)$$
 
 #
 
  **Recursive Factorial**
-  - Calculating the factorial of a number using recursion.
-  - Illustration of the call stack concept.
-  - Comparison with iterative approach.
+
+Factorial is a mathematical operation that calculates the product of all positive integers up to a given number. It is denoted by the symbol "!" and is often used in permutations, combinations, and other mathematical computations. When applying recursion to calculate the factorial of a number, the problem is broken down into smaller, similar sub-problems until a base case is reached.
+
+Here's a brief example in C demonstrating the calculation of factorial using recursion:
+
+ ```c
+#include <stdio.h>
+
+// Recursive function to calculate factorial
+int factorial(int n)
+{
+	if (n == 0 || n == 1)
+		return 1;
+	else
+		return n * factorial(n - 1);
+}
+
+int main(void)
+{
+	int number;
+	
+	// Ask the user for a positive integer
+	printf("Enter a positive integer: ");
+	scanf("%d", &number);
+	
+	// Check if the number is non-negative
+	if (number < 0)
+		printf("Please enter a non-negative number.\n");
+	else 
+		// Call the factorial function and display the result
+		printf("The factorial of %d is %d\n", number, factorial(number));
+	return 0;
+}
+```
+
+From the above example, let us analyse the steps of a recursive program
+
+- Specify the base case which will stop the function from making a call to itself.
+- Check to see whether the current value being processed matches with the value of the base case. If yes, process and return the value.
+- Divide the problem into smaller or simpler sub-problems. 
+- Call the function from each sub-problem. 
+- Combine the results of the sub-problems.
+- Return the result of the entire problem.
+
+In summary, the program employs a recursive approach to compute the factorial of the user-provided number and then displays the result.
+
+#
+
+**Fibonacci Series**
+
+The *Fibonacci Series* is a sequence of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1. This sequence was introduced to the Western world by the Italian mathematician **Leonardo Fibonacci** in his 1202 book *Liber Abaci* but the sequence had been previously described in Indian mathematics.
+
+The Fibonacci sequence begins with 0 and 1, and each subsequent number in the sequence is the sum of the two preceding ones. Mathematically, it can be defined by the recurrence relation:
+
+$$F(n)= F(n−1) + F(n−2)$$
+
+Where $F(0) = 0$ and $F(1) = 1$. The Fibonacci sequence is **infinite**, and it goes: $0, 1, 1, 2, 3, 5, 8, 13, 21, 34$, and so on.
+
+In computer science, the Fibonacci sequence is often used as an illustrative example for recursion and dynamic programming, as the computation of Fibonacci numbers can be efficiently optimized using these techniques. 
+
+In summary, the Fibonacci sequence is defined by the formula  $F(n) = F(n−1 )+ F(n−2)$ with two base cases, reflecting the division of every problem into two smaller problems.
+
+$$
+\ F(n) =
+  \begin{cases}
+    0								  & \quad \text{if } n = 0\\
+    1        				  & \quad \text{if } n = 1\\
+	  F(n-1) + F(n-2)   & \quad \text{otherwise }\\
+  \end{cases}
+\
+$$
+
+The following C code demonstrates how to calculate the Fibonacci series using a recursive approach.
+
+```c
+#include <stdio.h>
+
+// Recursive function to calculate Fibonacci number at a given position
+int fibonacci(int n)
+{
+  if (n <= 1)
+    return n;
+  else
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main(void)
+{
+  int terms;
+	
+  // User input for the number of terms in the Fibonacci series
+  printf("Enter the number of terms in the Fibonacci series: ");
+  scanf("%d", &terms);
+
+  // Check if the input is non-negative
+  if (terms < 0)
+    printf("Please enter a non-negative integer.\n");
+  else
+  {
+  // Display the Fibonacci series using recursion
+  printf("Fibonacci series up to term %d:\n", terms);
+  for (int i = 0; i < terms; ++i) {
+    printf("%d, ", fibonacci(i));
+  }
+  printf("\n");
+ }
+ return 0;
+}
+```
+
 
 ## Linked Lists 
 
