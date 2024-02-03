@@ -1185,7 +1185,9 @@ $$factorial(n) = n \\ \times \\ factorial (n–1)$$
 
  **Recursive Factorial**
 
-Factorial is a mathematical operation that calculates the product of all positive integers up to a given number. It is denoted by the symbol "!" and is often used in permutations, combinations, and other mathematical computations. When applying recursion to calculate the factorial of a number, the problem is broken down into smaller, similar sub-problems until a base case is reached.
+Factorial is a mathematical operation that calculates the product of all positive integers up to a given number. It is denoted by the symbol "!" and is often used in permutations, combinations, and other mathematical computations. 
+
+The combination of factorials and recursion provides an elegant and efficient way to calculate factorials, breaking down the problem into simpler sub-problems until reaching the base case. 
 
 Here's a brief example in C demonstrating the calculation of factorial using recursion:
 
@@ -1293,7 +1295,121 @@ int main(void)
  return 0;
 }
 ```
+#
 
+### Types of Recursion
+
+Recursion is a technique that breaks a problem into one or more sub-problems that are similar to the original problem. Any recursive function can be characterized based on:
+
+- Whether the function calls itself directly or indirectly (*direct* or *indirect recursion*)
+- Whether any operation is pending at each recursive call (*tailrecursive* or *not*)
+- The structure of the calling pattern (*linear* or *tree-recursive*).
+
+**Direct Recursion**
+
+A function is said to be *directly* recursive if it explicitly calls itself. 
+
+```c
+int function(int n)
+{
+  if (n == 0)
+    return n;
+  else
+    return (function(n–1));
+}
+```
+
+**Indirect Recursion**
+
+A function is said to be *indirectly* recursive if it contains a call to another function which ultimately calls it.
+
+```c
+int functionA(int n)
+{
+  if (n == 0)
+    return n;
+  else
+    return functionB(n);
+}
+
+int functionB(int x)
+{
+  return functionA(x–1);
+} 
+```
+
+**Tail Recursion**
+
+A recursive function is said to be *tail* recursive if no operations are pending to be performed when the recursive function returns to its caller. when the called function returns, the returned value
+is immediately returned from the calling function. 
+
+Tail recursive functions are highly desirable because they are much more efficient to use as the amount of information that has to be stored on the system stack is independent of the number of recursive calls.
+
+```c
+int factorialA(n)
+{
+  return factorialB(n, 1);
+}
+
+int factorialB(int n, int res)
+{
+  if (n == 1)
+    return res;
+  else
+    return factorialB(n–1, n*res);
+}
+```
+
+Whenever there is a pending operation to be performed, the function becomes non-tail recursive. In such a non-tail recursive function, information about each pending operation must be stored, so the
+amount of information directly depends on the number of calls. As shown in this example:
+
+```c
+int factorial(int n)
+{
+  if (n == 1)
+    return 1;
+  else
+  return (n * factorial(n–1));
+} 
+```
+
+In the code, $factorialB$  function preserves the syntax of $factorialA(n)$. Here the recursion occurs in the $factorialB$ function and not in $factorialA(n)$ function.
+
+Carefully observe that $factorialB$ has no pending operation to be performed on return from recursive calls. The value computed by the recursive call is simply returned without any modification. So in this case, the amount of information to be stored on the system stack is constant (only the values of $n$ and res need to be stored) and is independent of the number of recursive calls. 
+
+#
+
+### Recursion versus Iteration
+
+Recursion is more of a top-down approach to problem solving in which the original problem is divided into smaller sub-problems. On the contrary, iteration follows a bottom-up approach that
+begins with what is known and then constructing the solution step by step. 
+
+Recursion is an excellent way of solving complex problems especially when the problem can be defined in recursive terms. For such problems, a recursive code can be written and modified in a much simpler and clearer manner. 
+
+However, recursive solutions are not always the best solutions. In some cases, recursive programs may require substantial amount of run-time overhead. Therefore, when implementing a recursive solution, there is a trade-off involved between the time spent in constructing and maintaining the program and the cost incurred in running-time and memory space required for the execution of the program. 
+
+Whenever a recursive function is called, some amount of overhead in the form of a run time stack is always involved. Before jumping to the function with a smaller parameter, the original parameters, the local variables, and the return address of the calling function are all stored on the system stack. Therefore, while using recursion a lot of time is needed to first push all the information on the stack when the function is called and then again in retrieving the information stored on the stack once the control passes back to the calling function.
+
+To conclude, one must use recursion only to find solution to a problem for which no obvious iterative solution is known. To summarize the concept of recursion, let us briefly discuss the pros
+and cons of recursion.
+
+The advantages of using a recursive program include the following:
+
+- Recursive solutions often tend to be shorter and simpler than non-recursive ones.
+- Code is clearer and easier to use.
+- Recursion works similar to the original formula to solve a problem.
+- Recursion follows a divide and conquer technique to solve problems.
+- In some (limited) instances, recursion may be more efficient.
+
+The drawbacks/disadvantages of using a recursive program include the following:
+
+- For some programmers and readers, recursion is a difficult concept.
+- Recursion is implemented using system stack. If the stack space on the system is limited, recursion to a deeper level will be difficult to implement.
+- Aborting a recursive program in midstream can be a very slow process.
+- Using a recursive function takes more memory and time to execute as compared to its nonrecursive counterpart.
+- It is difficult to find bugs, particularly while using global variables.
+
+The advantages of recursion pay off for the extra overhead involved in terms of time and space required. 
 
 ## Linked Lists 
 
