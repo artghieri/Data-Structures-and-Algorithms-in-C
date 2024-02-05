@@ -1411,8 +1411,368 @@ The drawbacks/disadvantages of using a recursive program include the following:
 
 The advantages of recursion pay off for the extra overhead involved in terms of time and space required. 
 
+#
+
+**Before we move on to the next topic in this document, it's important to communicate a relevant decision regarding the purpose of this guide.**
+
+**In the upcoming sections, we will delve into the main Abstract Data Types (ADTs), highlighted throughout the guide as essential for its construction. As emphasized in the description, this guide serves as an introductory foundation.**
+
+**The following topics will be covered succinctly. For a deeper understanding of the mentioned data structures, I recommend referring to the reference works cited in this document. Thank you for your understanding.**
+
 ## Linked Lists 
 
+We have studied that an array is a linear collection of data elements in which the elements are stored in consecutive memory locations. While declaring arrays, we have to specify the size of the array, which will restrict the number of elements that the array can store. For example, if we declare an array as int $marks[10]$, then the array can store a maximum of $10$ data elements but not more than that. 
+
+But what if we are not sure of the number of elements in advance? Moreover, to make efficient use of memory, the elements must be stored randomly at any location rather than in consecutive locations. So, there must be a data structure that removes the restrictions on the maximum number of elements and the storage condition to write efficient programs.
+
+Linked list is a data structure that is free from the aforementioned restrictions. A *linked list* does not store its elements in consecutive memory locations and the user can add any number of elements to it. However, unlike an array, a linked list does not allow random access of data. Elements in a linked list can be accessed only in a sequential manner. But like an array, insertions and deletions can be done at any point in the list in a constant time.
+
+**Basic Terminologies**
+
+A linked list is a linear collection of data elements known as *nodes*. Functioning as a fundamental data structure, it serves as a foundational component for implementing various data structures like stacks, queues, and their derivatives. Conceptually, a linked list resembles a sequence of nodes, akin to a train, where each node comprises data fields and a pointer to the subsequent node.
+
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s2
+	s2 --> s3
+	s3 --> s4
+	s4 --> s5
+	s5 --> s6
+
+	s1 : Start
+	s2 : 1 | 
+	s3 : 2 | 
+	s4 : 3 | 
+	s5 : 4 | 
+	s6 : 5 | NULL
+```
+
+We can see a linked list in which every node contains two parts, an integer and a pointer to the next node. The left part of the node which contains data may include a simple data type, an array, or a structure. The right part of the node contains a pointer to the next node (or address of the next node in sequence). The last node will have no next node connected to it, so it will store a special value called $NULL$. 
+
+While programming, we usually define $NULL$ as $–1$. Hence, a $NULL$ pointer denotes the end of the list. Since in a linked list, every node contains a pointer to another node which is of the same type, it is also called a *self-referential data type*.
+
+Linked lists contain a pointer variable $START$ that stores the address of the first node in the list. We can traverse the entire list using START which contains the address of the first node; the next
+part of the first node in turn stores the address of its succeeding node. Using this technique, the individual nodes of the list will form a chain of nodes. If $START = NULL$, then the linked list is empty
+and contains no nodes.
+
+In C, we can implement a linked list using the following code:
+
+```c
+struct node
+{
+  int data;
+  struct node *next;
+};
+```
+
+> ***Note:** Linked lists provide an efficient way of storing related data and perform basic operations such as
+insertion, deletion, and updation of information at the cost of extra space required for storing address of the
+next node.*
+
+In order to form a linked list, we need a structure called *node* which has two fields, **DATA** and **NEXT**. **DATA** will store the information part and **NEXT** will store the address of the next node in sequence.
+
+In the table, we can see that the variable START is used to store the address of the first node. Here, in this example, START = 1, so the first data is stored at address 1, which is H. The
+corresponding **NEXT** stores the address of the next node, which is 4. So, we will look at address 4 to fetch the next data item.
+
+The second data element obtained from address 4 is E. Again, we see the corresponding **NEXT** to go to the next node. From the entry in the **NEXT**, we get the next address, that is 7, and
+fetch L as the data. We repeat this procedure until we reach a position where the **NEXT** entry contains –1 or NULL, as this  would denote the end of the linked list. When we traverse **DATA** and **NEXT** in this manner, we finally see that the linked list in the above example stores characters that when put together form the word **HELLO**.
+
+
+|		 	 |	**Data**	 	 |	**Next**	  |
+|	:---	 	 	 | :--- | :---	|
+|	1	 	 	 | 	H	 |	4		|
+|	2	 	 	 | 		 |			|
+|	3	 	 	 | 		 |			|
+|	4	 	   | 	E	 |	7		|
+|	5	 	 	 | 		 |			|
+|	6    	 | 		 |			|
+|	7	 	 	 | 	L	 |	8		|
+|	8	 	 	 | 	L	 |	10		|
+| 9		 	 | 		 |			|
+|	10	 	 | 	O	 |	-1		|
+
+> ***Note:** The Memory Adress 1 corresponds to the START, pointing to the first element of the linked list in the memory*
+
+Note that this table shows a chunk of memory locations which range from 1 to 10. The shaded portion contains data for other applications. Remember that the nodes of a linked list need not be in consecutive memory locations. In our example, the nodes for the linked list are stored at addresses 1, 4, 7, 8, and 10.
+
+#
+
+**Linked Lists versus Arrays**
+
+Arrays and linked lists, both linear data structures, exhibit key distinctions. Linked lists, in contrast to arrays, do not demand contiguous memory locations and lack random data access, relying on sequential access. Nevertheless, both structures share the efficiency of constant-time insertions and deletions.
+
+A notable advantage of linked lists lies in their dynamic flexibility, enabling the addition of an arbitrary number of elements. In contrast, arrays, when declared with a fixed size, such as int $marks[20]$, are limited to storing a predefined maximum of $20$ data elements. Linked lists thus offer adaptability without the constraints associated with fixed-size arrays.
+
+|   |   Roll No   |   Name   |   Aggregate   |   Next   |   Grade        |
+|:-:|:-----------:|:--------:|:-------------:|:--------:|:--------------:|
+| 1 |      S 1     |    Ram   |       78      |     6    |  Distinction   |
+| 2 |      S 2     |  Shyam   |       64      |    14    | First division |
+| 3 |      S 3     |  Mohit   |       89      |    17    |  Outstanding   |
+| 4 |      S 4     |  Rohit   |       77      |     2    |  Distinction   |
+| 5 |      S 5     |  Varun   |       86      |     1    |  Outstanding   |
+| 6 |      S 6     |  Karan   |       65      |    12    | First division |
+| 7 |      S 7     |  Veena   |       54      |    –1    | Second division|
+| 8 |      S 8     |  Meera   |       67      |     4    | First division |
+| 9 |      S 9     |  Krish   |       45      |    13    | Third division |
+|10 |      S1      |  Kusum   |       91      |    11    |  Outstanding   |
+|11 |      S11     |  Silky   |       72      |     7    | First division |
+|12 |      S12     | Monica   |       75      |     1    |  Distinction   |
+|13 |      S13     | Ashish   |       63      |    19    | First division |
+|14 |      S14     | Gaurav   |       61      |     -    | First division |
+
+> ***Note:** Students’ Linked list*
+
+Thus, linked lists provide an efficient way of storing related data and performing basic operations such as insertion, deletion, and updation of information at the cost of extra space required for storing the address of next nodes.
+
+#
+
+**Memory Allocation and De-allocation for a Linked List**
+
+In the representation of a linked list in memory, adding a node involves locating free space, which is then utilized to store the relevant information. For instance, consider the linked list with student roll numbers, Biology marks, and a **NEXT** field storing the address of the next node. If a new student joins and takes the same test, their marks need to be recorded in the linked list. The empty spaces indicates free space, offering 4 available memory locations. When nodes are deleted, the operating system manages the transition of memory status from occupied to available. While the detailed mechanism is beyond the scope of this book, as a programmer, your responsibility is to handle code for insertions and deletions in the list. The computer autonomously maintains a list of free memory cells known as the free pool.
+
+<table>
+
+<tr>
+  <td>
+  
+|   | Roll No | Marks | Next |
+|---|---------|-------|------|
+| 1 |   S01   |   78  |   2  |
+| 2 |   S02   |   84  |   3  |
+| 3 |   S03   |   45  |   5  |
+| 4 |         |       |      |
+| 5 |   S05   |   98  |   7  |
+| 6 |         |       |      |
+| 7 |   S07   |   55  |   8  |
+| 8 |   S08   |   34  |  10  |
+| 9 |         |   |      |
+|10 |   S10   |   90|  11  |
+|11 |   S11   |   87|  12  |
+|12 |   S12   |   86|  13  |
+|13 |   S13   |   67|  15  |
+|14 |         |       |      |
+|15 |   S15   |   56    |  -1  |
+
+</td>
+<td>
+
+|   | Roll No | Marks | Next |
+|---|---------|-------|------|
+| 1 |   S01   |   78  |   2  |
+| 2 |   S02   |   84  |   3  |
+| 3 |   S03   |   45  |   5  |
+| 4 |   S12   |   45  |  -1  |
+| 5 |   S05   |   98  |   7  |
+| 6 |         |       |      |
+| 7 |   S07   |   55  |   8  |
+| 8 |   S08   |   34  |  10  |
+| 9 |         |       |      |
+|10 |   S10   |   90  |  11  |
+|11 |   S11   |   87  |  12  |
+|12 |   S12   |   86  |  13  |
+|13 |   S13   |   67  |  15  |
+|14 |         |       |      |
+|15 |   S15   |   56  |   4  |
+
+</td></tr> 
+</table>
+
+> ***Note:** (left) Students’ linked list and (right) linked list after the insertion of new student’s record*
+
+Deleting a node or an entire linked list involves releasing the occupied space back to the free pool for potential reuse by other programs. The operating system handles this task during idle CPU periods or when programs face memory shortages. It scans through memory cells, marking those in use and adding the unused ones to the free pool. This process, known as garbage collection, ensures efficient memory utilization. In the next section, we are going to explore one of the most common types of linked lists used as a basis for other structures.
+
+# 
+
+**SINGLY LINKED Lists**
+
+A singly linked list is the simplest type of linked list in which every node contains some data and a pointer to the next node of the same data type. By saying that the node contains a pointer to the next node, we mean that the node stores the address of the next node in sequence. A singly linked list allows traversal of data only in one way. 
+
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s2
+	s2 --> s3
+	s3 --> s4
+	s4 --> s5
+	s5 --> s6
+
+	s1 : Start
+	s2 : 1 | 
+	s3 : 2 | 
+	s4 : 3 | 
+	s5 : 4 | 
+	s6 : 5 | NULL
+```
+
+**Traversing a Linked List**
+
+Traversing a linked list means accessing the nodes of the list in order to perform some processing on them. Remember a linked list always contains a pointer variable **START** which stores the address of the first node of the list. End of the list is marked by storing $NULL$ or $–1$ in the **NEXT** field of the last node. For traversing the linked list, we also make use of another pointer variable PTR which points to the node that is currently being accessed. The algorithm to traverse a linked list is shown below.
+
+```c
+STEP 1: [INITIALIZE] SET PTR = START
+STEP 2: Repeat Steps 3 and 4 while PTR != NULL
+STEP 3:        Apply Process to PTR DATA
+STEP 4:        SET PTR = PTR NEXT
+        [END OF LOOP]
+STEP 5: EXIT
+```
+
+> ***Note:** Algorithm for traversing a linked list*
+
+In this algorithm, we first initialize **PTR** with the address of **START**. So now, **PTR** points to the first node of the linked list. Then in STEP 2, a while loop is executed which is repeated till PTR processes the last node, that is until it encounters $NULL$. In STEP 3, we apply the process to the current node, that is, the node pointed by **PTR**. In STEP 4, we move to the next node by making the **PTR** variable point to the node whose address is stored in the NEXT field. 
+
+Let us now write an algorithm to count the number of nodes in a linked list. To do this, we will traverse each and every node of the list and while traversing every individual node, we will increment the counter by 1. Once we reach $NULL$, that is, when all the nodes of the linked list have been traversed, the final value of the counter will be displayed.
+
+```c
+STEP 1: [INITIALIZE] SET COUNT = 0
+STEP 2: [INITIALIZE] SET PTR = START
+STEP 3: Repeat Steps 4 and 5 while PTR != NULL
+STEP 4:        SET COUNT = COUNT + 1
+STEP 5:        SET PTR = PTR->NEXT
+        [END OF LOOP]
+STEP 6: Write COUNT
+STEP 7: EXIT
+```
+
+> ***Note:** Algorithm to print the number of nodes in a linked list*
+
+**Searching for a Value in a Linked List**
+
+Searching a linked list means to find a particular element in the linked list. As already discussed, a linked list consists of nodes which are divided into two parts, the information part and the next part. So searching means finding whether a given value is present in the information part of the node or not. If it is present, the algorithm returns the address of the node that contains the value
+
+```c
+STEP 1: [INITIALIZE] SET PTR = START
+STEP 2: Repeat Step 3 while PTR != NULL
+STEP 3:        IF VAL = PTR DATA
+                  SET POS = PTR
+                  Go To STEP 5
+               ELSE
+                  SET PTR = PTR NEXT
+               [END OF IF]
+        [END OF LOOP]
+STEP 4: SET POS = NULL
+STEP 5: EXIT
+```
+
+> ***Note:** Algorithm to search a linked list*
+
+In STEP 1, we initialize the pointer variable **PTR** with **START** that contains the address of the first node. In STEP 2, a while loop is executed which will compare every node’s **DATA** with **VAL** for which the search is being made. If the search is successful, that is, **VAL** has been found, then the address of that node is stored in **POS** and the control jumps to the last statement of the algorithm. However, if the search is unsuccessful, **POS** is set to $NULL$ which indicates that **VAL** is not present in the linked list.
+
+# 
+
+**Inserting a New Node in a Linked List**
+
+In this section, we will explore the addition of a new node to an existing linked list, focusing on a specific insertion case. While I will specifically demonstrate one instance of insertion, for a comprehensive understanding of various insertion scenarios, I encourage you to refer to additional sources provided in the guide.
+
+- **CASE 1:** The new node is inserted at the beginning.
+- **CASE 2:** The new node is inserted at the end.
+- **CASE 3:** The new node is inserted after a given node.
+- **CASE 4:** The new node is inserted before a given node.
+
+Before we describe the algorithms to perform insertions in the first case, let us first discuss an important term called $OVERFLOW$. Overflow is a condition that occurs when **AVAIL** = **NULL** or no
+*free memory cell* is present in the system. When this condition occurs, the program must give an appropriate message.
+
+**Inserting a Node at the Beginning of a Linked List**
+
+Suppose we want to add a new node with data 9 and
+add it as the first node of the list. Then the following changes will be done in the linked list.
+
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s2
+	s2 --> s3
+	s3 --> s4
+	s4 --> s5
+	s5 --> s6
+
+	s1 : Start
+	s2 : 1 | 
+	s3 : 2 | 
+	s4 : 3 | 
+	s5 : 4 | 
+	s6 : 5 | NULL
+```
+
+Allocate memory for the new node and initialize its DATA part to 9.
+
+```mermaid
+stateDiagram-v2
+	s2
+
+	s2 : 9 | 
+```
+
+Add the new node as the first node of the list by making the NEXT part of the new node contain the address of **START**.
+
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s2
+	s2 --> s3
+	s3 --> s4
+	s4 --> s5
+	s5 --> s6
+	s7 --> s2
+
+	s1 : Start
+	s2 : 1 | 
+	s3 : 2 | 
+	s4 : 3 | 
+	s5 : 4 | 
+	s6 : 5 | NULL
+	s7:  9 |
+```
+
+Now make START to point to the first node of the list.
+
+
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s7
+	s7 --> s2
+	s2 --> s3
+	s3 --> s4
+	s4 --> s5
+	s5 --> s6
+	s7 --> s2
+
+	s1 : Start
+	s2 : 1 | 
+	s3 : 2 | 
+	s4 : 3 | 
+	s5 : 4 | 
+	s6 : 5 | NULL
+	s7:  9 |
+```
+
+The code illustrates the algorithm for inserting a new node at the beginning of a linked list. In STEP 1, we check for available memory. If the memory is exhausted, an **OVERFLOW** message is printed; otherwise, we allocate space for the new node. The **DATA** part is set with the given **VAL**, and the next part is initialized with the address of the first node in the list, stored in **START**. As the new node becomes the first node (**START** node) of the list, the **START** pointer variable is updated to hold the address of **NEW_NODE**. 
+
+```c
+STEP 1: IF AVAIL = NULL
+           Write OVERFLOW
+           Go to STEP 7
+        [END OF IF]
+STEP 2: SET NEW_NODE = AVAIL
+STEP 3: SET AVAIL = AVAIL NEXT
+STEP 4: SET DATA = VAL
+STEP 5: SET NEW_NODE NEXT = START
+STEP 6: SET START = NEW_NODE
+STEP 7: EXIT
+```
+
+> ***Note:** Algorithm to insert a new node at the beginning*
+
+Note the following two critical steps:
+
+```c
+STEP 2: SET NEW_NODE = AVAIL
+STEP 3: SET AVAIL = AVAIL -> NEXT
+```
+
+These steps allocate memory for the new node. In C, there are functions like $malloc()$, alloc, and $calloc()$ which automatically do the memory allocation on behalf of the user.
 
 
 ---
@@ -1457,8 +1817,4 @@ The advantages of recursion pay off for the extra overhead involved in terms of 
 ## 12. Best Practices and Efficiency
 - Code optimization.
 - Proper choice of data structures.
-
-## 13. Examples and Practical Exercises
-- Small examples of data structure applications.
-- Practical exercises to reinforce learning.
 !-->
