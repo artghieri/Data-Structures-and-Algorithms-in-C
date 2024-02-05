@@ -1609,7 +1609,7 @@ stateDiagram-v2
 
 Traversing a linked list means accessing the nodes of the list in order to perform some processing on them. Remember a linked list always contains a pointer variable **START** which stores the address of the first node of the list. End of the list is marked by storing $NULL$ or $–1$ in the **NEXT** field of the last node. For traversing the linked list, we also make use of another pointer variable PTR which points to the node that is currently being accessed. The algorithm to traverse a linked list is shown below.
 
-```c
+```r
 STEP 1: [INITIALIZE] SET PTR = START
 STEP 2: Repeat Steps 3 and 4 while PTR != NULL
 STEP 3:        Apply Process to PTR DATA
@@ -1624,7 +1624,7 @@ In this algorithm, we first initialize **PTR** with the address of **START**. So
 
 Let us now write an algorithm to count the number of nodes in a linked list. To do this, we will traverse each and every node of the list and while traversing every individual node, we will increment the counter by 1. Once we reach $NULL$, that is, when all the nodes of the linked list have been traversed, the final value of the counter will be displayed.
 
-```c
+```r
 STEP 1: [INITIALIZE] SET COUNT = 0
 STEP 2: [INITIALIZE] SET PTR = START
 STEP 3: Repeat Steps 4 and 5 while PTR != NULL
@@ -1641,7 +1641,7 @@ STEP 7: EXIT
 
 Searching a linked list means to find a particular element in the linked list. As already discussed, a linked list consists of nodes which are divided into two parts, the information part and the next part. So searching means finding whether a given value is present in the information part of the node or not. If it is present, the algorithm returns the address of the node that contains the value
 
-```c
+```r
 STEP 1: [INITIALIZE] SET PTR = START
 STEP 2: Repeat Step 3 while PTR != NULL
 STEP 3:        IF VAL = PTR DATA
@@ -1665,6 +1665,8 @@ In STEP 1, we initialize the pointer variable **PTR** with **START** that contai
 
 In this section, we will explore the addition of a new node to an existing linked list, focusing on a specific insertion case. While I will specifically demonstrate one instance of insertion, for a comprehensive understanding of various insertion scenarios, I encourage you to refer to additional sources provided in the guide.
 
+While we will focus on demonstrating one specific case, there are four methods for adding a new node to an existing linked list, wich are:
+
 - **CASE 1:** The new node is inserted at the beginning.
 - **CASE 2:** The new node is inserted at the end.
 - **CASE 3:** The new node is inserted after a given node.
@@ -1675,8 +1677,7 @@ Before we describe the algorithms to perform insertions in the first case, let u
 
 **Inserting a Node at the Beginning of a Linked List**
 
-Suppose we want to add a new node with data 9 and
-add it as the first node of the list. Then the following changes will be done in the linked list.
+Suppose we want to add a new node with data 9 and add it as the first node of the list. Then the following changes will be done in the linked list.
 
 ```mermaid
 stateDiagram-v2
@@ -1737,7 +1738,6 @@ stateDiagram-v2
 	s3 --> s4
 	s4 --> s5
 	s5 --> s6
-	s7 --> s2
 
 	s1 : Start
 	s2 : 1 | 
@@ -1750,7 +1750,7 @@ stateDiagram-v2
 
 The code illustrates the algorithm for inserting a new node at the beginning of a linked list. In STEP 1, we check for available memory. If the memory is exhausted, an **OVERFLOW** message is printed; otherwise, we allocate space for the new node. The **DATA** part is set with the given **VAL**, and the next part is initialized with the address of the first node in the list, stored in **START**. As the new node becomes the first node (**START** node) of the list, the **START** pointer variable is updated to hold the address of **NEW_NODE**. 
 
-```c
+```r
 STEP 1: IF AVAIL = NULL
            Write OVERFLOW
            Go to STEP 7
@@ -1767,12 +1767,96 @@ STEP 7: EXIT
 
 Note the following two critical steps:
 
-```c
+```r
 STEP 2: SET NEW_NODE = AVAIL
 STEP 3: SET AVAIL = AVAIL -> NEXT
 ```
 
 These steps allocate memory for the new node. In C, there are functions like $malloc()$, alloc, and $calloc()$ which automatically do the memory allocation on behalf of the user.
+
+#
+
+**Deleting a Node from a Linked List**
+
+In this section, we will discuss the deletion of a node from an already existing linked list, concentrating on a particular deletion case. While I will demonstrate a specific instance of deletion, for a comprehensive understanding of various deletion scenarios, I recommend consulting additional sources outlined in the guide.
+
+While we will focus on demonstrating one specific case, there are three methods for deleting a node in a linked list, wich are:
+
+- **CASE 1:** The first node is deleted.
+- **CASE 2:** The last node is deleted.
+- **CASE 3:** The node after a given node is deleted
+
+Before diving into the algorithms for these deletion cases, let's touch on a crucial term: $UNDERFLOW$. $UNDERFLOW$ occurs when attempting to delete a node from an empty linked list, signified by conditions like **START** = **NULL** or no more nodes to delete. Upon deletion, the occupied memory is released, returned to the free pool for reuse by other programs. In all deletion cases, we adjust the **AVAIL** pointer to point to the most recently vacated address.
+
+**Deleting the First Node from a Linked List**
+
+Consider the linked list below. When we want to delete a node from the beginning of the list, then the following changes will be done in the linked list.
+
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s2
+	s2 --> s3
+	s3 --> s4
+	s4 --> s5
+	s5 --> s6
+
+	s1 : Start
+	s2 : 1 | 
+	s3 : 9 | 
+	s4 : 3 | 
+	s5 : 4 | 
+	s6 : 5 | NULL
+```
+
+Make START to point to the next node in sequence.
+
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s3
+	s3 --> s4
+	s4 --> s5
+	s5 --> s6
+
+	s1 : Start
+	s3 : 9 | 
+	s4 : 3 | 
+	s5 : 4 | 
+	s6 : 5 | NULL
+```
+
+
+In the code below, shows the algorithm to delete the first node from a linked list. Initially, we verify the existence of the linked list in STEP 1 by checking if **START** = **NULL**. If there are no nodes, the control transfers to the last statement of the algorithm. In the presence of nodes, we employ a pointer variable **PTR**, initialized to point to the first node using **START**. Proceeding to STEP 3, **START** is updated to point to the next node in sequence, and the memory occupied by the initially pointed node (**PTR**) is freed and returned to the free pool.
+
+
+```r
+STEP 1: IF START = NULL
+           Write UNDERFLOW
+           Go to STEP 5
+     [END OF IF]
+STEP 2: SET PTR = START
+STEP 3: SET START = START NEXT
+STEP 4: FREE PTR
+STEP 5: EXIT
+```
+
+> ***Note:** Algorithm to delete the first node*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ---
