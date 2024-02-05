@@ -1506,16 +1506,16 @@ A notable advantage of linked lists lies in their dynamic flexibility, enabling 
 
 |   |   Roll No   |   Name   |   Aggregate   |   Next   |   Grade        |
 |:-:|:-----------:|:--------:|:-------------:|:--------:|:--------------:|
-| 1 |      S 1     |    Ram   |       78      |     6    |  Distinction   |
-| 2 |      S 2     |  Shyam   |       64      |    14    | First division |
-| 3 |      S 3     |  Mohit   |       89      |    17    |  Outstanding   |
-| 4 |      S 4     |  Rohit   |       77      |     2    |  Distinction   |
-| 5 |      S 5     |  Varun   |       86      |     1    |  Outstanding   |
-| 6 |      S 6     |  Karan   |       65      |    12    | First division |
-| 7 |      S 7     |  Veena   |       54      |    –1    | Second division|
-| 8 |      S 8     |  Meera   |       67      |     4    | First division |
-| 9 |      S 9     |  Krish   |       45      |    13    | Third division |
-|10 |      S1      |  Kusum   |       91      |    11    |  Outstanding   |
+| 1 |      S01     |    Ram   |       78      |     6    |  Distinction   |
+| 2 |      S02     |  Shyam   |       64      |    14    | First division |
+| 3 |      S03     |  Mohit   |       89      |    17    |  Outstanding   |
+| 4 |      S04     |  Rohit   |       77      |     2    |  Distinction   |
+| 5 |      S05     |  Varun   |       86      |     1    |  Outstanding   |
+| 6 |      S06     |  Karan   |       65      |    12    | First division |
+| 7 |      S07     |  Veena   |       54      |    –1    | Second division|
+| 8 |      S08     |  Meera   |       67      |     4    | First division |
+| 9 |      S09     |  Krish   |       45      |    13    | Third division |
+|10 |      S10     |  Kusum   |       91      |    11    |  Outstanding   |
 |11 |      S11     |  Silky   |       72      |     7    | First division |
 |12 |      S12     | Monica   |       75      |     1    |  Distinction   |
 |13 |      S13     | Ashish   |       63      |    19    | First division |
@@ -1834,7 +1834,7 @@ In the code below, shows the algorithm to delete the first node from a linked li
 STEP 1: IF START = NULL
            Write UNDERFLOW
            Go to STEP 5
-     [END OF IF]
+        [END OF IF]
 STEP 2: SET PTR = START
 STEP 3: SET START = START NEXT
 STEP 4: FREE PTR
