@@ -1379,7 +1379,7 @@ Carefully observe that $factorialB$ has no pending operation to be performed on 
 
 #
 
-### Recursion versus Iteration
+**Recursion versus Iteration**
 
 Recursion is more of a top-down approach to problem solving in which the original problem is divided into smaller sub-problems. On the contrary, iteration follows a bottom-up approach that
 begins with what is known and then constructing the solution step by step. 
@@ -1843,20 +1843,133 @@ STEP 5: EXIT
 
 > ***Note:** Algorithm to delete the first node*
 
+#
 
+**In addition to the Single Linked List discussed earlier, we will now introduce three more data structures related to Linked Lists.**
 
+**Please note that for the purpose of this introductory guide, we recommend referring to the cited sources at the end of the document for more in-depth information. Thank you.**
 
+#
 
+**CIRCULAR LINKED LISTs**
 
+In a circular linked list, the last node contains a pointer to the first node of the list. We can have a circular singly linked list as well as a circular doubly linked list. While traversing a circular linked list, we can begin at any node and traverse the list in any direction, forward or backward, until we reach the same node where we started. Thus, a circular linked list has no beginning and no ending.
 
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s2
+	s2 --> s3
+	s3 --> s4
+	s4 --> s5
+	s5 --> s6
+	s6 --> s2
 
+	s1 : Start
+	s2 : 1 | 
+	s3 : 2 | 
+	s4 : 3 | 
+	s5 : 4 | 
+	s6 : 5 | 
+```
 
+> ***Note:** Circular Linked List*
 
+The only downside of a circular linked list is the complexity of iteration. Note that there are no NULL values in the NEXT part of any of the nodes of list.
 
+#
 
+**DOUBLY LINKED LISTS**
 
+A doubly linked list or a two-way linked list is a more complex type of linked list which contains a pointer to the next as well as the previous node in the sequence. Therefore, it consists of three parts—data, a pointer to the next node, and a pointer to the previous node.
 
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s2
+	s2 --> s3
+	s3 --> s2
+	
+	s3 --> s4
+	s4 --> s3
 
+	s4 --> s5
+	s5 --> s4
+
+	s5 --> s6
+	s6 --> s5
+
+	s1 : Start
+	s2 : X | 1 | 
+	s3 :  | 2 |  
+	s4 :  | 3 |  
+	s5 :  | 4 |  
+	s6 :  | 5 | X 
+```
+
+> ***Note:** Doubly Linked List*
+
+In C, the structure of a doubly linked list can be given as
+
+```c
+struct node
+{
+  struct node *prev;
+  int data;
+  struct node *next;
+};
+```
+
+The PREV field of the first node and the NEXT field of the last node will contain NULL. The PREV field is used to store the address of the preceding node, which enables us to traverse the list in the
+backward direction.
+
+Thus, we see that a doubly linked list calls for more space per node and more expensive basic operations. However, a doubly linked list provides the ease to manipulate the elements of the list as it maintains pointers to nodes in both the directions (forward and backward). The main advantage of using a doubly linked list is that it makes searching twice as efficient. 
+
+#
+
+**CIRCULAR DOUBLY LINKED LISTs**
+
+A circular doubly linked list, or circular two-way linked list, is a more intricate type of linked list featuring pointers to both the next and previous nodes in the sequence. Unlike a doubly linked list, the circular doubly linked list doesn't have NULL in the previous field of the first node and the next field of the last node. Instead, the next field of the last node stores the address of the first node (START), and the previous field of the first node stores the address of the last node.
+
+```mermaid
+stateDiagram-v2
+	direction LR
+	s1 --> s2
+	s2 --> s3
+	s3 --> s2
+	
+	s3 --> s4
+	s4 --> s3
+
+	s4 --> s5
+	s5 --> s4
+
+	s5 --> s6
+	s6 --> s5
+	s6 --> s2
+
+	s1 : Start
+	s2 : X | 1 | 
+	s3 :  | 2 |  
+	s4 :  | 3 |  
+	s5 :  | 4 |  
+	s6 :  | 5 |  
+```
+
+> ***Note:** Circular doubly Linked List*
+
+Since a circular doubly linked list contains three parts in its structure, it calls for more space per node and more expensive basic operations. However, a circular doubly linked list provides the ease to manipulate the elements of the list as it maintains pointers to nodes in both the directions (forward and backward). The main advantage of using a circular doubly linked list is that it makes search operation twice as efficient.
+
+## Stacks
+
+A stack, a crucial data structure, organizes its elements in a specific order. To illustrate this concept, consider a stack of plates where each plate is stacked on top of another. Similar to removing plates from the top of the pile, a stack allows adding and removing elements exclusively from the topmost position.
+
+In essence, a stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle. This means that the element inserted last is the first one to be removed.
+
+```mermaid
+	stateDiagram-v2
+		
+```
 
 
 ---
@@ -1874,11 +1987,6 @@ STEP 5: EXIT
 <!-- 
 # Study Guide: Data Structures in C
 
-
-## 7. Linked Lists
-- Introduction to linked lists.
-- Implementation of a simple linked list.
-- Insertion and removal of elements in linked lists.
 
 ## 8. Stacks and Queues
 - Concept of stacks and queues.
