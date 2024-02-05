@@ -1949,7 +1949,7 @@ stateDiagram-v2
 	s6 --> s2
 
 	s1 : Start
-	s2 : X | 1 | 
+	s2 :  | 1 | 
 	s3 :  | 2 |  
 	s4 :  | 3 |  
 	s5 :  | 4 |  
