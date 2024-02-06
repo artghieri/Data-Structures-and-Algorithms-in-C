@@ -2013,7 +2013,7 @@ In the optimized version, we've eliminated the variable area, simplifying the co
 
 #
 
-**Efficient Use of Data Structures:**
+**Efficient Use of Data Structures**
 
 The proper choice of data structures can have a significant impact on code performance. For instance, if many search operations are needed, a dictionary (or map) might be more efficient than a list. Let's consider an example in C:
  
@@ -2075,7 +2075,7 @@ Code optimization is a balance between performance and readability. By applying 
 
 Selecting the right data structures is a crucial aspect of writing efficient and effective code. Making proper choices ensures that your program runs smoothly and performs well. In this section, we'll explore the significance of choosing the right data structures for different programming scenarios, emphasizing how it impacts the overall efficiency of your code.
 
-**Choosing Based on Operations:**
+**Choosing Based on Operations**
 
 One key consideration when selecting a data structure is the type of operations your program needs to perform frequently. For instance, if you need fast insertion and deletion, a linked list might be more suitable than an array. Let's illustrate this with a simple C example:
 
@@ -2118,7 +2118,7 @@ In this example, the choice between an array and a linked list depends on the fr
 
 #
 
-**Consideration for Search and Retrieval:**
+**Consideration for Search and Retrieval**
 
 If your program requires fast search and retrieval, choosing the right data structure becomes crucial. For instance, a binary search tree can provide efficient searching compared to a simple array. Here's a simple C illustration:
 
