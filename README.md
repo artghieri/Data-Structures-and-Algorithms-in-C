@@ -1,6 +1,5 @@
 
----
-
+ate
 ## Algorithms: Their Key Role in Computing
 
 In this chapter, we aim to demystify algorithms. What exactly are algorithms, and why is it worthwhile to delve into their intricacies? How do algorithms differentiate themselves amidst the various computer technologies? This chapter wil answer these questions.
