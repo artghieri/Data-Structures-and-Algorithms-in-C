@@ -1972,6 +1972,9 @@ In essence, a stack is a linear data structure that follows the Last-In-First-Ou
 ```
 
 
+
+
+
 ---
 
 ## Conclusion
