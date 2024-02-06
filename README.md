@@ -2016,7 +2016,7 @@ In the optimized version, we've eliminated the variable area, simplifying the co
 **Efficient Use of Data Structures:**
 The proper choice of data structures can have a significant impact on code performance. For instance, if many search operations are needed, a dictionary (or map) might be more efficient than a list. Let's consider an example in C:
  
-**Non-optimized version**
+**Non-optimized Version**
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -2043,7 +2043,7 @@ int main()
 }
 ```
 
-Optimized version
+**Optimized Version**
 
 ```c
 #include <stdio.h>
