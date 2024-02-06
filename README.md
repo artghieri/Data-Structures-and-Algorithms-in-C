@@ -1971,9 +1971,193 @@ In essence, a stack is a linear data structure that follows the Last-In-First-Ou
 		
 ```
 
+## Queues
 
 
+## Trees
 
+
+## Sorting and Searching Algorithms
+
+
+## Advanced Data Structures
+
+## Best Practices and Efficiency
+
+Best practices and efficiency are paramount in the world of programming. Adhering to established conventions and adopting efficient coding techniques not only enhances the quality of your code but also contributes to overall software performance. In this topic, we'll explore  guidelines and strategies that developers can employ to write better, more efficient code.
+
+**Code optimization**
+
+Code optimization is a fundamental practice for developers aiming to enhance the performance and efficiency of their programs. Instead of settling for solutions that merely work, code optimization strives to make these solutions faster, more efficient, and sometimes even more elegant. In this topic, we'll explore some techniques and concepts that can be applied to optimize code in programming languages, with a focus on improving performance.
+
+One of the simplest ways to optimize code is by eliminating redundancies. Whether it's unnecessary variables, duplicate loops, or operations that can be simplified, removing redundancies can result in cleaner and more efficient code. Let's consider an example in C:
+
+```c
+// Non-optimized version
+#include <stdio.h>
+
+int calculate_rectangle_area(int length, int width) {
+  int area = length * width;
+  return area;
+}
+
+// Optimized version
+#include <stdio.h>
+
+int calculate_rectangle_area_optimized(int length, int width) {
+  return length * width;
+}
+```
+
+In the optimized version, we've eliminated the variable area, simplifying the code without compromising readability.
+
+#
+
+**Efficient Use of Data Structures:**
+The proper choice of data structures can have a significant impact on code performance. For instance, if many search operations are needed, a dictionary (or map) might be more efficient than a list. Let's consider an example in C:
+ 
+**Non-optimized version**
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+  char* names[] = {"Alice", "Bob", "Charlie"};
+  int index_bob = -1;
+
+  for (int i = 0; i < 3; ++i) {
+    if (strcmp(names[i], "Bob") == 0)
+    {
+      index_bob = i;
+      break;
+    }
+  }
+
+  if (index_bob != -1) 
+    printf("Bob found at position %d\n", index_bob);
+  else
+    printf("Bob not found\n");
+
+  return 0;
+}
+```
+
+Optimized version
+
+```c
+#include <stdio.h>
+
+int main()
+{
+  char* names[] = {"Alice", "Bob", "Charlie"};
+
+  for (int i = 0; i < 3; ++i) {
+    if (strcmp(names[i], "Bob") == 0) {
+      printf("Bob found at position %d\n", i);
+      return 0;
+  }
+}
+
+  printf("Bob not found\n");
+  return 0;
+}
+```
+
+In the optimized version, we've replaced the array with a loop that utilizes the efficient *strcmp* function for string comparison.
+
+Code optimization is a balance between performance and readability. By applying techniques such as eliminating redundancies and choosing data structures wisely, developers can create faster and more efficient programs. However, it's crucial to remember that premature optimization can compromise code clarity, so it's advisable to focus on critical areas for improvement.
+
+#
+
+**Proper choice of Data Structures**
+
+Selecting the right data structures is a crucial aspect of writing efficient and effective code. Making proper choices ensures that your program runs smoothly and performs well. In this section, we'll explore the significance of choosing the right data structures for different programming scenarios, emphasizing how it impacts the overall efficiency of your code.
+
+**Choosing Based on Operations:**
+
+One key consideration when selecting a data structure is the type of operations your program needs to perform frequently. For instance, if you need fast insertion and deletion, a linked list might be more suitable than an array. Let's illustrate this with a simple C example:
+
+**Array Implementation**
+```c
+#include <stdio.h>
+
+int main() {
+  int array[5] = {1, 2, 3, 4, 5};
+  // Array is fixed in size, making insertion and deletion less efficient
+
+  // Code for array operations...
+  return 0;
+}
+```
+
+**Linked List Implementation**
+```c
+
+#include <stdio.h>
+
+struct Node
+{
+  int data;
+  struct Node* next;
+};
+
+int main()
+{
+  struct Node* head = NULL;
+  // Linked list allows dynamic insertion and deletion
+
+  // Code for linked list operations...
+  return 0;
+}
+
+```
+
+In this example, the choice between an array and a linked list depends on the frequent operations anticipated.
+
+#
+
+**Consideration for Search and Retrieval:**
+
+If your program requires fast search and retrieval, choosing the right data structure becomes crucial. For instance, a binary search tree can provide efficient searching compared to a simple array. Here's a simple C illustration:
+
+**Array Implementation**
+```c
+#include <stdio.h>
+
+int main() {
+  int array[5] = {1, 2, 3, 4, 5};
+  // Searching in an array requires linear traversal
+
+  // Code for array search...
+  return 0;
+}
+```
+
+**Binary Search Tree Implementation**
+```c
+#include <stdio.h>
+
+struct Node
+{
+  int data;
+  struct Node* left;
+  struct Node* right;
+};
+
+int main()
+{
+  struct Node* root = NULL;
+  // Binary search tree allows efficient searching
+
+  // Code for tree search...
+  return 0;
+}
+```
+
+The choice of a binary search tree facilitates faster search operations compared to a simple array.
+
+Properly selecting data structures based on the nature of your program's operations is a key factor in achieving code efficiency. It ensures that your code performs optimally and meets the specific needs of your application. Keep in mind the trade-offs associated with each data structure to make informed decisions for your programming tasks.
 
 ---
 
@@ -1983,7 +2167,7 @@ In essence, a stack is a linear data structure that follows the Last-In-First-Ou
 
 - TENENBAUM, Aaron M. ; LANGSAM, Yedidyah ; AUGENSTEIN, Moshe J. **Data Structures Using C**. Facsimile Edition. Pearson, 1989.
 - CORMEN, Thomas H. ; LEISERSON, Charles E. ; RIVEST, Ronald L. ; STEIN, Clifford. **Introduction to Algorithms**. 4th Edition. MIT Press, 2022.
-
+- THAREJA, Reema. **Data Structures Using C**. 2nd Edition. Oxford University Press, 2014.
 
 
 
@@ -2009,7 +2193,4 @@ In essence, a stack is a linear data structure that follows the Last-In-First-Ou
 - Hash tables (hash tables).
 - Balanced data structures (e.g., AVL trees).
 
-## 12. Best Practices and Efficiency
-- Code optimization.
-- Proper choice of data structures.
 !-->
