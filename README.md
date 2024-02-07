@@ -2083,38 +2083,138 @@ One key consideration when selecting a data structure is the type of operations 
 ```c
 #include <stdio.h>
 
-int main() {
-  int array[5] = {1, 2, 3, 4, 5};
-  // Array is fixed in size, making insertion and deletion less efficient
+// Function to print elements of an array
+void printArray(int arr[], int size) {
+  for (int i = 0; i < size; i++)
+    printf("%d ", arr[i]);
 
-  // Code for array operations...
+  printf("\n");
+}
+
+int main()
+{
+  int array[5] = {1, 2, 3, 4, 5};
+  
+  // Print the original array
+  printf("Original array: ");
+  printArray(array, 5);
+  
+  // Insert an element at the end of the array
+  array[5] = 6;
+
+  // Print the array after insertion
+  printf("Array after insertion: ");
+  printArray(array, 6);
+  
+  // Remove the second element from the array (index 1)
+  for (int i = 1; i < 5; i++) 
+    array[i] = array[i + 1];
+  
+  // Print the array after removal
+  printf("Array after removal: ");
+  printArray(array, 5);
+  
   return 0;
 }
 ```
 
+In this example, the *printArray* function is used to print the elements of the array, and the program performs basic operations such as inserting an element at the end and removing the second element.
+
+The use of a linked list can be more effective in certain specific scenarios due to its dynamic and flexible nature compared to arrays.
+
+If we want to insert an element at the beginning of an array, we would have to shift all subsequent elements to make space for the new element. This involves moving all elements, which takes time proportional to the size of the array. Therefore, the operation of inserting at the beginning of an array has a time complexity of $O(n)$, where n is the number of elements in the array.
+
 **Linked List Implementation**
 ```c
-
 #include <stdio.h>
+#include <stdlib.h>
 
+// Node structure for the linked list
 struct Node
 {
   int data;
   struct Node* next;
 };
 
-int main()
+// Function to print elements of a linked list
+void printList(struct Node* head)
 {
-  struct Node* head = NULL;
-  // Linked list allows dynamic insertion and deletion
-
-  // Code for linked list operations...
-  return 0;
+  struct Node* current = head;
+  while (current != NULL) {
+      printf("%d ", current->data);
+      current = current->next;
+  }
+  printf("\n");
 }
 
+// Function to insert a new node at the beginning of the linked list
+struct Node* insertAtBeginning(struct Node* head, int newData)
+{
+  struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+  newNode->data = newData;
+  newNode->next = head;
+  return newNode;
+}
+
+// Function to delete a node with a specific value from the linked list
+struct Node* deleteNode(struct Node* head, int key)
+{
+  struct Node* current = head;
+  struct Node* prev = NULL;
+
+  // If the key is present in the head node
+  if (current != NULL && current->data == key) {
+      head = current->next;
+      free(current);
+      return head;
+  }
+
+  // Search for the key to be deleted, keep track of the previous node
+  while (current != NULL && current->data != key) {
+      prev = current;
+      current = current->next;
+  }
+
+  // If the key was not present in the linked list
+  if (current == NULL) {
+      return head;
+  }
+
+  // Unlink the node from the linked list
+  prev->next = current->next;
+  free(current);
+
+  return head;
+}
+
+int main()
+{
+  // Creating an empty linked list
+  struct Node* head = NULL;
+
+  // Inserting elements at the beginning of the linked list
+  head = insertAtBeginning(head, 5);
+  head = insertAtBeginning(head, 3);
+  head = insertAtBeginning(head, 8);
+
+  // Printing the linked list
+  printf("Linked List: ");
+  printList(head);
+
+  // Deleting a node with the value 3 from the linked list
+  head = deleteNode(head, 3);
+
+  // Printing the linked list after deletion
+  printf("Linked List after deletion: ");
+  printList(head);
+
+  return 0;
+}
 ```
 
-In this example, the choice between an array and a linked list depends on the frequent operations anticipated.
+If we want to insert an element at the beginning of the linked list, we only need to create a new node, adjust the pointers, and assign the new node as the new head. There is no need to shift all existing elements. This operation of inserting at the beginning of a linked list has a time complexity of $O(1)$, which is more efficient compared to the array approach.
+
+Therefore, when choosing data structures based on the operations you intend to perform more frequently, the linked list may be preferable in cases where frequent insertion or removal of elements at the beginning is a significant consideration.
 
 #
 
@@ -2126,34 +2226,117 @@ If your program requires fast search and retrieval, choosing the right data stru
 ```c
 #include <stdio.h>
 
-int main() {
-  int array[5] = {1, 2, 3, 4, 5};
-  // Searching in an array requires linear traversal
+// Function to search for a key in an array
+int searchInArray(int arr[], int size, int key)
+{
+  for (int i = 0; i < size; i++) {
+      if (arr[i] == key) {
+          return i;  // Retorna o índice se a chave for encontrada
+      }
+  }
+  return -1;  // Retorna -1 se a chave não for encontrada
+}
 
-  // Code for array search...
+int main()
+{
+  int array[] = {8, 3, 10, 1, 6};
+  int size = sizeof(array) / sizeof(array[0]);
+
+  // Buscando por uma chave no array
+  int searchKey = 6;
+  int result = searchInArray(array, size, searchKey);
+
+  // Exibindo o resultado da busca
+  if (result != -1) {
+      printf("Key %d found at index %d in the array.\n", searchKey, result);
+  } else {
+      printf("Key %d not found in the array.\n", searchKey);
+  }
+
   return 0;
 }
 ```
 
+This example uses a function called *searchInArray* to perform a linear search in an array. The result indicates whether the key was found and, if so, at which index it is in the array. However, it's important to note that linear search in an array is not as efficient as searching in a data structure more suitable for this type of operation, such as a binary search tree.
+
 **Binary Search Tree Implementation**
 ```c
 #include <stdio.h>
+#include <stdlib.h>
 
+// Node structure for the binary search tree
 struct Node
 {
-  int data;
+  int key;
   struct Node* left;
   struct Node* right;
 };
 
+// Function to search for a key in the binary search tree
+struct Node* search(struct Node* root, int key)
+{
+  // Base cases: root is null or key is present at the root
+  if (root == NULL || root->key == key) {
+      return root;
+  }
+
+  // Key is greater than root's key
+  if (key > root->key) {
+      return search(root->right, key);
+  }
+
+  // Key is smaller than root's key
+  return search(root->left, key);
+}
+
+// Function to create a new node with a given key
+struct Node* newNode(int key)
+{
+  struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+  node->key = key;
+  node->left = node->right = NULL;
+  return node;
+}
+
+// Function to insert a new key into the binary search tree
+struct Node* insert(struct Node* root, int key)
+{
+  // Base case: root is null or a leaf node is reached
+  if (root == NULL) {
+      return newNode(key);
+  }
+
+  // Recur down the tree
+  if (key < root->key) {
+      root->left = insert(root->left, key);
+  } else if (key > root->key) {
+      root->right = insert(root->right, key);
+  }
+
+  return root;
+}
+
 int main()
 {
   struct Node* root = NULL;
-  // Binary search tree allows efficient searching
 
-  // Code for tree search...
-  return 0;
-}
+  // Inserting keys into the binary search tree
+  root = insert(root, 8);
+  root = insert(root, 3);
+  root = insert(root, 10);
+  root = insert(root, 1);
+  root = insert(root, 6);
+
+  // Searching for a key in the binary search tree
+  int searchKey = 6;
+  struct Node* result = search(root, searchKey);
+
+  // Displaying the search result
+  if (result != NULL) {
+      printf("Key %d found in the binary search tree.\n", searchKey);
+  } else {
+      printf("Key %d not found in the binary search tree.\n", search
+
 ```
 
 The choice of a binary search tree facilitates faster search operations compared to a simple array.
