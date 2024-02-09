@@ -1979,6 +1979,713 @@ In essence, a stack is a linear data structure that follows the Last-In-First-Ou
 
 ## Sorting and Searching Algorithms
 
+In computer science, Sorting and Searching Algorithms are pivotal, shaping the efficiency of data organization and retrieval. Sorting algorithms meticulously arrange data for optimized access, while searching algorithms act as precision tools, swiftly locating specific elements. The commonly used orders are numerical and alphabetical. This chapter delves into various techniques for searching and sorting arrays of numbers or characters.
+
+**Introduction to Searching**
+
+Searching involves determining the presence of a specific value in an array. A successful search provides the location of the value in the array, while an unsuccessful search prompts an appropriate message. Two common methods for searching arrays are *linear search* and *binary search*. The choice between them depends on the organization of values within the array. For instance, if the array is sorted in ascending order, *binary search* is more efficient in terms of complexity.
+
+#
+
+**Linear Search**
+
+Linear search, also known as sequential search, is a straightforward method for finding a specific value in an array. It involves comparing the target value with each element of the array sequentially until a match is found. Linear search is commonly employed for searching unordered lists of elements, where data elements are not sorted. 
+
+For instance, consider the following array:
+
+```c
+int A[] = { 10, 8, 2, 7, 3, 4, 9, 1, 6, 5};
+```
+
+
+If the value to be searched is VAL = 7, the linear search determines whether '7' is present in the array. If yes, it returns the position of its occurrence, here, POS = 3 (index starting from 0).
+
+Linear Search, also known as sequential search, stands out as a simple yet fundamental approach for finding a specific value within an array. This method is particularly useful for searching through unordered lists where data elements are not sorted. Let's explore the concept through an example using the C programming language.
+
+```r
+LINEAR_SEARCH(A, N, VAL)
+  STEP 1: [INITIALIZE] SET POS=-1
+  STEP 2: [INITIALIZE] SET I=1
+  STEP 3: Repeat STEP 4 while I <= N
+  STEP 4:   IF A[I] = VAL
+              SET POS = I
+              PRINT POS
+              Go to STEP 6
+          [END OF IF]
+        [END OF LOOP]
+  STEP 6: EXIT
+```
+
+> ***Note:** Algorithm for Linear Search*
+
+In STEPS 1 and 2 of the algorithm, we initialize the values of POS and I. In STEP 3, a while loop is executed until I is less than N (total number of elements in the array). In STEP 4, a check is made to see if a match is found between the current array element and VAL. If a match is found, then the position of the array element is printed; else, the value of I is incremented to match the next element with VAL. However, if all the array elements have been compared with VAL and no match is found, then it means that VAL is not present in the array.
+
+**Complexity of Linear Search Algorithm**
+
+The Linear search algorithm operates in $O(n)$ time, where n represents the number of elements in the array. The best-case scenario occurs when VAL is equal to the first element of the array, resulting in only one comparison. Conversely, the worst-case scenario unfolds when VAL is either not present in the array or equal to the last element, requiring n comparisons in both instances. However, the efficiency of the linear search algorithm can be enhanced when applied to a sorted array.
+
+```c
+// Here is a example of a program using the Linear Search technique.
+#include <stdio.h>
+
+int linearSearch(int arr[], int n, int val)
+{
+  int pos = -1; // Initialize POS to -1 (not found)
+  int i = 0;    // Initialize I to 0
+
+  while (i < n) {
+    // Check if the current element matches VAL
+    if (arr[i] == val) {
+      pos = i; // Update POS if a match is found
+      break;   // Exit the loop
+    }
+
+    i++; // Move to the next element
+  }
+
+  return pos; // Return the final position (or -1 if not found)
+}
+
+int main()
+{
+  int A[] = {10, 8, 2, 7, 3, 4, 9, 1, 6, 5};
+  int val = 7;
+
+  int result = linearSearch(A, sizeof(A) / sizeof(A[0]), val);
+
+  if (result != -1)
+    printf("Element %d found at index %d\n", val, result);
+  else
+    printf("Element %d not found in the array\n", val);
+
+  return 0;
+}
+```
+
+#
+
+**Binary Search**
+
+Binary search is a highly efficient searching algorithm designed for use with a sorted list. To illustrate its mechanics, let's draw an analogy with a telephone directory. When searching for a specific name, we open the directory from the middle and decide whether to explore the first or second part based on our comparison. This process continues, resembling how we navigate through a directory until we find the desired name.
+
+Take another analogy with a dictionary. Opening it in the middle, we compare the first word on the page with the target word. Depending on the comparison result, we proceed to the first or second half of the dictionary. This iterative process continues until we locate the desired word. The binary search employs a similar mechanism.
+
+Now, let us consider how this mechanism is applied to search for a value in a sorted array declared below. 
+
+```c
+int A[ ] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+```
+
+Consider the array A[] is declared and initialized as above and the value to be searched is VAL = 9. 
+
+The algorithm will proceed in the following manner:
+
+| **Iteration** | **BEG** | **END** | **MID** | **A[MID]** | **Comparison Result**        |
+|-----------|-----|-----|-----|--------|---------------------------|
+| Initial   | 0   | 10  | 5   | A[5] = 12 | A[5] > VAL (9)          |
+| 1         | 0   | 4   | 2   | A[2] = 6  | A[2] < VAL (9)          |
+| 2         | 3   | 4   | 3   | A[3] = 8  | A[3] < VAL (9)          |
+| 3         | 4   | 4   | 4   | A[4] = 10 | A[4] > VAL (9)          |
+| 4         | 4   | 3   | -   | -        | Value Found at A[4]      |
+
+Binary Search is an algorithm used for efficiently finding a target value in a sorted array. The process starts with the entire array, and two pointers, $BEG$ and $END$, are initialized to the indices of the first and last elements. The midpoint $MID$ of the array is calculated as the average of $BEG$ and $END$.
+
+In each iteration, the algorithm compares the value at the midpoint, $A[MID]$, with the target value ($VAL$). If they are equal, the search is successful, and the position of the element is returned. If $A[MID]$ is less than $VAL$, the search narrows to the right half of the array by updating $BEG$ to $MID + 1$. If $A[MID]$ is greater than $VAL$, the search narrows to the left half by updating $END$ to $MID - 1$.
+
+This process is repeated iteratively until the target value is found or the search interval becomes empty (when $BEG$ surpasses $END$). If the target value is found, the algorithm returns its position; otherwise, it concludes that the value is not present in the array.
+
+Binary Search is efficient because, with each iteration, it halves the search space, resulting in a logarithmic time complexity for sorted arrays.
+
+In this algorithm, $BEG$ and $END$ define the search segment, with $MID$ initially calculated as $(BEG + END)/2$. The algorithm terminates when $A[MID] = VAL$, setting $POS = MID$ for a successful search. If $VAL$ is not equal to $A[MID]$, adjust $BEG$, $END$, and $MID$ based on the comparison:
+
+- If $VAL < A[MID]$, update $END = MID – 1$.
+- If $VAL > A[MID]$, update $BEG = MID + 1$.
+
+The algorithm concludes when $END$ becomes less than $BEG$, indicating an unsuccessful search.
+
+Let's dive into a step-by-step explanation of the binary search algorithm, unveiling its effectiveness in swiftly finding the desired element with minimal computational effort.
+
+```r
+BINARY_SEARCH(A, lower_bound, upper_bound, VAL)
+STEP 1: [INITIALIZE] SET BEG = lower_bound, END = upper_bound, POS = -1
+STEP 2: Repeat STEPS 3 and 4 while BEG <= END
+STEP 3:     SET MID = (BEG + END) / 2
+STEP 4:     IF A[MID] = VAL
+              SET POS = MID
+              PRINT POS
+              Go to STEP 6
+            ELSE IF A[MID] > VAL
+              SET END = MID - 1
+            ELSE
+              SET BEG = MID + 1
+            [END OF IF]
+        [END OF LOOP]
+STEP 5: IF POS = -1
+          PRINT "VALUE IS NOT PRESENT IN THE ARRAY"
+        [END OF IF]
+STEP 6: EXIT
+
+```
+
+> ***Note:** Algorithm for Binary Search*
+
+In STEP 1, initialize $BEG$, $END$, and $POS$. STEP 2 executes a while loop until $BEG$ is less than or equal to $END$. STEP 3 calculates $MID$. STEP 4 checks if $A[MID]$ equals $VAL$; if true, print $POS$ and exit. If not, adjust $END$ or $BEG$ based on $A[MID]$ and $VAL$. In STEP 5, if $POS = -1$, print a message indicating $VAL$ is not present before exiting.
+
+**Complexity of Binary Search Algorithm**
+
+The complexity of the Binary Search algorithm can be expressed as $f(n)$, where n is the number of elements in the array. This complexity is determined based on the number of comparisons made during the algorithm's execution. In the Binary Search algorithm, with each comparison, the size of the segment where the search has to be made is reduced by half. 
+
+Therefore, to locate a particular value in the array, the total number of comparisons can be expressed as $2^{f(n)} > n$ or $f(n) = log_{2}n$.
+
+```c
+// Here is a example of a program using Binary Search
+#include <stdio.h>
+
+int binarySearch(int arr[], int low, int high, int key)
+{
+  while (low <= high) {
+    int mid = low + (high - low) / 2;
+
+    // Check if the key is present at the middle
+    if (arr[mid] == key)
+      return mid;
+
+    // If key is greater, ignore the left half
+    else if (arr[mid] < key)
+      low = mid + 1;
+
+    // If key is smaller, ignore the right half
+    else
+      high = mid - 1;
+  }
+
+  // If the key is not present in the array
+  return -1;
+}
+
+int main()
+{
+  int arr[] = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
+  int n = sizeof(arr) / sizeof(arr[0]);
+  int key = 12;
+
+  // Perform Binary Search
+  int result = binarySearch(arr, 0, n - 1, key);
+
+  // Print the result
+  if (result != -1)
+    printf("Element %d found at index %d\n", key, result);
+  else
+    printf("Element %d not found in the array\n", key);
+
+  return 0;
+}
+```
+
+#
+
+**Interpolation Search**
+
+Interpolation search, also known as extrapolation search, is a technique for finding a specified value in a sorted array. It resembles searching for names in a telephone book or keys in an ordered book. Unlike binary search, where the list is divided in two halves each time, interpolation search adapts to the position of the desired value, making it more efficient for cases like finding a specific name near the extreme left in a telephone directory.
+
+```r
+INTERPOLATION_SEARCH(A, lower_bound, upper_bound, VAL)
+STEP 1: [INITIALIZE] SET LOW = lower_bound, HIGH = upper_bound, POS = –1
+STEP 2: Repeat STEPS 3 to 4 while LOW <= HIGH
+STEP 3:     SET MID = LOW + (HIGH – LOW) × ((VAL – A[LOW]) / (A[HIGH] – A[LOW]))
+STEP 4:     IF VAL = A[MID]
+              POS = MID
+              PRINT POS
+              Go to STEP 6
+            ELSE IF VAL < A[MID]
+              SET HIGH = MID – 1
+            ELSE
+              SET LOW = MID + 1
+          [END OF IF]
+     [END OF LOOP]
+STEP 5: IF POS = –1
+          PRINT "VALUE IS NOT PRESENT IN THE ARRAY"
+        [END OF IF]
+STEP 6: EXIT
+```
+
+In each step of the interpolation search, the remaining search space for the value to be found is calculated. This calculation is based on the values at the bounds of the search space and the value to be searched. The value found at this estimated position is then compared with the value being searched for. If the two values are equal, then the search is considered complete.
+
+If the values are unequal, the remaining search space is adjusted based on the comparison, narrowing it to the part before or after the estimated position. Interpolation search shares similarities with binary search, but the crucial difference lies in their approach to the remaining search space. Binary search consistently selects the middle value, discarding half based on a comparison between the value found at the estimated position and the target value. In contrast, interpolation search utilizes interpolation to approximate a nearby item before employing a linear search for the exact item's precise location.
+
+**Complexity of Interpolation Search Algorithm**
+
+When $n$ elements of a list to be sorted are uniformly distributed (average case), interpolation search makes about $log(log \\ n)$ comparisons. 
+
+However, in the worst case, that is when the elements increase exponentially, the algorithm can make up to $O(n)$ comparisons.
+
+```c
+// Here is a example of a program using Interpolation Search.
+#include <stdio.h>
+
+// Interpolation Search function
+int interpolationSearch(int arr[], int n, int target)
+{
+  int low = 0, high = n - 1;
+
+  while (low <= high && target >= arr[low] && target <= arr[high])
+  {
+    // Estimate the position of target
+    int pos = low + ((double)(high - low) / (arr[high] - arr[low])) * (target - arr[low]);
+
+    if (arr[pos] == target)
+      return pos; // Target found
+
+    if (arr[pos] < target)
+      low = pos + 1; // Search in the right half
+    else
+      high = pos - 1; // Search in the left half
+  }
+
+  return -1; // Target not found
+}
+
+// Driver program
+int main()
+{
+  int arr[] = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
+  int n = sizeof(arr) / sizeof(arr[0]);
+  int target = 14;
+
+  int result = interpolationSearch(arr, n, target);
+
+  if (result != -1)
+    printf("Element %d found at index %d\n", target, result);
+  else
+    printf("Element %d not found in the array\n", target);
+
+  return 0;
+}
+```
+
+#
+
+**Introduction To Sorting**
+
+Sorting is the process of arranging elements in an array in a specific order, either ascending or descending. In ascending order, the elements follow the sequence $A[0] < A[1] < A[2] < ... < A[N].$ 
+
+For instance, given the array:
+
+```c
+int A[] = {21, 34, 11, 9, 1, 0, 22};
+```
+
+The sorted array in ascending order would be:
+
+```c
+A[] = {0, 1, 9, 11, 21, 22, 34};
+```
+
+A sorting algorithm is a method that organizes elements in a list, whether in numerical, lexicographical, or user-defined order. Efficient sorting algorithms play a crucial role in optimizing other algorithms, such as search and merge algorithms, which rely on sorted lists for correct execution. Sorting is categorized into:
+
+- **Internal Sorting:** Deals with sorting data stored in the computer's memory.
+- **External Sorting:** Deals with sorting data stored in files, particularly useful when handling large datasets that cannot fit into memory.
+
+**Sorting on Multiple Keys**
+
+In real-world applications, there are scenarios where sorting arrays involves multiple keys, allowing for a more refined organization of records. This need arises when a single key is insufficient to uniquely identify a record. For instance, in a large organization, sorting employees might involve organizing them first by departments and then by names in alphabetical order. Other examples of sorting with multiple keys include:
+
+- Telephone directories, where names are sorted by location, category (business or residential), and then alphabetically.  
+- In a library, sorting information about books alphabetically based on titles and then by authors' names.  
+- Sorting customers' addresses based on the city's name first and then the street.  
+
+> ***Note:** Data records can be sorted based on a property. Such a component or property is called a sort key. A sort key can be defined using two or more sort keys. In such a case, the first key is called the primary sort key, the second is known as the secondary sort key, etc.*
+
+Consider the data records given below:
+
+| Name   | Department          | Salary   | Phone Number |
+|--------|---------------------|----------|--------------|
+| Janak  | Telecommunications   | 1000000  | 9812345678   |
+| Raj    | Computer Science     | 890000   | 9910023456   |
+| Aditya | Electronics          | 900000   | 7838987654   |
+| Huma   | Telecommunications   | 1100000  | 9654123456   |
+| Divya  | Computer Science     | 750000   | 9350123455   |
+
+Now if we take department as the primary key and name as the secondary key, then the sorted order of records can be given as:
+
+| Name   | Department          | Salary   | Phone Number |
+|--------|---------------------|----------|--------------|
+| Divya  | Computer Science     | 750000   | 9350123455   |
+| Raj    | Computer Science     | 890000   | 9910023456   |
+| Aditya | Electronics          | 900000   | 7838987654   |
+| Huma   | Telecommunications   | 1100000  | 9654123456   |
+| Janak  | Telecommunications   | 1000000  | 9812345678   |
+
+Observe that the records are sorted based on department. However, within each department the records are sorted alphabetically based on the names of the employees.
+
+#
+
+**Practical Considerations for Internal Sorting**
+
+Sort keys are fundamental to arranging records, allowing sorting in either ascending or descending order. Records may reside in a contiguous and randomly accessible structure like an array or a dispersed, sequentially accessible structure like a linked list. The sorting logic remains consistent across different data structures, with only implementation details varying. Performance analysis of sorting algorithms considers factors such as:
+
+- Number of sort key comparisons
+- Count of record movements
+- Best-case performance
+- Worst-case performance
+- Average-case performance
+- Stability, ensuring equivalent elements maintain their relative positions post-sorting.
+
+#
+
+**Bubble Sort**
+
+Bubble Sort is a straightforward sorting method that iteratively moves the largest element to the highest index position in the array segment, specifically for arranging elements in ascending order. The algorithm compares consecutive adjacent pairs of elements, swapping them if the element at the lower index is greater. This process repeats until the unsorted elements are exhausted. The term "bubble sorting" is derived from elements 'bubbling' to the top of the list, ensuring the largest element is correctly positioned at the end after the first pass.
+
+> ***Note:** If the elements are to be sorted in descending order, then in first pass the smallest element is moved to the highest index of the array.*
+
+In the Bubble Sort algorithm, the outer loop iterates for the total number of passes, which is N–1. The inner loop is executed for every pass, but its frequency decreases with each pass as one element becomes correctly positioned. Therefore, for each pass, the inner loop is executed N–I times, where N is the number of elements in the array, and I is the pass count.
+
+```r
+BUBBLE_SORT(A, N)
+STEP 1: Repeat STEP 2 for I = 1 to N-1
+STEP 2: Repeat for J = 1 to N-I
+STEP 3:     IF A[J] > A[J+1]
+              SWAP A[J] and A[J+1]
+            [END OF INNER LOOP]
+       [END OF OUTER LOOP]
+STEP 4: EXIT
+```
+
+> ***Note:** Algorithm for Bubble Sort*
+
+**Complexity of Bubble Sort**
+
+The complexity of the Bubble Sort algorithm depends on the number of comparisons made during the $N–1$ passes. The total number of comparisons can be expressed as:
+
+$$ f(n) = (n – 1) + (n – 2) + (n – 3) + \ldots + 3 + 2 + 1 $$
+
+Simplifying this, we get:
+
+$$ f(n) = \frac{n \cdot (n – 1)}{2}$$
+
+This leads to a complexity of $O(n^2)$, indicating that the time required to execute Bubble Sort is proportional to $n^2$, where $n$ is the total number of elements in the array.
+
+```c
+// Here is a example of a program using Bubble Sort
+#include <stdio.h>
+
+// Function to perform Bubble Sort
+void bubbleSort(int arr[], int n)
+{
+  for (int i = 0; i < n - 1; i++)
+  {
+    // Last i elements are already sorted, no need to check them
+    for (int j = 0; j < n - i - 1; j++)
+    {
+      // Traverse the array from 0 to n - i - 1
+      // Swap if the element found is greater than the next element
+      if (arr[j] > arr[j + 1])
+      {
+          int temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+      }
+    }
+  }
+}
+
+int main()
+{
+  int arr[] = {64, 34, 25, 12, 22, 11, 90};
+  int n = sizeof(arr) / sizeof(arr[0]);
+
+  // Call the Bubble Sort function
+  bubbleSort(arr, n);
+
+  // Print the sorted array
+  printf("Sorted array: ");
+  for (int i = 0; i < n; i++) {
+    printf("%d ", arr[i]);
+  }
+
+  return 0;
+}
+```
+
+#
+
+**Merge Sort**
+
+Merge Sort is a sorting algorithm that employs the divide, conquer, and combine paradigm. The process begins by dividing the n-element array into two sub-arrays, $A_1$ and $A_2$, each containing about half of the elements. If array A has zero or one element, it is considered sorted. However, if A contains more elements, it is divided into two sub-arrays, $A_1$ and $A_2$, each with about half of A's elements. 
+
+*Conquer* involves recursively sorting the two sub-arrays using the merge sort algorithm, while *combine* merges the two sorted sub-arrays of size $n/2$ to produce the fully sorted array of $n$ elements.
+
+Merge sort algorithm focuses on two main concepts to improve its performance (running time):
+- A smaller list takes fewer steps and less time to sort than a larger list.
+- The number of steps is relatively less, requiring less time to create a sorted list from two sorted lists than creating it using two unsorted lists.
+
+The basic steps of the merge sort algorithm are as follows:
+- If the array has a length of 0 or 1, it is already sorted.
+- Otherwise, divide the unsorted array into two sub-arrays of about half the size.
+- Use the merge sort algorithm recursively to sort each sub-array.
+- Merge the two sub-arrays to form a single sorted list.
+
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/034acf27-22fe-4638-83b9-72171731ecdf)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 443)*
+
+The merge sort algorithm uses a function merge which combines the sub-arrays to form a sorted array. While the merge sort algorithm recursively divides the list into smaller lists, the merge algorithm conquers the list to sort the elements in individual lists. Finally, the smaller lists are merged to form one list.
+
+```r
+MERGE_SORT(ARR, BEG, END)
+STEP 1: IF BEG < END
+          SET MID = (BEG + END)/2
+          CALL MERGE_SORT(ARR, BEG, MID)
+          CALL MERGE_SORT(ARR, MID+1, END)
+          MERGE(ARR, BEG, MID, END)
+        [END OF IF]
+STEP 2: END
+```
+
+The running time of merge sort in the average case and the worst case can be given as $O(n log \\ n)$. Although merge sort has an optimal time complexity, it needs an additional space of $O(n)$ for the temporary array TEMP.
+
+> ***Note:** Algorithm for Merge Sort*
+
+```c
+// Here is a example of a program using Merge Sort
+#include <stdio.h>
+
+// Function to merge two subarrays of arr[].
+// The first subarray is arr[l..m]
+// The second subarray is arr[m+1..r]
+void merge(int arr[], int l, int m, int r) {
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    // Create temporary arrays
+    int L[n1], R[n2];
+
+    // Copy data to temporary arrays L[] and R[]
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    // Merge the temporary arrays back into arr[l..r]
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Copy the remaining elements of L[], if there are any
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // Copy the remaining elements of R[], if there are any
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+// Main function that implements Merge Sort
+// arr[] is the array to be sorted,
+// l is the left index, and r is the right index of the subarray to be sorted
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        // Calculate the middle point of the array
+        int m = l + (r - l) / 2;
+
+        // Recursively sort the left and right subarrays
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+
+        // Merge the sorted subarrays
+        merge(arr, l, m, r);
+    }
+}
+
+// Utility function to print an array
+void printArray(int A[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", A[i]);
+    printf("\n");
+}
+
+// Example program
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array:\n");
+    printArray(arr, arr_size);
+
+    // Apply Merge Sort
+    mergeSort(arr, 0, arr_size - 1);
+
+    printf("\nSorted array:\n");
+    printArray(arr, arr_size);
+
+    return 0;
+}
+```
+
+#
+
+**Quick Sort**
+
+Quick sort, conceived by C. A. R. Hoare, stands as a prominent sorting algorithm, boasting $O(n \\ log \\ n)$ comparisons on average for an array of n elements. Yet, it faces a worst-case scenario with quadratic time complexity, denoted as $O(n^2)$. Its efficiency surpasses other $O(n \\ log \\ n)$ algorithms, primarily due to a well-optimized implementation that minimizes the likelihood of quadratic time. 
+
+Often labeled as partition exchange sort, quick sort employs a divide-and-conquer strategy akin to merge sort, breaking a single unsorted array into two smaller sub-arrays.
+
+The quick sort algorithm works as follows:
+
+1. Choose a pivot element from the array.
+2. Rearrange the array elements so that those less than the pivot precede it, and those greater come after (equal values can go either way). This step, known as the partition operation, ensures the pivot is in its final position.
+3. Recursively sort the two resulting sub-arrays. One contains elements smaller than the pivot, and the other has elements greater than the pivot.
+
+In recursion, like merge sort, the base case triggers when the array holds zero or one element, indicating its pre-sorted state. After each iteration, a single element (pivot) consistently reaches its final position. Consequently, with each cycle, the array requires sorting one less element.
+
+The primary objective involves finding the pivot element, which effectively partitions the array into two halves. The steps below outline how to identify the pivot element, typically taking the first array element.
+
+**Quick Sort Technique**
+
+Quick sort works through the following steps:
+
+1. Initialize the index variables $loc, left, and right$. Set $loc$ and $left$ to $0$, and $right$ to $n–1$ (where $n$ is the number of elements in the array).
+
+2. Scan the array from right to left, starting from the element pointed to by right. Compare each element with the element at loc ($a[loc]$ should be less than $a[right]$).
+   - (a) If $a[loc] < a[right]$, continue comparing until right becomes equal to loc, indicating the correct position for the pivot.
+   - (b) If $a[loc] > a[right]$, interchange the two values and proceed to Step 3.
+   - (c) Set loc = right.
+
+3. Scan the array from left to right, starting from the element pointed to by left. Compare each element with the element at loc ($a[loc]$ should be greater than $a[left]$).
+   - (a) If $a[loc] > a[left]$, continue comparing until left becomes equal to loc, indicating the correct position for the pivot.
+   - (b) If $a[loc] < a[left]$, interchange the two values and return to Step 2.
+   - (c) Set $loc = left$.
+
+The quick sort algorithm makes use of a function *Partition* to divide the array into two sub-arrays.
+
+```r
+PARTITION(ARR, BEG, END, LOC)
+STEP 1: [INITIALIZE] SET LEFT = BEG, RIGHT = END, LOC = BEG, FLAG =
+STEP 2: Repeat STEPS 3 to 6 while FLAG =
+STEP 3: Repeat while ARR[LOC] <= ARR[RIGHT] AND LOC != RIGHT
+            SET RIGHT = RIGHT-1
+        [END OF LOOP]
+STEP 4: IF LOC = RIGHT
+            SET FLAG = 1
+          ELSE IF ARR[LOC] > ARR[RIGHT]
+            SWAP ARR[LOC] with ARR[RIGHT]
+            SET LOC = RIGHT
+          [END OF IF]
+STEP 5: IF FLAG =
+            Repeat while ARR[LOC] >= ARR[LEFT] AND LOC != LEFT
+              SET LEFT = LEFT+1
+            [END OF LOOP]
+STEP 6: IF LOC = LEFT
+            SET FLAG = 1
+          ELSE IF ARR[LOC] < ARR[LEFT]
+            SWAP ARR[LOC] with ARR[LEFT]
+            SET LOC = LEFT
+          [END OF IF]
+        [END OF IF]
+STEP 7: [END OF LOOP]
+STEP 8: END
+
+QUICK_SORT(ARR, BEG, END)
+STEP 1: IF BEG < END
+          CALL PARTITION(ARR, BEG, END, LOC)
+          CALL QUICK_SORT(ARR, BEG, LOC-1)
+          CALL QUICK_SORT(ARR, LOC+1, END)
+        [END OF IF]
+STEP 2: END
+```
+
+> ***Note:** Algorithm for Quick Sort*
+
+
+**Complexity of Quick Sort**
+
+The complexity of Quick Sort in the average case is $O(n \\ log \\ n)$, where n is the number of elements in the array. The partitioning step, which iterates over the elements of the array once, takes $O(n)$ time.
+
+In the best case, when the array is consistently divided into two nearly equal halves during partitioning, the recursive calls process sub-arrays of half the size. With a maximum of log n nested calls, the depth of the call tree is $O(log \\ n)$. As each level can have $O(n)$ elements, the overall time complexity is $O(n \\ log \\ n)$.
+
+In the worst case, when the array is already sorted and the leftmost element is chosen as the pivot, Quick Sort has a time complexity of $O(n^2$). However, many implementations use randomized pivot selection, resulting in a consistent $O(n \\ log \\ n)$ time complexity.
+
+**Pros and Cons of Quick Sort**
+
+| **Pros of Quick Sort**                                      | **Cons of Quick Sort**                                                                  |
+|------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| 1. Faster than bubble sort, selection sort, and insertion sort. | 1. Complexity and recursion make it more challenging to understand.                    |
+| 2. Suitable for sorting arrays of small, medium, or large sizes.  | 2. Worst-case efficiency is $O(n^2)$ when the array is sorted.                             |
+|                                                               | 3. Not a stable sorting algorithm (order of equal elements may not be preserved).        |
+
+
+```c
+// Here is a example of a program using Quick Sort
+#include <stdio.h>
+
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+
+    swap(&arr[i + 1], &arr[high]);
+    return i + 1;
+}
+
+void quick_sort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        quick_sort(arr, low, pi - 1);
+        quick_sort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int unsorted_array[] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
+    int n = sizeof(unsorted_array) / sizeof(unsorted_array[0]);
+
+    printf("Unsorted Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", unsorted_array[i]);
+    }
+
+    quick_sort(unsorted_array, 0, n - 1);
+
+    printf("\nSorted Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", unsorted_array[i]);
+    }
+
+    return 0;
+}
+```
 
 
 ## Advanced Data Structures
