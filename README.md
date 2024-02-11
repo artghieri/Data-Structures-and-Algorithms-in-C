@@ -5474,11 +5474,9 @@ int factorial(int n) {
 
 Recursive computations, like the one illustrated by the factorial function, can pose challenges, particularly when facing stack overflow issues with larger input values. In response, adopting an iterative methodology or incorporating memoization techniques emerges as a pragmatic means of optimizing recursive algorithms.
 
-Within the realm of C programming, where efficiency is a cornerstone, the optimization of algorithms and data structures holds paramount importance. Addressing concerns related to excessive recursion is just one facet of a broader strategy that includes a nuanced understanding of time and space complexity, judicious selection of data structures, implementation of efficient algorithms, and skillful utilization of pointers. By embracing these principles, developers can not only circumvent the pitfalls of excessive recursion but also craft systems that are faster, more resilient, and inherently efficient.
+Where efficiency is a cornerstone, the optimization of algorithms and data structures holds paramount importance. Addressing concerns related to excessive recursion is just one facet of a broader strategy that includes a nuanced understanding of time and space complexity, judicious selection of data structures, implementation of efficient algorithms, and skillful utilization of pointers. By embracing these principles, developers can not only circumvent the pitfalls of excessive recursion but also craft systems that are faster, more resilient, and inherently efficient.
 
 ---
-
-## Conclusion
 
 #### Reference
 
@@ -5487,18 +5485,3 @@ Within the realm of C programming, where efficiency is a cornerstone, the optimi
 - THAREJA, Reema. **Data Structures Using C**. 2nd Edition. Oxford University Press, 2014.
 
 
-
-<!-- 
-# Study Guide: Data Structures in C
-
-
-## 8. Stacks and Queues
-- Concept of stacks and queues.
-- Implementation of stacks and queues in C.
-
-## 9. Trees
-- Introduction to trees.
-- Binary search trees.
-- Tree traversal.
-
-!-->
