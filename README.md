@@ -2933,9 +2933,6 @@ $$
 
 $$ Where \\ k \\ \geq 1 \\ \\ T_{ij}^{k} = T_{ij}^{k-1} \\ V \\ ( \\ T_{ik}^{k-1} \\ \wedge \\ T_{kj}^{k-1} \\ ) $$
 
-> ***Note:** Relation between $k$ and $T_{ij}^{k}$*
-
-
 ```r
 TRANSITIVE_CLOSURE(A, T, n)
 STEP 1: SET i=1, j=1, k=1
@@ -3237,8 +3234,6 @@ Using the adjacency multi-list given above, the adjacency list for vertices can 
 | 5       | Edge 6                   |
 | 6       | Edge 7                   |
 
-#
-
 ## Hashing
 
 Certainly! Here's an improved version:
@@ -3274,7 +3269,7 @@ Let us assume that the same company uses a five-digit Emp_ID as the primary key.
 | Key[99998] | Employee record with Emp_ID 99998  |
 | Key[99999] | Employee record with Emp_ID 99999  |
 
-> ***Note:** Records of ECertainly, here's an improved version:
+> ***Note:** Records of ECertainly, improved version*
 
 Allocating excessive storage space solely to ensure each employee's record is in a unique and predictable location is impractical.
 
@@ -3331,13 +3326,13 @@ However, real-world applications may involve alphanumeric keys rather than simpl
 
 The division method is a straightforward approach to creating a hash of an integer x. It involves dividing x by M and then using the remainder obtained. The hash function for this method is given by:
 
-$$ h(x) = x \mod M $$
+$$h(x) = x \mod M$$
 
 The division method is effective for various values of M and, due to requiring only a single division operation, works quickly. However, care should be taken when selecting a suitable value for M.
 
 For example, if M is an even number, then $h(x)$ will be even when x is even and $h(x)$ will be odd when x is odd. While this is not a problem if all possible keys are equiprobable, uneven key probabilities may lead to a non-uniform distribution with the division method.
 
-In practice, it is advisable to choose M as a prime number, as this increases the likelihood of mapping keys uniformly in the output value range. Additionally, M should not be too close to exact powers of 2. For a hash function like $h(x) = x \mod 2^k $, choosing M as a prime number improves distribution, preventing the function from simply extracting the lowest k bits of the binary representation of x.
+In practice, it is advisable to choose M as a prime number, as this increases the likelihood of mapping keys uniformly in the output value range. Additionally, M should not be too close to exact powers of 2. For a hash function like $h(x) = x \mod 2^k$, choosing M as a prime number improves distribution, preventing the function from simply extracting the lowest k bits of the binary representation of x.
 
 The division method is extremely simple to implement. The following code segment illustrates how to do this:
 
@@ -3648,21 +3643,76 @@ The next task in rebalancing the tree is determining the type of rotation to be 
 #
 
 ### LL Rotation
+Consider the tree given which shows an AVL tree
 
+![image](https://github.com/artghieri/Vaults/assets/102708433/4a5dae64-5580-4d8f-94b8-1f226d71573f)
 
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 318)*
+
+Tree (a) is an AVL tree. In tree (b), a new node is inserted in the left sub-tree of the left sub-tree of the critical node A (node A is the critical node because it is the closest ancestor whose balance factor is not $(–1, 0, or \\ 1)$, so we apply LL rotation as shown in tree (c). 
+
+While rotating, node B becomes the root, with $T_1$ and A as its left and right child. $T_2$ and $T_3$ become the left and right sub-trees of A.
+
+#
+
+Example: Consider the AVL tree given and insert 18 into it:
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/38bcb215-2ed0-46f3-94f3-ba53d3e0b909)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 319)*
 
 #
 
 ### RR Rotation
 
+Let us now discuss where and how RR rotation is applied. Consider the tree given which shows an AVL tree
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/6409a8ec-c96f-4372-9d94-7005eb7f21cb)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 319)*
+
+Tree (a) is an AVL tree. In tree (b), a new node is inserted in the right sub-tree of the right sub-tree of the critical node A (node A is the critical node because it is the closest ancestor whose balance factor is not $(–1, 0, or \\ 1)$, so we apply RR rotation as shown in tree (c). Note that the new node has now become a part of tree $T_3$. 
+
+While rotating, node B becomes the root, with A and $T_3$ as its left and right child. $T_1$ and $T_2$ become the left and right sub-trees of A.
+
+#
+Example: Consider the AVL tree given and insert 89 into it.
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/fdd3f3a8-0913-40b2-af3a-5a289728a68a)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 319)*
+
 #
 
-### LR Rotation
+### LR and RL Rotations
+
+Consider the AVL tree given and see how LR rotation is done to rebalance the tree.
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/9b021ee8-49fd-4a50-8306-9c5a19bcfba6)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 320)*
+
+Tree (a) is an AVL tree. In tree (b), a new node is inserted in the right sub-tree of the left sub-tree of the critical node A (node A is the critical node because it is the closest ancestor whose balance factor is not $(–1, 0, or \\ 1)$, so we apply LR rotation as shown in tree (c). Note that the new node has now become a part of tree $T_2$. 
+
+While rotating, node C becomes the root, with B and A as its left and right children. Node B has $T_1$ and $T_2$ as its left and right sub-trees, and $T_3$ and $T_4$ become the left and right sub-trees of node A.
+
+Now, consider the AVL tree given and see how RL rotation is done to rebalance the tree
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/a24bca17-b841-4586-969d-424ed6656d95)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 320)*
+
+Tree (a) is an AVL tree. In tree (b), a new node is inserted in the left sub-tree of the right sub-tree of the critical node A (node A is the critical node because it is the closest ancestor whose balance factor is not $(–1, 0, or \\ 1)$, so we apply RL rotation as shown in tree (c). Note that the new node has now become a part of tree $T_2$.
+
+While rotating, node C becomes the root, with A and B as its left and right children. Node A has $T_1$ and $T_2$ as its left and right sub-trees, and $T_3$ and $T_4$ become the left and right sub-trees of node B.
 
 #
 
-### RL Rotation
+### Deleting a Node from an AVL Tree
 
+Deletion of a node in an AVL tree is similar to that of binary search trees. However, it goes one step ahead. Deletion may disturb the AVLness of the tree, so to rebalance the AVL tree, we need to perform rotations. Two classes of rotations can be performed on an AVL tree after deleting a given node: R rotation and L rotation.
+
+Upon the deletion of node X from the AVL tree, if node A becomes the critical node (the closest ancestor node on the path from X to the root node that does not have its balance factor as 1, 0, or –1), then the type of rotation depends on whether X is in the left sub-tree of A or in its right sub-tree. If the node to be deleted is present in the left sub-tree of A, then L rotation is applied; otherwise, if X is in the right sub-tree, R rotation is performed.
 
 
 ## Clean Code and Best Practices
