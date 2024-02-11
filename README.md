@@ -2687,10 +2687,291 @@ int main() {
 }
 ```
 
+<!--
+## 11. Advanced Data Structures (Optional)
+- Graphs and their representations.
+- Hash tables (hash tables).
+- Balanced data structures (e.g., AVL trees).
+!-->
 
 ## Advanced Data Structures
 
-## Optimizing Code Efficiency: Best Practices in C
+In the coding universe, we've got more than just the basics – enter advanced data structures. Imagine them as the superheroes of data management, like heaps, binary trees, AVL trees, and more. These aren't your run-of-the-mill arrays; they're the cool kids on the block, each with a unique superpower.
+
+Think of heaps as the priority queuers, always putting things in order. Binary trees? They're like speed demons, making searches and insertions a breeze. AVL trees? The balancing acts of the data world, ensuring everything stays in check.
+
+## Graphs and their Representations
+
+A graph, as an abstract data structure, is the embodiment of the mathematical concept it's named after. Essentially, it's a collection of vertices (or nodes) and edges forming connections between these vertices. Unlike the structured parent-to-child relationship seen in trees, graphs thrive on complexity, allowing for a diverse range of relationships to flourish.
+
+**Why are Graphs Useful?**
+
+Graphs are widely used to model any situation where entities or things are related to each other in pairs. For example, the following information can be represented by graphs:
+
+- Family trees in which the member nodes have an edge from parent to each of their children.
+
+- Transportation networks in which nodes are airports, intersections, ports, etc. The edges can be airline flights, one-way roads, shipping routes, etc.
+
+**Definition**
+
+A graph G is defined as an ordered set $(V, E)$, where $V(G)$ represents the set of vertices and $E(G)$ represents the edges that connect these vertices. The example below shows a graph with $V(G) = {A, B, C, D and E}$ and $E(G) = {(A, B), (B, C), (A, D), (B, D), (D, E), (C, E)}$. Note that there are five vertices or nodes and six edges in the graph.
+
+```mermaid
+graph LR;
+    A --- B
+    A --- D
+    B --- C
+    B --- D
+    C --- E
+    D --- E
+```
+
+> ***Note:** Undirected Graph*
+
+A graph can be directed or undirected. In an undirected graph, edges do not have any direction associated with them. That is, if an edge is drawn between nodes $A$ and $B$, then the nodes can be traversed from $A$ to $B$ as well as from $B$ to $A$. The first example shows an undirected graph because it does not give any information about the direction of the edges.
+
+Now, the next example below shows a directed graph. In a directed graph, edges form an ordered pair. If there is an edge from $A$ to $B$, then there is a path from $A$ to $B$ but not from $B$ to $A$. The edge $(A, B)$ is said to initiate from node $A$ (also known as initial node) and terminate at node $B$ (terminal node).
+
+```mermaid
+graph LR;
+    A --> B
+    A --> D
+    B --> C
+    B --> D
+    C --> E
+    D --> E
+```
+
+> ***Note:** Directed Graph*
+
+**Graph Terminology**
+
+***Adjacent Nodes or Neighbours***  
+For every edge, denoted as $e = (u, v)$, connecting nodes $u$ and $v$, the nodes u and v are the end-points and are said to be the adjacent nodes or neighbours.
+
+***Degree of a Node***  
+The degree of a node $u$, denoted as $deg(u)$, is the total number of edges containing the node u. If $deg(u) = 0$, it means that u does not belong to any edge, and such a node is known as an isolated node.
+
+***Regular Graph***  
+A regular graph is a graph where each vertex has the same number of neighbours. That is, every node has the same degree. A regular graph with vertices of degree $k$ is called a *k–regular graph* or a *regular graph of degree* $k$. 
+
+```mermaid
+graph TD
+    subgraph "0-Regular Graph"
+        A((0))
+        B((1))
+        C((2))
+        D((3))
+    end
+
+    subgraph "1-Regular Graph"
+        subgraph "Group 1"
+            E((0))
+            F((1))
+        end
+        subgraph "Group 2"
+            G((2))
+            H((3))
+        end
+        E --- F
+        G --- H
+    end
+
+    subgraph "2-Regular Graph"
+        subgraph "Group 1"
+            I((0))
+            J((1))
+            K((2))
+            J --- K
+            I --- K
+            I --- J
+        end
+        subgraph "Group 2"
+            L((3))
+            M((4))
+            N((5))
+            L --- M
+            M --- N
+            N --- L
+        end
+    end
+```
+
+***Path***  
+A path $P$, written as $P = {v0, v1, v2, ..., vn}$, of length n from a node $u$ to $v$ is defined as a sequence of $(n+1)$ nodes. Here, $u = v0$, $v = vn$, and $vi–1$ is adjacent to $vi$ for $i = 1, 2, 3, ..., n$.
+
+***Closed Path***  
+A path $P$ is known as a closed path if the edge has the same end-points. That is, if $v0 = vn$.
+
+***Simple Path***  
+A path $P$ is known as a simple path if all the nodes in the path are distinct with an exception that $v_0$ may be equal to $v_n$. If $v_0 = v_n$, then the path is called a closed simple path.
+
+***Cycle***  
+A path in which the first and the last vertices are the same. A simple cycle has no repeated edges or vertices (except the first and last vertices).
+
+***Connected Graph***  
+A graph is said to be connected if for any two vertices $(u, v)$ in $V$ there is a path from $u$ to $v$. That is to say that there are no isolated nodes in a connected graph. A connected graph that does not have any cycle is called a tree. Therefore, a tree is treated as a special graph.
+
+```mermaid
+graph TD
+    subgraph "(a) Multi-graph"
+        A((A))
+        B((B))
+        C((C))
+        D((D))
+        E((E))
+        A --- B
+        A --- B  %% Duplicate edge
+        A --- C
+        B --- C
+        C --- D
+        D --- E
+    end
+
+    subgraph "(b) Tree"
+        F((F))
+        G((G))
+        H((H))
+        I((I))
+        J((J))
+        K((K))
+        F --- G
+        F --- H
+        G --- I
+        G --- J
+        H --- K
+    end
+
+    subgraph "(c) Weighted Graph"
+        L((L))
+        M((M))
+        N((N))
+        O((O))
+        P((P))
+        L -->|4| M
+        L -->|7| N
+        M -->|2| O
+        N -->|6| P
+        O -->|3| P
+    end
+
+```
+
+***Complete Graph***  
+A graph $G$ is said to be complete if all its nodes are fully connected. That is, there is a path from one node to every other node in the graph. A complete graph has $n(n–1)/2$ edges, where $n$ is the number of nodes in $G$.
+
+***Clique***  
+In an undirected graph $G = (V, E)$, clique is a subset of the vertex set $C \subseteq V$, such that for every two vertices in $C$, there is an edge that connects two vertices.
+
+***Labelled Graph or Weighted Graph***  
+A graph is considered labelled when every edge is assigned some data. In the case of a weighted graph, the edges are assigned weights or lengths. The weight of an edge, denoted by $w(e)$, is a positive value indicating the cost of traversing the edge.
+
+***Multiple Edges***  
+Distinct edges connecting the same end-points are referred to as multiple edges. That is, $e = (u, v)$ and $e' = (u, v)$ are identified as multiple edges in $G$.
+
+***Loop***  
+An edge with identical end-points is termed a loop, denoted as $e = (u, u)$.
+
+***Multi-graph***  
+A graph featuring multiple edges and/or loops is termed a multi-graph. 
+
+***Size of a Graph***  
+The size of a graph corresponds to the total number of edges it encompasses.
+
+#
+
+***Directed Graphs***
+
+A directed graph $G$, also known as a digraph, is a graph where each edge has an assigned direction. In a directed graph, an edge is represented as an ordered pair $(u, v)$ of nodes in $G$. For an edge $(u, v)$:
+
+- The edge originates from node $u$ and concludes at node $v$.
+- Node $u$ is termed the origin or initial point of the edge $(e)$, while node $v$ is known as the destination or terminal point of $e$.
+- Node $u$ serves as the predecessor of $v$, and reciprocally, $v$ acts as the successor of $u$.
+- Nodes $u$ and $v$ are considered adjacent to each other.
+
+| Terminology                           | Description                                                                                                                |
+|---------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| Out-degree of a node                  | The out-degree of a node $u$, denoted as $outdeg(u)$, is the count of edges originating from $u$.                          |
+| In-degree of a node                   | The in-degree of a node $u$, denoted as $indeg(u)$, is the count of edges terminating at $u$.                                |
+| Degree of a node                      | The degree of a node, denoted as $deg(u)$, is the sum of its in-degree and out-degree. Thus, $deg(u) = indeg(u) + outdeg(u)$.  |
+| Isolated vertex                       | A vertex with degree zero, implying it is not an end-point of any edge.                                                     |
+| Pendant vertex (leaf vertex)           | A vertex with degree one.                                                                                                  |
+| Cut vertex                            | A vertex whose removal would disconnect the remaining graph.                                                              |
+| Source                                | A node $u$ is a source if it has a positive out-degree but a zero in-degree.                                               |
+| Sink                                  | A node $u$ is a sink if it has a positive in-degree but a zero out-degree.                                                 |
+| Reachability                          | A node $v$ is reachable from node $u$ if there exists a directed path from $u$ to $v$.                                     |
+| Strongly connected directed graph     | A digraph is strongly connected if there is a path between every pair of nodes.                                             |
+| Unilaterally connected graph           | A digraph is unilaterally connected if there exists a path between any pair of nodes $u$, $v$ such that there is a path from $u$ to $v$ or a path from $v$ to $u$, but not both.    |
+| Weakly connected digraph              | A directed graph is weakly connected if it is connected by ignoring the direction of edges.                                 |
+| Parallel/Multiple edges               | Distinct edges which connect the same end-points are called multiple edges.                   |
+| Simple directed graph                 | A directed graph $G$ is said to be a simple directed graph if and only if it has no parallel edges. However, a simple directed graph may contain cycles with an exception that it cannot have more than one loop at a given node.  |
+
+#
+
+**Transitive Closure of a Directed Graph**
+
+A transitive closure of a graph is constructed to answer reachability questions. That is, is there a path from a node A to node E in one or more hops? A binary relation indicates only whether the node A is connected to node B, whether node B is connected to node C, etc. 
+
+But once the transitive closure is constructed we can easily determine in $O(1)$ time whether node E is reachable from node A or not. Like the adjacency list, transitive closure is also stored as a matrix $T$, so if $T[1][5] = 1$, then node 5 can be reached from node 1 in one or more hops.
+
+**Definition**  
+For a directed graph G = (V,E), where V is the set of vertices and E is the set of edges, the transitive closure of G is a graph $G* = (V,E*)$. In $G$*, for every vertex pair $v$, $w$ in $V$ there is an edge $(v, w)$ in $E$* if and only if there is a valid path from $v$ to $w$ in $G$.
+
+**Where and Why is it Needed?**  
+Finding the transitive closure of a directed graph is an important problem in the following computational tasks:
+- Transitive closure is used to find the reachability analysis of transition networks representing distributed and parallel systems.
+- It is used in the construction of parsing automata in compiler construction.
+- Recently, transitive closure computation is being used to evaluate recursive database queries (because almost all practical recursive queries are transitive in nature).
+
+**Algorithm**
+
+In order to determine the transitive closure of a graph, we define a matrix **t** where $T_{ij}^{k} = 1$, for $i, j, k = 1, 2, 3, ... n$ if there exists a path in $G$ from the vertex $i$ to vertex $j$ with intermediate vertices in the set $(1, 2, 3, ..., k)$ and 0 otherwise. That is, G* is constructed by adding an edge $(i, j)$ into $E*$ if and only if $T_{ij}^{k} = 1$. 
+
+Look at equation below which shows the relation between $k$ and $T_{ij}$.
+
+$$
+Where k = 0
+T^{0}_{ij} =
+\begin{cases} 
+0 & \text{if } (i, j) \text{ is not in } E \\
+1 & \text{if } (i, j) \text{ is in } E 
+\end{cases}
+$$
+
+$$ Where \\ k \\ \geq 1 \\ \\ T_{ij}^{k} = T_{ij}^{k-1} \\ V \\ ( \\ T_{ik}^{k-1} \\ \wedge \\ T_{kj}^{k-1} \\ ) $$
+
+> ***Note:** Relation between $k$ and $T_{ij}^{k}$*
+
+
+```r
+TRANSITIVE_CLOSURE(A, T, n)
+STEP 1: SET i=1, j=1, k=1
+STEP 2: Repeat STEPS 3 and 4 while i <= n
+STEP 3:   Repeat STEP 4 while j <= n
+STEP 4:     IF (A[i][j] = 1)
+              SET T[i][j] = 1
+            ELSE
+              SET T[i][j] = 0
+              INCREMENT j
+            [END OF LOOP]
+          INCREMENT i
+        [END OF LOOP]
+STEP 5: Repeat STEPS 6 to 11 while k <= n
+STEP 6:   Repeat STEPS 7 to 1 while i <= n
+STEP 7:     Repeat STEPS 8 and 9 while j <= n
+STEP 8:       SET T[i,j] = T[i][j] V ( T[i][k] T[k][j])
+STEP 9:       INCREMENT j
+            [END OF LOOP]
+          INCREMENT i
+          [END OF LOOP]
+STEP 10: INCREMENT k
+        [END OF LOOP]
+STEP 12: END
+```
+
+> ***Note:**  Algorithm to find the transitive enclosure of a Graph G*
+
+
 
 
 ## Clean Code and Best Practices
@@ -2983,10 +3264,5 @@ Within the realm of C programming, where efficiency is a cornerstone, the optimi
 - Introduction to trees.
 - Binary search trees.
 - Tree traversal.
-
-## 11. Advanced Data Structures (Optional)
-- Graphs and their representations.
-- Hash tables (hash tables).
-- Balanced data structures (e.g., AVL trees).
 
 !-->
