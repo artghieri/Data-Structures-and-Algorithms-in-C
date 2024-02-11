@@ -2687,20 +2687,13 @@ int main() {
 }
 ```
 
-<!--
-## 11. Advanced Data Structures (Optional)
-- Graphs and their representations.
-- Hash tables (hash tables).
-- Balanced data structures (e.g., AVL trees).
-!-->
-
 ## Advanced Data Structures
 
 In the coding universe, we've got more than just the basics – enter advanced data structures. Imagine them as the superheroes of data management, like heaps, binary trees, AVL trees, and more. These aren't your run-of-the-mill arrays; they're the cool kids on the block, each with a unique superpower.
 
 Think of heaps as the priority queuers, always putting things in order. Binary trees? They're like speed demons, making searches and insertions a breeze. AVL trees? The balancing acts of the data world, ensuring everything stays in check.
 
-## Graphs and their Representations
+### Graphs and their Representations
 
 A graph, as an abstract data structure, is the embodiment of the mathematical concept it's named after. Essentially, it's a collection of vertices (or nodes) and edges forming connections between these vertices. Unlike the structured parent-to-child relationship seen in trees, graphs thrive on complexity, allowing for a diverse range of relationships to flourish.
 
@@ -2971,6 +2964,704 @@ STEP 12: END
 
 > ***Note:**  Algorithm to find the transitive enclosure of a Graph G*
 
+#
+
+### BI-CONNECTED Components
+
+A vertex $v$ of $G$ is called an articulation point if removing $v$ along with the edges incident on $v$ results in a graph that has at least two connected components. A bi-connected graph (shown in Fig. 13.10) is defined as a connected graph that has no articulation vertices. That is, a bi-connected graph is connected and non-separable, meaning that even if we remove any vertex from the graph, the resultant graph remains connected. By definition:
+
+- A bi-connected undirected graph is a connected graph that cannot be broken into disconnected pieces by deleting any single vertex.
+- In a bi-connected directed graph, for any two vertices $v$ and $w$, there are two directed paths from $v$ to $w$ which have no vertices in common other than $v$ and $w$.
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/cb3e6361-4edb-46c6-9dc1-a0b93fe36e55)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 388)*
+
+As for vertices, there is a related concept for edges. An edge in a graph is called a bridge if removing that edge results in a disconnected graph. Also, an edge in a graph that does not lie on a cycle is a bridge. This means that a bridge has at least one articulation point at its end, although it is not necessary that the articulation point is linked to a bridge. 
+
+Look at the graph shown in Fig. 13.11. In the graph, CD and DE are bridges. Consider some more examples shown in Fig. 13.12.
+
+#
+
+### Representation of Graphs
+
+Graphs can be stored in a computer's memory using three common methods:
+- **Sequential Representation:** This involves utilizing an adjacency matrix.
+- **Linked Representation:** This method employs an adjacency list to store the neighbors of a node through a linked list.
+- **Adjacency Multi-List:** An extension of linked representation.
+
+**Adjacency Matrix Representation**
+
+An adjacency matrix is employed to depict the adjacency relationships among nodes in a graph. By definition, two nodes are considered adjacent if there exists an edge connecting them.
+
+In a directed graph $G$, if node $v$ is adjacent to node $u$, there is assuredly an edge from $u$ to $v$. In other words, if $v$ is adjacent to $u$, traversing a single edge allows us to move from $u$ to $v$. For a graph $G$ with $n$ nodes, the adjacency matrix will be of dimensions $n \times n$.
+
+In an adjacency matrix, rows and columns are labeled by graph vertices. An entry $a_{ij}$ in the matrix will contain 1 if vertices $v_i$ and $v_j$ are adjacent, and 0 if they are not. This relationship is summarized in Fig. 13.13.
+
+As an adjacency matrix exclusively contains 0s and 1s, it is referred to as a bit matrix or a Boolean matrix. The entries in the matrix depend on the ordering of the nodes in $G$. Therefore, a change in the order of nodes will yield a different adjacency matrix. Figure 13.14 illustrates some graphs along with their corresponding adjacency matrices.
+
+$$
+a_{ij} =
+\begin{cases}
+    1 & \text{if } i \text{ is adjacent to } V_j \text{ (there is an edge } (V_i, V_j)) \\
+    0 & \text{otherwise}
+\end{cases}
+$$
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/6bfefa3b-ddbc-41cd-8e60-681a9400e17f)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 388)*
+
+**Conclusions from Adjacency Matrix Analysis:**
+
+From the above examples, we can draw the following conclusions:
+
+- For a simple graph (without loops), the adjacency matrix has 0s on the diagonal.
+- The adjacency matrix of an undirected graph is symmetric.
+- The memory use of an adjacency matrix is O($n^2$), where $n$ is the number of nodes in the graph.
+- The number of 1s (or non-zero entries) in an adjacency matrix is equal to the number of edges in the graph.
+- The adjacency matrix for a weighted graph contains the weights of the edges connecting the nodes.
+
+Now, let us delve into the powers of an adjacency matrix. From the adjacency matrix $A^1$, we can conclude that an entry 1 in the $i$-th row and $j$-th column means that there exists a path of length 1 from $v_i$ to $v_j$. Now consider $A^2$, $A^3$, and $A^4$.
+
+$$
+(a_{ij})^2 = \sum a_{ik} \cdot a_{kj}
+$$
+
+Any entry $a_{ij} = 1$ if $a_{ik} = 1$ and $a_{kj} = 1$. That is, if there is an edge $(v_i, v_k)$ and $(v_k, v_j)$, then there is a path from $v_i$ to $v_j$ of length 2.
+
+Similarly, every entry in the $i$-th row and $j$-th column of $A^3$ gives the number of paths of length 3 from node $v_i$ to $v_j$.
+
+In general terms, every entry in the $i$-th row and $j$-th column of $A^n$ (where $n$ is the number of nodes in the graph) gives the number of paths of length $n$ from node $v_i$ to $v_j$. Consider a directed graph given in Fig. 13.15. Given its adjacency matrix $A$, let us calculate $A^2$, $A^3$, and $A^4$.
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/2d99e3b8-95b0-41a9-9243-51196ca694f9)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 389)*
+
+$$
+A^2 = A^1 \times A^1 = 
+  \begin{bmatrix}
+  0 & 1 & 1 & 0 \\
+  0 & 0 & 1 & 1 \\
+  1 & 0 & 0 & 1 \\
+  1 & 0 & 0 & 0 \\
+  \end{bmatrix}
+  \times
+  \begin{bmatrix}
+  0 & 1 & 1 & 0 \\
+  0 & 0 & 1 & 1 \\
+  1 & 0 & 0 & 1 \\
+  1 & 0 & 0 & 0 \\
+  \end{bmatrix}
+  \\ = \\
+  \begin{bmatrix}
+  0 & 0 & 1 & 2 \\
+  1 & 1 & 0 & 1 \\
+  1 & 1 & 2 & 1 \\
+  0 & 0 & 1 & 2 \\
+  \end{bmatrix}
+  $$
+
+$$
+A^3 = A^2 \times A^1 = 
+\begin{bmatrix}
+0 & 0 & 1 & 2 \\
+1 & 1 & 0 & 1 \\
+1 & 1 & 2 & 1 \\
+0 & 0 & 1 & 2 \\
+\end{bmatrix}
+\times
+\begin{bmatrix}
+0 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 \\
+1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 \\
+\end{bmatrix}
+\\ = \\
+\begin{bmatrix}
+2 & 2 & 0 & 1 \\
+1 & 2 & 2 & 1 \\
+0 & 1 & 2 & 1 \\
+1 & 2 & 2 & 3 \\
+\end{bmatrix}
+$$
+
+$$
+A^4 = A^3 \times A^1 = 
+\begin{bmatrix}
+2 & 2 & 0 & 1 \\
+1 & 2 & 2 & 1 \\
+0 & 1 & 2 & 1 \\
+1 & 2 & 2 & 3 \\
+\end{bmatrix}
+\times
+\begin{bmatrix}
+0 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 \\
+1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 \\
+\end{bmatrix}
+\\ = \\
+\begin{bmatrix}
+1 & 3 & 4 & 2 \\
+3 & 4 & 2 & 3 \\
+1 & 1 & 1 & 3 \\
+3 & 4 & 2 & 3 \\
+\end{bmatrix}
+$$
+
+Now, based on the above calculations, we define matrix $B$ as:
+
+$B_r = A^1 + A^2 + A^3 + \ldots + A^r$
+
+An entry in the $i$-th row and $j$-th column of matrix $B_r$ gives the number of paths of length $r$ or less than $r$ from vertex $v_i$ to $v_j$. The main goal in defining matrix $B$ is to obtain the path matrix $P$. The path matrix $P$ can be calculated from $B$ by setting an entry $P_{ij} = 1$ if $B_{ij}$ is non-zero, and $P_{ij} = 0$ otherwise. The path matrix is used to show whether there exists a simple path from node $v_i$ to $v_j$ or not.
+
+$$ P_{ij} = 
+\begin{cases} 
+1 & \text{if there is a path from } v_i \text{ to } v_j \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+Let's calculate matrix B and matrix P using the above discussion.
+
+$$ B =
+\begin{bmatrix}
+0 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 \\
+1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 \\
+\end{bmatrix}
++
+\begin{bmatrix}
+0 & 0 & 1 & 2 \\
+1 & 1 & 0 & 1 \\
+1 & 1 & 2 & 1 \\
+0 & 0 & 1 & 2 \\
+\end{bmatrix}
++
+\begin{bmatrix}
+2 & 2 & 0 & 1 \\
+1 & 2 & 2 & 1 \\
+0 & 1 & 2 & 1 \\
+1 & 2 & 2 & 3 \\
+\end{bmatrix}
++
+\begin{bmatrix}
+1 & 3 & 4 & 2 \\
+3 & 4 & 2 & 3 \\
+1 & 1 & 1 & 3 \\
+3 & 4 & 2 & 3 \\
+\end{bmatrix}
+$$
+
+$$ B =
+\begin{bmatrix}
+3 & 6 & 6 & 5 \\
+3 & 7 & 5 & 5 \\
+2 & 2 & 5 & 5 \\
+6 & 8 & 7 & 8 \\
+\end{bmatrix}
+$$
+
+Now, the path matrix \(P\) can be given as:
+
+$$ P =
+\begin{bmatrix}
+1 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 \\
+\end{bmatrix}
+$$
+
+**Adjacency List Representation**
+
+An adjacency list is another way in which graphs can be represented in the computer's memory. This structure comprises a list of all nodes in $G$. Additionally, each node is linked to its list containing the names of all other nodes that are adjacent to it.
+
+The key advantages of using an adjacency list are:
+
+- It is easy to follow and clearly shows the adjacent nodes of a particular node.
+- It is often used for storing graphs with a small-to-moderate number of edges. In other words, an adjacency list is preferred for representing sparse graphs in the computer's memory; otherwise, an adjacency matrix is a good choice.
+- Adding new nodes in $G$ is easy and straightforward when $G$ is represented using an adjacency list. Adding new nodes in an adjacency matrix is a difficult task, as the size of the matrix needs to be changed, and existing nodes may have to be reordered.
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/32bc7c12-a382-4c6c-aa28-d13ba197135a)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 390)*
+
+Consider the graph given in Fig. 13.17 and observe how its adjacency list is stored in memory.
+
+For a directed graph, the sum of the lengths of all adjacency lists is equal to the number of edges in $G$. However, for an undirected graph, the sum of the lengths of all adjacency lists is equal to twice the number of edges in $G$ because an edge $(u, v)$ means an edge from node $u$ to $v$ as well as an edge from $v$ to $u$. Adjacency lists can also be modified to store weighted graphs.
+
+Let us now see an adjacency list for an undirected graph as well as a weighted graph. This is shown in Fig. 13.18.
+
+**Adjacency Multi-list Representation**
+
+Graphs can also be represented using multi-lists, a modified version of adjacency lists. Adjacency multi-list is an edge-based, rather than a vertex-based, representation of graphs. A multi-list representation consists of two parts – a directory of nodes’ information and a set of linked lists storing information about edges. While there is a single entry for each node in the node directory, every node, on the other hand, appears in two adjacency lists (one for the node at each end of the edge). For example, the directory entry for node $i$ points to the adjacency list for node $i$. This means that the nodes are shared among several lists.
+
+In a multi-list representation, the information about an edge $(v_i, v_j)$ of an undirected graph can be stored using the following attributes:
+
+- **M:** A single bit field to indicate whether the edge has been examined or not.
+- **$v_i$:** A vertex in the graph that is connected to vertex $v_j$ by an edge.
+- **$v_j$:** A vertex in the graph that is connected to vertex $v_i$ by an edge.
+- **Link $i$ for $v_i$:** A link that points to another node that has an edge incident on $v_i$.
+- **Link $j$ for $v_i$:** A link that points to another node that has an edge incident on $v_j$.
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/9c93290c-7486-4ca4-ae68-44a10bc596db)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 391)*
+
+Consider the undirected graph given in Fig. 13.19.
+
+The adjacency multi-list for the graph can be given as:
+
+|   |   |   |   |   |
+|---|---|---|---|---|
+| Edge 1 | 0 | 1 | Edge 2 | Edge 3 |
+| Edge 2 | 0 | 2 | NULL | Edge 4 |
+| Edge 3 | 1 | 3 | NULL | Edge 4 |
+| Edge 4 | 2 | 3 | NULL | Edge 5 |
+| Edge 5 | 3 | 4 | NULL | Edge 6 |
+| Edge 6 | 4 | 5 | Edge 7 | NULL |
+| Edge 7 | 4 | 6 | NULL | NULL |
+
+Using the adjacency multi-list given above, the adjacency list for vertices can be constructed as shown below:
+
+| VERTEX  |  LIST OF EDGES                  |
+|---------|--------------------------|
+| 0       | Edge 1, Edge 2           |
+| 1       | Edge 1, Edge 3           |
+| 2       | Edge 2, Edge 4           |
+| 3       | Edge 3, Edge 4, Edge 5   |
+| 4       | Edge 5, Edge 6, Edge 7   |
+| 5       | Edge 6                   |
+| 6       | Edge 7                   |
+
+#
+
+## Hashing
+
+Certainly! Here's an improved version:
+
+In our discussion, we explored two search algorithms: linear search and binary search. Linear search has a time complexity proportional to $O(n)$, making it suitable for arrays with a relatively small number of elements. On the other hand, binary search boasts a time complexity of $O(log \\ n)$, offering efficiency for larger arrays.
+
+However, what if we aim to optimize the search operation even further, achieving constant time complexity $O(1)$? In simpler terms, is there a method to search an array in constant time, regardless of its size?
+
+| Key      | Array of Employees’ Records         |
+|----------|-------------------------------------|
+| Key[0]   | Employee Record with Emp_ID 0       |
+| Key[1]   | Employee Record with Emp_ID 1       |
+| Key[2]   | Employee Record with Emp_ID 2       |
+| ...      | ...                                 |
+| Key[98]  | Employee Record with Emp_ID 98      |
+| Key[99]  | Employee Record with Emp_ID 99      |
+
+
+> ***Note:** Records of Employees*
+
+There are two solutions to this problem. Let's illustrate the first solution with an example. Consider a small company with 100 employees, each assigned a unique Emp_ID in the range of 0–99. To organize the records efficiently in an array, each employee's Emp_ID serves as an index where their record will be stored.
+
+In this scenario, accessing any employee's record becomes a direct operation once we know their Emp_ID, as the array index corresponds to the Emp_ID number. However, in practical terms, this implementation is hardly feasible.
+
+Let us assume that the same company uses a five-digit Emp_ID as the primary key. In this case, key values will range from 00000 to 99999. If we want to use the same technique as above, we need an array of size 100,000, of which only 100 elements will be used.
+
+| Key      | Array of Employees’ Records         |
+|----------|-------------------------------------|
+| Key[00000] | Employee record with Emp_ID 00000  |
+| ...      | ...                                 |
+| Key[n]     | Employee record with Emp_ID n      |
+| ...      | ...                                 |
+| Key[99998] | Employee record with Emp_ID 99998  |
+| Key[99999] | Employee record with Emp_ID 99999  |
+
+> ***Note:** Records of ECertainly, here's an improved version:
+
+Allocating excessive storage space solely to ensure each employee's record is in a unique and predictable location is impractical.
+
+Whether we employ a two-digit primary key (Emp_ID) or a five-digit key, given the company has only 100 employees, we'll be utilizing just 100 locations in the array. To maintain efficiency and minimize the array size to the practical usage (100 elements), an alternative approach is to use only the last two digits of the key to identify each employee. For instance, an employee with Emp_ID 79439 would be stored in the array at index 39, and an employee with Emp_ID 12345 would have their record stored at the 45th location.
+
+In the second solution, elements are not stored according to the value of the key. Therefore, we need a method to convert a five-digit key number to a two-digit array index. This conversion necessitates a function, which we refer to as a hash table for an array, and the function that performs the transformation is termed a hash function.mployees with a five-digit Emp_ID*
+
+#
+
+**Hash Tables**
+
+A hash table is a data structure in which keys are mapped to array positions through a hash function. In the discussed example, we employ a hash function that extracts the last two digits of the key, mapping the keys to array locations or indices. A value stored in a hash table can be searched in O(1) time by using a hash function that generates an address from the key, producing the index of the array where the value is stored.
+
+In Figure 15.3, a direct correspondence between the keys and the indices of the array is illustrated. This concept proves useful when the total universe of keys is small, and most of the keys are used from the entire set of keys, akin to our first example where there are 100 keys for 100 employees.
+
+However, when the set K of keys actually used is smaller than the universe of keys (U), a hash table consumes less storage space. The storage requirement for a hash table is O(k), where k is the number of keys actually used.
+
+In a hash table, an element with key k is stored at index h(k), not k. This means a hash function h is used to calculate the index at which the element with key k will be stored. This process of mapping keys to appropriate locations (or indices) in a hash table is called hashing.
+
+Figure 15.4 illustrates a hash table in which each key from the set K is mapped to locations generated by using a hash function. Note that keys k2 and k6 point to the same memory location, known as collision. That is, when two or more keys map to the same memory location, a collision occurs. Similarly, keys k5 and k7 also collide. The primary goal of using a hash function is to reduce the range of array indices that need handling, requiring only K values instead of U values, thereby reducing the required storage space.
+
+
+![image](https://github.com/artghieri/Vaults/assets/102708433/260b0869-a95f-452c-a9d2-ca93decb8c74)
+
+> ***Source:** (Thareja, 2014, Data Structures Using C, 2nd Edition, p. 466)*
+
+#
+
+**Hash Functions**
+
+Certainly, here's an improved version:
+
+A hash function is a mathematical formula that, when applied to a key, produces an integer usable as an index for the key in the hash table. The primary goal of a hash function is to distribute elements relatively, randomly, and uniformly. It aims to generate a unique set of integers within a suitable range to minimize the number of collisions. In practice, no hash function can completely eliminate collisions; however, a good hash function can effectively reduce collisions by uniformly spreading elements throughout the array.
+
+In this section, we'll delve into popular hash functions designed to minimize collisions. But before that, let's examine the properties of a good hash function.
+
+**Properties of a Good Hash Function:**
+
+1. **Low cost:** The execution cost of a hash function must be minimal, making the hashing technique preferable over other approaches. For instance, if a binary search algorithm can search an element in a sorted table of n items with log2 n key comparisons, the hash function must be less costly than performing log2 n key comparisons.
+
+2. **Determinism:** A hash procedure must be deterministic, ensuring that the same hash value is generated for a given input value. This excludes hash functions dependent on external variable parameters (e.g., time of day) and the memory address of the object being hashed (as the object's address may change during processing).
+
+3. **Uniformity:** A good hash function should evenly map keys over its output range. This implies that the probability of generating every hash value in the output range should be roughly the same. Uniformity minimizes the number of collisions and is a crucial property of an effective hash function.
+
+#
+
+**Different Hash Functions**
+
+However, real-world applications may involve alphanumeric keys rather than simple numeric keys. In such cases, the ASCII value of the character can be used to transform it into its equivalent numeric key. Once this transformation is done, any of the hash functions described below can be applied to generate the hash value.
+
+#
+
+**Division Method**
+
+The division method is a straightforward approach to creating a hash of an integer x. It involves dividing x by M and then using the remainder obtained. The hash function for this method is given by:
+
+$$ h(x) = x \mod M $$
+
+The division method is effective for various values of M and, due to requiring only a single division operation, works quickly. However, care should be taken when selecting a suitable value for M.
+
+For example, if M is an even number, then $h(x)$ will be even when x is even and $h(x)$ will be odd when x is odd. While this is not a problem if all possible keys are equiprobable, uneven key probabilities may lead to a non-uniform distribution with the division method.
+
+In practice, it is advisable to choose M as a prime number, as this increases the likelihood of mapping keys uniformly in the output value range. Additionally, M should not be too close to exact powers of 2. For a hash function like $h(x) = x \mod 2^k $, choosing M as a prime number improves distribution, preventing the function from simply extracting the lowest k bits of the binary representation of x.
+
+The division method is extremely simple to implement. The following code segment illustrates how to do this:
+
+```c
+int const M = 97; // a prime number
+int h(int x) {
+    return (x % M);
+}
+```
+
+A potential drawback of the division method is that consecutive keys map to consecutive hash values. While this ensures that consecutive keys do not collide, it also means that consecutive array locations will be occupied. This may lead to performance degradation.
+
+#
+
+Example: Calculate the hash values of keys 1234 and 5462.
+
+**Solution:**
+Setting M = 97, hash values can be calculated as follows:  
+$h(1234) = 1234 \mod 97 = 70$  
+$h(5462) = 5462 \mod 97 = 16$  
+
+Therefore, the hash values for keys 1234 and 5462 are 70 and 16, respectively.
+
+#
+
+**Multiplication Method**
+
+The multiplication method involves the following steps:
+
+**Step 1:** Choose a constant A such that 0 < A < 1.  
+**Step 2:** Multiply the key k by A.  
+**Step 3:** Extract the fractional part of kA.  
+**Step 4:** Multiply the result of Step 3 by the size of the hash table (m).
+
+Hence, the hash function can be expressed as:
+$h(k) = \lfloor m \cdot (kA \mod 1) \rfloor$
+where $(kA \mod 1)$ gives the fractional part of $kA$, and m is the total number of indices in the hash table.
+
+The greatest advantage of this method is its practical applicability to any value of A. While the algorithm performs better with certain values, the optimal choice depends on the characteristics of the data being hashed. Knuth has suggested that the best choice for A is $\frac{\sqrt{5} - 1}{2} \approx 0.6180339887 $.
+
+#
+Example: Given a hash table of size 1000, map the key 12345 to an appropriate location in the hash table.
+
+**Solution:**
+We will use $A = 0.618033$, $m = 1000$, and $k = 12345$.  
+$h(12345) = \lfloor 1000 \cdot (12345 \times 0.618033 \mod 1) \rfloor $  
+$h(12345) = \lfloor 1000 \cdot (7629.617385 \mod 1) \rfloor $  
+$h(12345) = \lfloor 1000 \cdot 0.617385 \rfloor $  
+$h(12345) = \lfloor 617.385 \rfloor $  
+$h(12345) = 617 $  
+
+Therefore, the key 12345 maps to the location 617 in the hash table.
+
+#
+
+**Mid-Square Method**
+
+The mid-square method is a good hash function which works in two steps:
+
+**Step 1:** Square the value of the key. That is, find $k^2$.
+
+**Step 2:** Extract the middle $r$ digits of the result obtained in Step 1.
+
+The algorithm works well because most or all digits of the key value contribute to the result. This is because all the digits in the original key value contribute to produce the middle digits of the squared value. Therefore, the result is not dominated by the distribution of the bottom digit or the top digit of the original key value.
+
+In the mid-square method, the same $r$ digits must be chosen from all the keys. Therefore, the hash function can be given as:
+
+$$h(k) = s$$
+
+where $s$ is obtained by selecting $r$ digits from $k^2$.
+
+#
+
+Example: Calculate the hash value for keys 1234 and 5642 using the mid-square method. The hash table has 100 memory locations.
+
+**Solution:** Note that the hash table has 100 memory locations whose indices vary from 0 to 99. This means that only two digits are needed to map the key to a location in the hash table, so $r = 2$.
+
+When $k = 1234$, $k^2 = 1522756$, $h(1234) = 27$.
+
+When $k = 5642$, $k^2 = 31832164$, $h(5642) = 21$.
+
+Observe that the 3rd and 4th digits starting from the right are chosen.
+
+#
+
+**Folding Method**
+
+The folding method works in the following two steps:
+
+**Step 1:** Divide the key value into a number of parts. That is, divide $k$ into parts $k_1, k_2, ..., k_n$, where each part has the same number of digits except the last part which may have fewer digits than the other parts.
+
+**Step 2:** Add the individual parts. That is, obtain the sum of $k_1 + k_2 + ... + k_n$. The hash value is produced by ignoring the last carry, if any.
+
+Note that the number of digits in each part of the key will vary depending upon the size of the hash table. For example, if the hash table has a size of 1000, then there are 1000 locations in the hash table. To address these 1000 locations, we need at least three digits; therefore, each part of the key must have three digits except the last part which may have fewer digits.
+
+#
+
+Example: Given a hash table of 100 locations, calculate the hash value using the folding method for keys 5678, 321, and 34567.
+
+**Solution:**
+Since there are 100 memory locations to address, we will break the key into parts where each part (except the last) will contain two digits. The hash values can be obtained as shown below:
+
+For the key 5678:
+- $k_1 = 56$
+- $k_2 = 78$
+- $Hash = k_1 + k_2 = 56 + 78 = 134$
+
+For the key 321:
+- $k_1 = 03$ *(Note: Padded with leading zero as needed)*
+- $k_2 = 21$
+- $Hash = k_1 + k_2 = 03 + 21 = 24$
+
+For the key 34567:
+- $k_1 = 34$
+- $k_2 = 56$
+- $k_3 = 07$
+- $Hash = k_1 + k_2 + k_3 = 34 + 56 + 07 = 97$
+
+These values represent the hash values for the respective keys using the folding method.
+
+| Key      | Parts5678                           | 321 | 34567                     |
+|----------|---------------------------------|-----|---------------------------------|
+| Parts     | 56 and 78                       | 134 | 34 (ignore the last carry)      |
+| Sum      | 32 and 1                        | 33  | 33                              |
+| Hash Value     | 34, 56 and 7                    | 97  | 97                              |
+
+#
+
+#### PROS and CONS of Hashing
+
+| **Pros**                               | **Cons**                                                                         |
+|----------------------------------------|-----------------------------------------------------------------------------------|
+| 1. **Space Efficiency:** Hashing does not require extra space to store indices, making it space-efficient compared to some other data structures.    | 1. **Locality and Sequential Retrieval:** Hashing usually lacks locality and sequential retrieval by key. This can result in a more random access pattern, especially during insertion and retrieval of data values. |
+| 2. **Fast Data Access:** Hash tables provide fast access to data, often in constant time $(O(1))$, which is advantageous for quick data retrieval.       | 2. **Choosing Effective Hash Function:** Selecting an effective hash function is more of an art than a science. In some cases, creating a poor hash function, especially in open-addressed hash tables, can be a challenge. |
+| 3. **Rapid Updates:** Hashing supports rapid updates, allowing efficient insertion and deletion of data values.                         |                                                                                   |
+
+In summary, while hashing offers advantages such as space efficiency, fast data access, and rapid updates, it also comes with drawbacks related to locality, sequential retrieval, and the need for careful selection of hash functions.
+
+#
+
+### Applications of Hashing
+
+Hash tables play a crucial role in scenarios involving the rapid access of extensive datasets for efficient search and information retrieval. Several notable applications of hashing highlight its significance:
+
+1. **Database Indexing:**
+   - Hashing is extensively employed in database indexing. Many database management systems utilize a dedicated index file to store key information. When retrieving data from a file, the index file is consulted to quickly locate the exact record position in the database file, often represented as a hashed value.
+
+2. **File and Directory Hashing in High-Performance File Systems:**
+   - High-performance file systems leverage file and directory hashing alongside caching techniques. These complementary approaches enhance file access efficiency. Hashing facilitates swift lookups of file locations in memory, contributing to faster access compared to alternative methods.
+
+3. **Compiler Symbol Tables in C++:**
+   - Hashing is a fundamental component in implementing compiler symbol tables, especially in languages like C++. Symbol tables maintain records of all user-defined symbols within a C++ program. Hashing enables the compiler to swiftly retrieve variable names and associated attributes.
+
+4. **Internet Search Engines:**
+   - Hashing is widely integrated into the core functionality of Internet search engines. It aids in organizing and retrieving information from vast datasets, enabling search engines to deliver prompt and relevant search results.
+
+These examples underscore the versatility of hashing in optimizing data access, indexing, and retrieval mechanisms across diverse computing applications.
+
+#
+
+**Real World Applications of Hashing**
+
+**Password Storage:**
+Hashing is commonly employed in the secure storage of passwords. Instead of storing actual passwords in databases, systems store the hashed values of passwords. When a user attempts to log in, the system hashes the entered password and compares it with the stored hash. This way, even if the database is compromised, attackers would only obtain hashed values, making it challenging to retrieve the original passwords.
+
+**Data Integrity in Cryptography:**
+Hash functions are crucial in ensuring data integrity in cryptographic applications. When transferring files or messages over a network, a hash value (often called a checksum or digest) is computed for the original data. This hash value is then sent along with the data. Upon receiving the data, the recipient computes the hash of the received data and compares it with the originally transmitted hash. If they match, it indicates that the data hasn't been altered during transmission.
+
+**Distributed Hash Tables (DHTs) in Peer-to-Peer Networks:**
+Distributed Hash Tables are utilized in peer-to-peer (P2P) networks for efficient and scalable distributed data storage and retrieval. Nodes in the network are assigned keys, and the data is distributed across these nodes based on their keys using a hash function. This allows for quick lookup and retrieval of data by efficiently determining which node in the network should store or retrieve a particular piece of information. DHTs are commonly employed in distributed file-sharing systems and other decentralized applications.
+
+
+## AVL Trees
+
+The AVL tree, named after its inventors G.M. Adelson-Velsky and E.M. Landis in 1962, is a self-balancing binary search tree. It is recognized as an AVL tree due to its key property: the heights of the two sub-trees of any node differ by at most one. This characteristic earns the AVL tree the designation of a height-balanced tree. The primary advantage of utilizing an AVL tree is its efficiency, ensuring $O(log \\ n)$ time complexity for search, insert, and delete operations in both average and worst-case scenarios. This efficiency is achieved by maintaining a balanced structure, limiting the height of the tree to $O(log \\ n)$.
+
+In the structure of an AVL tree, which closely resembles that of a binary search tree, a notable distinction lies in the inclusion of an additional variable known as the BalanceFactor. Each node in the AVL tree is equipped with this balance factor, calculated by subtracting the height of its right sub-tree from the height of its left sub-tree. An AVL tree is deemed height-balanced when every node possesses a balance factor of -1, 0, or 1. Any node with a balance factor outside this range is considered unbalanced, necessitating a rebalancing operation for the tree.
+
+$$Balance factor = Height (left sub-tree) – Height (right sub-tree)$$
+
+In the explanation of AVL tree balance factors:
+
+- If the balance factor of a node is 1, it indicates that the left sub-tree of the tree is one level higher than that of the right sub-tree. Such a tree is referred to as a left-heavy tree.
+- If the balance factor of a node is 0, it means that the height of the left sub-tree (the longest path in the left sub-tree) is equal to the height of the right sub-tree.
+- If the balance factor of a node is -1, it implies that the left sub-tree of the tree is one level lower than that of the right sub-tree. Such a tree is called a right-heavy tree.
+
+Observing the example below, nodes 18, 39, 54, and 72 have no children, so their balance factor is 0. Node 27 has one left child and zero right child, resulting in the height of the left sub-tree being 1 and the right sub-tree being 0, making its balance factor 1. For node 36, the left sub-tree has a height of 2, and the right sub-tree has a height of 1, giving it a balance factor of 2 – 1 = 1. Similarly, the balance factor of node 45 is 3 – 2 = 1, and node 63 has a balance factor of 0 (1 – 1).
+
+```mermaid
+graph TD
+
+subgraph Right_Heavy_AVL_Tree
+    A[45]
+    B[36]
+    C[63]
+    D[27]
+    E[39]
+    F[54]
+    G[72]
+    H[70]
+    
+    A --> |0| B
+    A --> |-1| C
+    B --> |0| D
+    B --> |0| E
+    C --> |-1| F
+    C --> |0| G
+    G --> |1| H
+    H --> |0| H
+end
+
+subgraph Left_Heavy_AVL_Tree
+    P[45]
+    Q[36]
+    R[63]
+    S[27]
+    T[39]
+    U[54]
+    V[72]
+    W[18]
+    P --> |1| Q
+    P --> |0| R
+    Q --> |1| S
+    Q --> |0| T
+    R --> |0| U
+    R --> |0| V
+    T --> |0| W
+end
+
+subgraph Balanced_AVL_Tree
+    X[45]
+    Y[36]
+    Z[63]
+    AA[27]
+    AB[39]
+    AC[54]
+    AD[72]
+
+    X --> |0| Y
+    X --> |0| Z
+    Y --> |0| AA
+    Y --> |0| AB
+    Z --> |0| AC
+    Z --> |0| AD
+end
+
+
+```
+
+The trees given are typical candidates of AVL trees because the balancing factor of every node is either 1, 0, or –1. However, insertions and deletions from an AVL tree may disturb the balance factor of the nodes and, thus, rebalancing of the tree may have to be done. The tree is rebalanced by performing rotation at the critical node. There are four types of rotations: LL rotation, RR rotation, LR rotation, and RL rotation. 
+
+The type of rotation that has to be done will vary depending on the particular situation. In the following section, we will discuss insertion, deletion, searching, and rotations in AVL trees
+
+#
+
+### Operations on AVL Trees
+
+**Searching for a Node in an AVL Tree**
+
+Searching for a node in an AVL tree is carried out similarly to a binary search tree. Due to the height-balancing property of the tree, the search operation has a time complexity of $O(log n)$. As this operation does not alter the structure of the tree, no special considerations are needed.
+
+**Inserting a New Node in an AVL Tree**
+
+Inserting a new node in an AVL tree follows the same process as in a binary search tree. The new node is always inserted as a leaf node in an AVL tree. However, the insertion step is typically followed by an additional rotation step, which is performed to restore the balance of the tree. It's important to note that rotations are only necessary if the insertion of the new node disrupts the balance factor, meaning that the balance factor of every node is no longer -1, 0, or 1.
+
+During the insertion process, the new node is added as a leaf node, resulting in a balance factor of zero. The only nodes whose balance factors may change are those lying in the path between the root of the tree and the newly inserted node. The potential changes in any node along this path include:
+
+- Initially, the node was either left- or right-heavy, and after insertion, it becomes balanced.
+- Initially, the node was balanced, and after insertion, it becomes either left- or right-heavy.
+- Initially, the node was heavy (either left or right), and the new node has been inserted in the heavy sub-tree, creating an unbalanced sub-tree. Such a node is referred to as a critical node.
+
+After inserting a new node with the value 71, the updated tree is shown below. Three nodes in the tree now have balance factors of 2, -2, and -2, disrupting the AVL property of the tree. Rotation is needed to restore balance.
+
+```mermaid
+graph TD
+
+subgraph AVL_Tree
+    A[45]
+    B[36]
+    C[63]
+    D[27]
+    E[39]
+    F[54]
+    G[72]
+    H[70]
+    I[71]
+
+    A --> |0| B
+    A --> |-2| C
+    B --> |0| D
+    B --> |0| E
+    C --> |0| F
+    C --> |2| G
+    G --> |-1| H
+    H --> |0| I
+end
+```
+
+The first step in performing a rotation is to identify the critical node. The critical node is the nearest ancestor on the path from the inserted node to the root, whose balance factor is not -1, 0, or 1. In the given tree, the critical node is 72.
+
+The next task in rebalancing the tree is determining the type of rotation to be performed. There are four types of rebalancing rotations, and the choice depends on the position of the inserted node relative to the critical node:
+
+- LL Rotation: The new node is inserted in the left sub-tree of the left sub-tree of the critical node.
+- RR Rotation: The new node is inserted in the right sub-tree of the right sub-tree of the critical node.
+- LR Rotation: The new node is inserted in the right sub-tree of the left sub-tree of the critical node.
+- RL Rotation: The new node is inserted in the left sub-tree of the right sub-tree of the critical node.
+
+#
+
+### LL Rotation
+
+
+
+#
+
+### RR Rotation
+
+#
+
+### LR Rotation
+
+#
+
+### RL Rotation
 
 
 
