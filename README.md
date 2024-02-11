@@ -1962,16 +1962,493 @@ Since a circular doubly linked list contains three parts in its structure, it ca
 
 ## Stacks
 
-A stack, a crucial data structure, organizes its elements in a specific order. To illustrate this concept, consider a stack of plates where each plate is stacked on top of another. Similar to removing plates from the top of the pile, a stack allows adding and removing elements exclusively from the topmost position.
+A stack is a fundamental data structure that organizes its elements in a sequential manner. To illustrate the concept of stacks, consider a stack of plates where each plate is stacked on top of another. When removing a plate, you start with the topmost one. Consequently, adding and removing elements (plates) is restricted to the topmost position.
 
-In essence, a stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle. This means that the element inserted last is the first one to be removed.
+In the realm of data structures, a stack is a linear structure that adheres to the same principle—elements are added and removed exclusively from one end known as the **TOP**. This characteristic gives rise to the term **LIFO** (Last-In-First-Out), signifying that the element inserted last is the first one to be taken out.
 
 ```mermaid
-	stateDiagram-v2
-		
+graph TD
+  A[A] --> B
+  B -->  C
 ```
 
+The system stack plays a crucial role in guaranteeing the correct execution order of functions. Stacks find extensive applications in scenarios where the sequence of processing holds utmost significance, particularly when certain operations need to be deferred until specific conditions are met.
+
+The implementation of stacks can be accomplished through either arrays or linked lists. Subsequent sections will delve into the details of both array and linked list implementations of stacks.
+
+#
+
+### Array Representation of Stacks
+
+In the computer's memory, stacks can be depicted as a linear array. Each stack is equipped with a variable denoted as $TOP$, responsible for preserving the address of the uppermost element within the stack. This position serves as the point for adding or removing elements. Another variable, named $MAX$, is utilized to store the maximum capacity of the stack, indicating the maximum number of elements it can accommodate.
+
+If $TOP$ is set to $NULL$, it signifies an empty stack. Conversely, if $TOP$ equals $MAX–1$, it indicates that the stack has reached its full capacity. (The usage of $MAX–1$ is due to array indices commencing from 0.)
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>A</td>
+          <td>AB</td>
+          <td>ABC</td>
+          <td>ABCD</td>
+          <td>ABCDE</td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+      </tr>
+  </table>
+</div>
+
+> ***Note:** Stack*
+
+The stack shows that $TOP = 4$, so insertions and deletions will be done at this position.
+
+#
+
+### Operations on a Stack
+
+| Operation | Description                                                    |
+|----------|--------------------------------------------------------------|
+| $Push$     | This operation involves adding an element to the top of the stack. |
+| $Pop$      | The pop operation entails removing the element from the top of the stack. |
+| $Peek$     | The peek operation returns the value of the uppermost element present in the stack. |
+
+#
+
+**Push Operation**
+
+The push operation is used to insert an element into the stack. The new element is added at the topmost position of the stack. However, before inserting the value, we must first check if $TOP = MAX–1$, because if that is the case, then the stack is full and no more insertions can be done. If an attempt is made to insert a value in a stack that is already full, an OVERFLOW message is printed. Consider the stack given below.
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+      </tr>
+  </table>
+</div>
+
+> ***Note:** TOP = 4*
+
+To insert an element with value 6, we first check if $TOP = MAX–1$. If the condition is false, then we increment the value of $TOP$ and store the new element at the position given by stack[TOP]. Thus, the updated stack becomes as shown below.
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+      </tr>
+  </table>
+</div>
+
+> ***Note:** Stack after Insertion*
+
+#
+
+Below is a concise algorithm detailing the steps for performing the operation of inserting an element into a stack. By following these steps, one can gain an understanding of the efficient and organized functioning of this fundamental process in data structures.
+
+```r
+STEP 1: IF TOP = MAX-1
+          PRINT OVERFLOW
+        [END OF IF]
+STEP 2: SET TOP = TOP + 1
+STEP 3: SET STACK[TOP] = VALUE
+STEP 4: END
+```
+
+> ***Note:** Algorithm to insert an element in a stack*
+
+In STEP 1, we initially check for the OVERFLOW condition. In STEP 2, TOP is incremented so that it points to the next location in the array. Finally, in STEP 3, the value is stored in the stack at the location pointed to by $TOP$.
+
+These steps describe the process of inserting an element into the stack. First, we ensure there is available space, avoiding overflow. Then, we move the reference to the next valid position in the stack, and finally, we store the value at that position. This algorithm is crucial for maintaining proper order and control in a stack data structure.
+
+#
+
+**Pop Operation**
+
+The pop operation is employed to remove the uppermost element from the stack. Prior to deletion, it is crucial to verify if $TOP = NULL$ because if this condition holds true, it signifies that the stack is empty, rendering further deletions impossible. If an attempt is made to delete a value from an already empty stack, an UNDERFLOW message is displayed.
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+      </tr>
+  </table>
+</div>
+
+To delete the topmost element, we first check if $TOP = NULL$. If the condition is false, then we decrement the value pointed by $TOP$. Thus, the updated stack becomes as shown below.
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+      </tr>
+  </table>
+</div>
+
+> ***Note:** Stack after Deletion*
+
+As represented earlier, upon analyzing the stack before and after the execution of the pop operation, we observe that before the operation, $TOP$ equals 5, and after the operation, the variable is updated to $TOP = 4$.
+
+#
+
+This algorithm outlines the systematic steps involved in efficiently removing elements from the stack, offering a clear understanding of this fundamental operation within data structures.
+
+```r
+STEP 1: IF TOP = NULL
+          PRINT UNDERFLOW
+        [END OF IF]
+STEP 2: SET VAL = STACK[TOP]
+STEP 3: SET TOP = TOP - 1
+STEP 4: END
+```
+
+> ***Note:** Algorithm to delete an element from a stack*
+
+In STEP 1, the initial action involves checking for the presence of the UNDERFLOW condition. Following this initial check, the algorithm progresses to STEP 2. In STEP 2, the value stored at the location in the stack, pointed to by the $TOP$ variable, is retrieved and stored in the variable VAL. Finally, in STEP 3, the $TOP$ variable is decremented, representing the adjustment of the stack pointer. These steps collectively outline a process for managing underflow conditions, retrieving a value from the stack, and updating the stack pointer accordingly.
+
+#
+
+**Peek Operation**
+
+Peek is an operation that returns the value of the topmost element of the stack without deleting it from the stack.
+
+```r
+STEP 1: IF TOP = NULL
+          PRINT STACK IS EMPTY
+          Goto STEP 3
+STEP 2: RETURN STACK[TOP]
+STEP 3: END
+```
+
+> ***Note:** Algorithm for peek operation*
+
+However, the Peek operation first checks if the stack is empty, i.e., if $TOP = NULL$, then an appropriate message is printed, else the value is returned. Consider the stack given below.
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+      </tr>
+  </table>
+</div>
+
+Here, the Peek operation will return 5, as it is the value of the topmost element of the stack.
+
+#
+
+### Linked Representation of Stacks
+
+Creating a stack using an array is a straightforward technique, but it comes with a limitation - the array must be predefined with a fixed size. If the stack is small or its maximum size is known beforehand, this array implementation can be efficient. However, when the array size is undeterminable in advance, an alternative approach, the linked representation, is preferred.
+
+The linked representation of a stack with n elements incurs a storage requirement of $O(n)$, and the typical time complexity for operations is $O(1)$.
+
+In a linked stack, each node consists of two parts - one for storing data and the other for storing the address of the next node. The $START$ pointer of the linked list serves as the $TOP$. 
+
+All insertions and deletions occur at the node pointed to by TOP. If $TOP = NULL$, it indicates that the stack is empty.
+
+```mermaid
+classDiagram
+    direction LR
+    A --> B
+    B --> C
+    C --> D
+    class A["TOP"]{
+        9
+        next()
+    }
+    class B["Stack B"]{
+        4
+        next()
+    }
+    class C["Stack C"]{
+        1
+        next()
+    }
+    class D["Stack D"]{
+        5
+        NULL()
+    }
+```
+
+> ***Note:** Linked Stack*
+
+#
+
+### Operations on a Linked Stack
+
+A linked stack supports all the three stack operations, that is, push, pop, and peek.
+
+**Push Operation**
+
+The push operation is used to insert an element into the stack. The new element is added at the topmost position of the stack.
+
+```mermaid
+classDiagram
+    direction LR
+    A --> B
+    B --> C
+    C --> D
+    class A["TOP"]{
+        3
+        next()
+    }
+    class B["Stack B"]{
+        4
+        next()
+    }
+    class C["Stack C"]{
+        1
+        next()
+    }
+    class D["Stack D"]{
+        5
+        NULL()
+    }
+```
+
+> ***Note:** Linked Stack*
+
+To insert an element with value 9, we first check if $TOP = NULL$. If this is the case, then we allocate memory for a new node, store the value in its $DATA$ part and $NULL$ in its $NEXT$ part. 
+
+The new node will then be called $TOP$. However, if $TOP != NULL$, then we insert the new node at the beginning of the linked stack and name this new node as $TOP$. 
+
+```mermaid
+classDiagram
+    direction LR
+    E --> A
+    A --> B
+    B --> C
+    C --> D
+    class E["TOP"]{
+        9
+        next()
+    }
+    class A["Stack A"]{
+        3
+        next()
+    }
+    class B["Stack B"]{
+        4
+        next()
+    }
+    class C["Stack C"]{
+        1
+        next()
+    }
+    class D["Stack D"]{
+        5
+        NULL()
+    }
+```
+
+> ***Note:** Linked Stack after inserting a new node*
+
+#
+
+This algorithm outlines the systematic steps involved in efficiently adding elements to a stack implemented as a linked structure. By following these steps, one can gain a clear understanding of the organized and dynamic nature of this fundamental operation within linked stack data structures.
+
+```r
+STEP 1: Allocate memory for the new node and name it as NEW_NODE
+STEP 2: SET NEW_NODE DATA = VAL
+STEP 3: IF TOP = NULL
+          SET NEW_NODE NEXT = NULL
+          SET TOP = NEW_NODE
+        ELSE
+          SET NEW_NODE NEXT = TOP
+          SET TOP = NEW_NODE
+        [END OF IF]
+STEP 4: END
+```
+
+> ***Note:** Algorithm to insert an element in a Linked Stack*
+
+In STEP 1, memory is allocated for the new node. Moving to STEP 2, the $DATA$ part of the new node is initialized with the value to be stored in the node. In STEP 3, we check if the new node is the first node of the linked list. This is done by checking if $TOP$ equals $NULL$. If the IF statement evaluates to true, then $NULL$ is stored in the $NEXT$ part of the node, and the new node is called $TOP$. However, if the new node is not the first node in the list, then it is added before the first node of the list (that is, the $TOP$ node) and termed as $TOP$.
+
+#
+
+**Pop Operation**
+
+The pop operation is used to delete the topmost element from a stack. However, before deleting the value, we must first check if $TOP = NULL$, because if this is the case, then it means that the stack is empty and no more deletions can be done. If an attempt is made to delete a value from a stack that is already empty, an UNDERFLOW message is printed.
+
+```mermaid
+classDiagram
+    direction LR
+    E --> A
+    A --> B
+    B --> C
+    C --> D
+    class E["TOP"]{
+        9
+        next()
+    }
+    class A["Stack A"]{
+        3
+        next()
+    }
+    class B["Stack B"]{
+        4
+        next()
+    }
+    class C["Stack C"]{
+        1
+        next()
+    }
+    class D["Stack D"]{
+        5
+        NULL()
+    }
+```
+
+> ***Note:** Linked Stack*
+
+In case $TOP != NULL$, then we will delete the node pointed by $TOP$, and make $TOP$ point to the second element of the linked stack.
+
+```mermaid
+classDiagram
+    direction LR
+    A --> B
+    B --> C
+    C --> D
+    class A["TOP"]{
+        3
+        next()
+    }
+    class B["Stack B"]{
+        4
+        next()
+    }
+    class C["Stack C"]{
+        1
+        next()
+    }
+    class D["Stack D"]{
+        5
+        NULL()
+    }
+```
+
+> ***Note:** Linked stack after deletion of the topmost element*
+
+#
+
+This algorithm outlines the systematic steps involved in efficiently removing elements from a stack implemented as a linked structure. 
+
+```r
+STEP 1: IF TOP = NULL
+          PRINT "UNDERFLOW"
+          Goto STEP 5
+        [END OF IF]
+STEP 2: SET PTR = TOP
+STEP 3: SET TOP = TOP->NEXT 
+STEP 4: FREE PTR
+STEP 5: END
+```
+
+> ***Note:** Algorithm to delete an element from a Linked Stack*
+
+In STEP 1, we first check for the UNDERFLOW condition. In STEP 2, we use a pointer $PTR$ that points to $TOP$. In STEP 3, $TOP$ is made to point to the next node in sequence. In STEP 4, the memory occupied by $PTR$ is given back to the free pool.
+
+#
+
+### Applications of Stacks
+
+Stacks, a fundamental data structure, find widespread applications across various computational challenges. Their simplicity and efficiency make them valuable tools in problem-solving scenarios, including:
+
+| Application                   | Description                                                                                      |
+|-------------------------------|--------------------------------------------------------------------------------------------------|
+| **Reversing a List**          | Utilizing stacks to efficiently reverse the order of elements in a list.                           |
+| **Parentheses Checker**       | Employing stacks for verifying the balance of parentheses in mathematical expressions.            |
+| **Expression Conversion**     | Leveraging stacks to convert mathematical expressions between infix, postfix, and prefix notations.|
+| **Tower of Hanoi**            | Using stacks to solve the Tower of Hanoi problem, a classic recursive challenge with specific rules.|
+
+These applications showcase the adaptability of stacks in addressing a range of computational tasks, making them a cornerstone in algorithmic problem-solving.
+
+
 ## Queues
+
+
+
+
+
+
 
 
 ## Trees
