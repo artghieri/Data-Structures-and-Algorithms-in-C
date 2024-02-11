@@ -2441,17 +2441,525 @@ Stacks, a fundamental data structure, find widespread applications across variou
 
 These applications showcase the adaptability of stacks in addressing a range of computational tasks, making them a cornerstone in algorithmic problem-solving.
 
-
 ## Queues
 
+Let us explain the concept of queues using the analogies given below:
+
+- People moving on an escalator. The people who got on the escalator first will be the first one to step out of it.
+- People waiting for a bus. The first person standing in the line will be the first one to get into the bus.
+- Cars lined at a toll bridge. The first car to reach the bridge will be the first to leave.
+
+In all these examples, we see that the element at the first position is served first. Same is the case with queue data structure. A queue is a **FIFO** (*First-In*, *First-Out*) data structure in which the element that is inserted first is the first one to be taken out. The elements in a queue are added at one end called the $REAR$ and removed from the other end called the $FRONT$.
+
+Queues can be implemented by using either arrays or linked lists. In this section, we will see how queues are implemented using each of these data structures.
+
+#
+
+### Array Representation of Queues
+
+Queues can be easily represented using linear arrays. As stated earlier, every queue has *front* and *rear* variables that point to the position from where deletions and insertions can be done, respectively. 
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>17</td>
+          <td>33</td>
+          <td>9</td>
+          <td>75</td>
+          <td>55</td>
+          <td>48</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+      </tr>
+  </table>
+</div>
+
+> ***Note:** Queue*
+
+#
+
+### Operations on Queue
+
+These operations are fundamental for manipulating and managing elements in a queue, ensuring the *First In, First Out* order.
+
+| Operation         | Description                                               |
+|-------------------|-----------------------------------------------------------|
+| $Enqueue (Insert)$  | Adds an element to the end of the queue.                   |
+| $Dequeue (Remove)$  | Removes the element at the front of the queue.             |
+| $Front$             | Retrieves the element at the front without removing it.   |
+| $IsEmpty$           | Checks if the queue is empty.                              |
+| $Size$              | Returns the number of elements in the queue.               |
+
+#
+
+**Enqueue Operation**
+
+In this example, $FRONT = 0$ and $REAR = 5$. Suppose we want to add another element with value 81, then $REAR$ would be incremented by 1 and the value would be stored at the position pointed by $REAR$. 
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>17</td>
+          <td>33</td>
+          <td>9</td>
+          <td>75</td>
+          <td>55</td>
+          <td>48</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+      </tr>
+  </table>
+</div>
+
+The queue after addition would be as shown. Here, $FRONT = 0$ and $REAR = 6$. Every time a new element has to be added, we repeat the same procedure
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>17</td>
+          <td>33</td>
+          <td>9</td>
+          <td>75</td>
+          <td>55</td>
+          <td>48</td>
+          <td>81</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+      </tr>
+  </table>
+</div>
+
+> ***Note:** Queue after insertion of a new element*
+
+However, before inserting an element in a queue, we must check for overflow conditions. An *overflow* will occur when we try to insert an element into a queue that is already full. When $REAR = MAX – 1$, where $MAX$ is the size of the queue, we have an overflow condition. Note that we have written $MAX – 1$ because the index starts from 0.
+
+#
+
+This algorithm illustrates the procedure for inserting an element into a queue. 
+
+In STEP 1, we first check for the overflow condition. In STEP 2, we check if the queue is empty. In case the queue is empty, then both $FRONT$ and $REAR$ are set to zero, so that the new value can be stored at the 0th location. 
+
+Otherwise, if the queue already has some values, then $REAR$ is incremented so that it points to the next location in the array. In STEP 3, the value is stored in the queue at the location pointed by $REAR$.
+
+```r
+STEP 1: IF REAR = MAX-1
+          Write OVERFLOW
+          Goto STEP 4
+          [END OF IF]
+STEP 2: IF FRONT = -1 and REAR = -1
+          SET FRONT = REAR = 0
+        ELSE
+          SET REAR = REAR + 1
+        [END OF IF]
+STEP 3: SET QUEUE[REAR] = NUM
+STEP 4: EXIT
+```
+
+> ***Note:** Algorithm to insert an element in a queue*
+
+#
+
+**Dequeue Operation**
+
+If we want to delete an element from the queue, then the value of $FRONT$ will be incremented. Deletions are done from only this end of the queue. 
+
+<div align = "center">
+  <table>
+      <tr>
+          <td>17</td>
+          <td>33</td>
+          <td>9</td>
+          <td>75</td>
+          <td>55</td>
+          <td>48</td>
+          <td>81</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+      </tr>
+  </table>
+</div>
+
+> ***Note:** Queue before deletion of an element*
+
+The queue after deletion will be as shown below. Here, $FRONT = 1$ and $REAR = 6$.
 
 
+<div align = "center">
+  <table>
+      <tr>
+          <td></td>
+          <td>33</td>
+          <td>9</td>
+          <td>75</td>
+          <td>55</td>
+          <td>48</td>
+          <td>81</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+      </tr>
+  </table>
+</div>
+
+> ***Note:** Queue after deletion of an element*
+
+Similarly, before deleting an element from a queue, we must check for underflow conditions. An underflow condition occurs when we try to delete an element from a queue that is already empty. 
+
+If $FRONT = –1$ and $REAR = –1$, it means there is no element in the queue. 
+
+#
+
+This algorithm illustrates the procedure to delete an element from a queue. 
+
+In STEP 1, we check for underflow condition. An underflow occurs if $FRONT = –1$ or $FRONT > REAR$. However, if queue has some values, then $FRONT$ is incremented so that it now points to the next value in the queue.
+
+```r
+STEP 1: IF FRONT = -1 OR FRONT > REAR
+          Write UNDERFLOW
+        ELSE
+          SET FRONT = FRONT+1
+        [END OF IF]
+STEP 2: EXIT
+````
+
+> ***Note:** Algorithm to delete an element from a queue*
+
+#
+
+### Linked Representation of Queues
+
+We have seen how a queue is created using an array. Although this technique of creating a queue is easy, its drawback is that the array must be declared to have some fixed size. If we allocate space for 50 elements in the queue and it hardly uses 20–25 locations, then half of the space will be wasted. And in case we allocate fewer memory locations for a queue that might end up growing large, a lot of re-allocations will have to be done, thereby creating a lot of overhead and consuming a lot of time.
+
+In case the queue is a very small one or its maximum size is known in advance, then the array implementation of the queue gives an efficient implementation. But if the array size cannot be determined in advance, the other alternative, i.e., the linked representation is used. 
+
+The storage requirement of linked representation of a queue with n elements is $O(n)$, and the typical time requirement for operations is $O(1)$.
+
+```mermaid
+classDiagram
+    direction LR
+    A --> B
+    B --> C
+    C --> D
+    class A["FRONT"]{
+        7
+        next()
+    }
+    class B["NODE"]{
+        9
+        next()
+    }
+    class C["NODE"]{
+        3
+        next()
+    }
+    class D["REAR"]{
+        5
+        NULL()
+    }
+```
+
+> ***Note:** Linked Queue*
+
+In a linked queue, every element has two parts: one that stores the data and another that stores the address of the next element. The $START$ pointer of the linked list is used as $FRONT$. Here, we will also use another pointer called $REAR$, which will store the address of the last element in the queue. All insertions will be done at the rear end, and all deletions will be done at the front end. If $FRONT = REAR = NULL$, then it indicates that the queue is empty.
+
+#
+
+### Operations on Linked Queues
+
+A queue has two basic operations: *insert* and *delete* - enqueue and dequeue. The insert operation adds an element to the end of the queue, and the delete operation removes an element from the front or the start of the queue. Apart from this, there is another operation peek which returns the value of the first element of the queue
+
+#
+
+**Enqueue Operation**
+
+The insert operation is used to insert an element into a queue. The new element is added as the last element of the queue.
+
+```mermaid
+classDiagram
+    direction LR
+    A --> B
+    B --> C
+    C --> D
+    class A["FRONT"]{
+        7
+        next()
+    }
+    class B["NODE"]{
+        2
+        next()
+    }
+    class C["NODE"]{
+        3
+        next()
+    }
+    class D["REAR"]{
+        5
+        NULL()
+    }
+```
+
+To insert an element with value 9, we first check if $FRONT = NULL$. If the condition holds, then the queue is empty. So, we allocate memory for a new node, store the value in its data part and $NULL$ in its next part. 
+
+The new node will then be called both front and rear. However, if $FRONT != NULL$, then we will insert the new node at the rear end of the linked queue and name this new node as rear.
+
+```mermaid
+classDiagram
+    direction LR
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    class E["REAR"]{
+        9
+        NULL()
+    }
+    class A["FRONT"]{
+        7
+        next()
+    }
+    class B["NODE"]{
+        2
+        next()
+    }
+    class C["NODE"]{
+        3
+        next()
+    }
+    class D["NODE"]{
+        5
+        next()
+    }
+```
+
+> ***Note:** Linked Queue after inserting a new node*
+
+#
+
+This algorithm illustrates the procedure for inserting an element into a linked queue. 
+
+In STEP 1, the memory is allocated for the new node. In STEP 2, the $DATA$ part of the new node is initialized with the value to be stored in the node. In STEP 3, we check if the new node is the first node of the linked queue. 
+
+This is done by checking if $FRONT = NULL$. If this is the case, then the new node is tagged as $FRONT$ as well as $REAR$. Also, $NULL$ is stored in the $NEXT$ part of the node (which is also the $FRONT$ and the $REAR$ node). 
+
+However, if the new node is not the first node in the list, then it is added at the $REAR$ end of the linked queue (or the last node of the queue).
+
+```r
+STEP 1: Allocate memory for the new node and name it as PTR
+STEP 2: SET PTR->DATA = VAL
+STEP 3: IF FRONT = NULL
+          SET FRONT = REAR = PTR
+          SET FRONT->NEXT = REAR->NEXT = NULL
+        ELSE
+          SET REAR->NEXT = PTR
+          SET REAR = PTR
+          SET REAR->NEXT = PTR
+        [END OF IF]
+STEP 4: END
+```
+
+> ***Note:** Algorithm to insert an element in a linked queue*
+
+#
+
+**Dequeue Operation**
+
+The delete operation in a queue is employed to remove the element that was first inserted, identified by the address stored in the $FRONT$ pointer. However, a critical check is performed before the actual deletion: we must verify if $FRONT$ is equal to $NULL$. If this condition holds true, it indicates that the queue is empty, rendering further deletions impossible. Any attempt to delete a value from an already empty queue results in an underflow, and an appropriate underflow message is printed in such cases. This ensures that the delete operation is executed cautiously, preventing errors caused by attempting to delete from an empty queue.
+
+```mermaid
+classDiagram
+    direction LR
+    A --> B
+    B --> C
+    C --> D
+    class A["FRONT"]{
+        7
+        next()
+    }
+    class B["NODE"]{
+        2
+        next()
+    }
+    class C["NODE"]{
+        3
+        next()
+    }
+    class D["REAR"]{
+        5
+        NULL()
+    }
+```
+
+To delete an element, we first check if $FRONT = NULL$. If the condition is false, then we delete the first node pointed by FRONT. The $FRONT$ will now point to the second element of the linked queue.
+
+```mermaid
+classDiagram
+    direction LR
+    B --> C
+    C --> D
+    class B["FRONT"]{
+        2
+        next()
+    }
+    class C["NODE"]{
+        3
+        next()
+    }
+    class D["REAR"]{
+        5
+        NULL()
+    }
+```
+
+> ***Note:** Linked Queue after deletion of an element*
+
+#
+
+This algorithm illustrates the procedure for deleting an element from a linked queue.
+
+In STEP 1, we first check for the underflow condition. If the condition is true, then an appropriate message is displayed, otherwise in STEP 2, we use a pointer $PTR$ that points to $FRONT$. 
+
+In STEP 3, FRONT is made to point to the next node in sequence. In STEP 4, the memory occupied by $PTR$ is given back to the free pool.
+
+```r
+STEP 1: IF FRONT = NULL
+          Write "Underflow"
+          Go to STEP 5
+        [END OF IF]
+STEP 2: SET PTR = FRONT
+STEP 3: SET FRONT = FRONT->NEXT
+STEP 4: FREE PTR
+STEP 5: END
+```
+
+> ***Note:** Algorithm to insert an element in a linked queue*
+
+#
+
+### Types of Queues
 
 
+1. **Common Queue (Queue):**
+   - **Characteristics:**
+     - Follows the order of arrival of elements.
+     - The first element to be inserted is the first to be removed (FIFO - First In, First Out).
 
+2. **Priority Queue:**
+   - **Characteristics:**
+     - Each element has an associated priority.
+     - Elements are removed from the queue based on their priority, where higher-priority elements are removed first.
+     - Useful in situations where processing elements according to their importance is necessary.
+
+3. **Circular Queue:**
+   - **Characteristics:**
+     - Has a ring structure, where the last element is connected to the first, forming a cycle.
+     - After reaching the last element, the next insertion occurs at the beginning of the queue.
+     - Avoids space wastage, as new elements can replace old ones when the queue is full.
+
+4. **Double-ended Queue (Deque):**
+   - **Characteristics:**
+     - Allows addition and removal of elements at both the beginning and end of the queue.
+     - Can be used as a common queue, stack, or priority queue, offering flexibility.
+
+These are just some of the commonly used queues. The choice of queue type depends on the specific requirements of the problem being solved.
+
+#
+
+### Application of Queues
+
+1. **Resource Management:**
+   - Queues are widely used as waiting lists for a single shared resource such as a printer, disk, or CPU. This ensures that tasks are processed in the order they are received, following the First In, First Out (FIFO) principle.
+
+2. **Asynchronous Data Transfer:**
+   - Queues are utilized to transfer data asynchronously between two processes, where data may not be received at the same rate as it is sent. This is commonly seen in IO buffers, pipes, file IO, and sockets, where the sender and receiver operate independently.
+
+3. **Media Player Playlists:**
+   - In media players like MP3 players, portable CD players, and iPods, queues are employed as buffers for playlists. They help manage the order in which songs are played and provide a seamless experience for the user.
+
+4. **Jukebox Playlists:**
+   - Queues are used in jukebox playlists to add songs to the end of the list and play them from the front. This ensures that songs are played in the order they were added, creating a queue-like behavior.
+
+5. **Operating System Interrupt Handling:**
+   - In operating systems, queues play a crucial role in handling interrupts. When a real-time system can be interrupted (e.g., by a mouse click), it is essential to process these interrupts immediately. Using a FIFO queue ensures that interrupts are handled in the order of their arrival, maintaining a fair and sequential execution.
+
+These examples illustrate the versatility of queues as a fundamental data structure in computer science and various applications. They are essential for managing resources, facilitating communication between processes, and ensuring orderly execution of tasks.
 
 
 ## Trees
+
+
+
+
+
+
+
+
+
 
 
 ## Sorting and Searching Algorithms
