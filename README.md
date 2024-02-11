@@ -2952,13 +2952,523 @@ These examples illustrate the versatility of queues as a fundamental data struct
 
 ## Trees
 
+A tree is recursively defined as a set of one or more nodes where one node is designated as the root of the tree and all the remaining nodes can be partitioned into non-empty sets each of which is a sub-tree of the root. 
+
+The figure shows a tree where node $A$ is the root node; nodes $B$, $C$ are children of the root node and form sub-trees of the tree rooted at node $A$.
+
+```mermaid
+graph TD
+  A[ A ]
+  B[ B ]
+  C[ C ]
+  D[ D ]
+  E[ E ]
+  F[ F ]
+  G[ G ]
+  
+  A --> B
+  A --> C
+  B --> D
+  B --> E
+  C --> F
+  C --> G
+```
+
+#
+
+### Basic Terminology 
+
+| Term              | Definition                                                                                     |
+|-------------------|------------------------------------------------------------------------------------------------|
+| **Root node**     | The topmost node in the tree. If $R = NULL$, then it means the tree is empty.                    |
+| **Sub-trees**     | If the root node $R != NULL$, then the trees $T1$, $T2$, and $T3$ are called the sub-trees of $R$.    |
+| **Leaf node**     | A node that has no children is called the leaf node or the terminal node.                       |
+| **Path**          | A sequence of consecutive edges is called a path. For example, the path from the root node $A$ to node $E$ is given as: $A$, $B$, and $E$. |
+| **Ancestor node** | An ancestor of a node is any predecessor node on the path from root to that node. The root node does not have any ancestors. In the tree given, nodes $A$, $B$, are the ancestors of node $E$. |
+| **Descendant node** | A descendant node is any successor node on any path from the node to a leaf node. Leaf nodes do not have any descendants. In the tree given, nodes $D$, $B$, $E$ are the descendants of node $A$. |
+| **Level number**  | Every node in the tree is assigned a level number in such a way that the root node is at level 0, children of the root node are at level number 1. Thus, every node is at one level higher than its parent. So, all child nodes have a level number given by parent’s level number + 1. |
+| **Degree**        | Degree of a node is equal to the number of children that a node has. The degree of a leaf node is zero. |
+| **In-degree**     | In-degree of a node is the number of edges arriving at that node.                                |
+| **Out-degree**    | Out-degree of a node is the number of edges leaving that node.                                    |
+
+#
+
+### Types of Trees
+
+Each type of tree has its unique properties and specific applications. The choice of the tree type depends on the problem being solved and the requirements of the application.
+
+| Tree Type                  | Description                                                                                                      |
+|----------------------------|------------------------------------------------------------------------------------------------------------------|
+| **General Trees**          | A tree where each node can have an arbitrary number of children, not limited to two.                             |
+| **Forests**                | A collection of trees, i.e., a set of independent tree structures.                                                |
+| **Binary Trees**           | Each node has at most two children, typically labeled as the left child and the right child.                      |
+| **Binary Search Trees**    | A binary tree where the value in each node is greater than all values in the left subtree and smaller than all values in the right subtree. |
+| **Expression Trees**       | A tree used to represent mathematical expressions, where internal nodes represent operators and leaf nodes represent operands. |
+| **Tournament Trees**       | A tree used to represent a series of elements in a tournament or competition, where each internal node represents the winner of a match between its children. |
+| **AVL Tree**            | A self-balancing binary search tree where the heights of the two child subtrees of every node differ by at most one. |
+| **Red-Black Tree**      | A self-balancing binary search tree with an additional bit for each node to represent whether the node is red or black. |
 
 
+It's important to note that, for the purpose of this guide, we will focus on introducing the core concepts by delving into four types of trees. This limited selection aims to provide a solid foundation for understanding key tree structures and their applications.
 
+#
 
+**General Trees**
 
+General trees are hierarchical data structures in which elements are organized in a hierarchical manner. At the top of the hierarchy is the root node, and every node, except the root, has a parent. In a general tree, each node, excluding leaf nodes, can have zero or more sub-trees. When a node has precisely three sub-trees, the tree is termed a ternary tree. However, the number of sub-trees for any node in a general tree is variable, ranging from zero to multiple sub-trees.
 
+While general trees can be conceptualized as Abstract Data Types (ADTs), challenges arise when adding another sub-tree to a node that already possesses the maximum number of sub-trees. This complexity extends to algorithms for operations such as searching, traversing, adding, and deleting nodes, as there are multiple possibilities for any given node, rather than just two.
 
+To address the intricacies of general trees, one approach is to represent them as a graph data structure. However, this conversion can lead to the loss of many advantages associated with tree processes. A more effective alternative is to convert general trees into binary trees.
+
+When a general tree is converted into a binary tree, the resulting binary tree may not be well-formed or complete. Nevertheless, this conversion offers the advantage of enabling the use of algorithms designed for binary trees, with only minor modifications required. This approach simplifies the application of various processes to the tree while retaining the inherent hierarchical structure.
+
+#
+
+**Forests**
+
+A forest is a collection of disjoint trees, formed by removing the root and the edges connecting it to nodes at level 1. In other words, a set of disjoint trees (or forests) is obtained by deleting the root node along with its connections to level 1 nodes.
+
+As we've learned, each node in a tree serves as the root of a sub-tree. Therefore, the set of all sub-trees immediately below a node forms a forest. The figure below illustrates a tree with its root node and corresponding sub-trees.
+
+```mermaid
+graph TD
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+
+  A -->|Parent| B
+  A -->|Parent| C
+  B -->|Parent| D
+  B -->|Parent| E
+  E -->|Parent| F
+  E -->|Parent| G
+
+```
+
+A forest can also be characterized as an ordered set comprising zero or more general trees. Unlike general trees, a forest may be empty, as it is defined as a set, and sets can be devoid of elements.
+
+```mermaid
+graph TD
+  B
+  D
+  C
+  E
+  F
+  G
+  H
+  
+  C --> D
+  E --> F
+  E --> G
+
+  G --> H
+```
+
+> ***Note:** Forest*
+
+To convert a forest into a tree, a single node is added as the root node of the tree.
+
+```mermaid
+graph TD
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  H
+
+  A --> B
+  A --> C
+  C --> D
+  A --> E
+  E --> F
+  E --> G
+  G --> H
+
+```
+
+> ***Note:** The Corresponding Tree of the Forest. (A is the root node)*
+
+Similarly, we can convert a general tree into a forest by removing the root node of the tree.
+
+#
+
+**Binary Trees**
+
+A binary tree is a data structure defined as a collection of elements known as nodes. In a binary tree, the uppermost element is referred to as the root node, and each node can have 0, 1, or at most 2 children. A node with zero children is termed a leaf node or a terminal node. 
+
+Each node comprises a data element, a left pointer pointing to the left child, and a right pointer pointing to the right child. The root element is indicated by a $root$ pointer. If $root = NULL$, it signifies that the tree is empty.
+
+```mermaid
+graph TD
+    A("1 (Root)")
+    B("2 (T2)")
+    C("3 (T3)")
+    D(4)
+    E(5)
+    F(6)
+    G(7)
+    H(8)
+    I(9)
+    J(10)
+    K(11)
+    L(12)
+
+    A --> B
+    A --> C
+    B --> D
+    B --> E
+    C --> F
+    C --> G
+    D --> H
+    D --> I
+    F --> J
+    F --> K
+    G --> L
+
+```
+
+> ***Note:** Binary Tree*
+
+In the figure, $R$ is the root node, and the two trees $T_{1}$ and $T_{2}$ are the left and right sub-trees of $R$. $T_{1}$ is considered the left successor of $R$, while  $T_{2}$  is the right successor of $R$.
+
+The left sub-tree of the root node consists of the nodes: $2, 4, 5, 8,$ and $9$. Similarly, the right sub-tree of the root node consists of nodes: $3, 6, 7, 10, 11,$ and $12$.
+
+In the tree, the root node $1$ has two successors: $2$ and $3$. Node $2$ has two successor nodes: $4$ and $5$. Node $4$ has two successors: $8$ and $9$. Node $5$ has no successors. Node $3$ has two successor nodes: $6$ and $7$. Node $6$ has two successors: $10$ and $11$. Finally, node $7$ has only one successor: $12$.
+
+A binary tree is recursive by definition, as every node in the tree contains a left sub-tree and a right sub-tree. Even the terminal nodes contain an empty left sub-tree and an empty right sub-tree. In the figure, nodes $5, 8, 9, 10, 11,$ and $12$ have no successors and are thus said to have empty sub-trees.
+
+#
+
+**Terminology**
+
+**Parent:** If $N$ is any node in $T$ that has left successor $S_{1}$ and right successor $S_{2}$, then $N$ is called the parent of $S_{1}$ and $S_{2}$. Correspondingly, $S_{1}$ and $S_{2}$ are called the left child and the right child of $N$. Every node other than the root node has a parent.
+
+**Level Number:** Every node in the binary tree is assigned a level number. The root node is defined to be at level $0$. The left and the right child of the root node have a level number $1$. Similarly, every node is at one level higher than its parents. So, all child nodes are defined to have a level number as the parent's level number + 1.
+
+```mermaid
+graph TD
+    A("(Level 0) 1 (Root)")
+    B("(Level 1) 2")
+    C("(Level 1) 3")
+    D("(Level 2) 4")
+    E("(Level 2) 5")
+    F("(Level 2) 6")
+    G("(Level 2) 7")
+    H("(Level 3) 8")
+    I("(Level 3) 9")
+    J("(Level 3) 10")
+    K("(Level 3) 11")
+    L("(Level 3) 12")
+
+    A --> B
+    A --> C
+    B --> D
+    B --> E
+    C --> F
+    C --> G
+    D --> H
+    D --> I
+    F --> J
+    F --> K
+    G --> L
+```
+
+> ***Note:** Levels in Binary Tree*
+
+**Degree of a Node:** It is equal to the number of children that a node has. The degree of a leaf node is zero. For example, in the tree, the degree of node $4$ is $2$, the degree of node $5$ is zero, and the degree of node $7$ is $1$.
+
+**Sibling:** All nodes that are at the same level and share the same parent are called siblings (brothers). For example, nodes $2$ and $3$; nodes $4$ and $5$; nodes $6$ and $7$; nodes $8$ and $9$; and nodes $10$ and $11$ are siblings.
+
+**Leaf Node:** A node that has no children is called a leaf node or a terminal node. The leaf nodes in the tree are: $8, 9, 5, 10, 11,$ and $12$.
+
+**Similar Binary Trees:** Two binary trees $T$ and $T'$ are said to be similar if both these trees have the same structure.  
+
+```mermaid
+graph TD
+    subgraph "Tree T"
+        A1(A)
+        B1(B)
+        C1(C)
+        D1(D)
+        E1(E)
+
+        A1 --> B1
+        A1 --> C1
+        B1 --> D1
+        B1 --> E1
+    end
+
+    subgraph "Tree T'"
+        X2(F)
+        Y2(G)
+        Z2(H)
+        W2(I)
+        P2(J)
+
+        X2 --> Y2
+        X2 --> Z2
+        Z2 --> W2
+        Z2 --> P2
+    end
+
+```
+
+> ***Note:** Similar Binary Trees*
+
+**Copies:** Two binary trees $T$ and $T'$ are said to be copies if they have similar structure and if they have the same content at the corresponding nodes.
+
+```mermaid
+graph TD
+    subgraph "Tree T"
+        A1(A)
+        B1(B)
+        C1(C)
+        D1(D)
+        E1(E)
+
+        A1 --> B1
+        A1 --> C1
+        B1 --> D1
+        B1 --> E1
+    end
+
+    subgraph "Tree T'"
+        X2(F)
+        Y2(G)
+        Z2(H)
+        W2(I)
+        P2(J)
+
+        X2 --> Y2
+        X2 --> Z2
+        Y2 --> W2
+        Y2 --> P2
+    end
+
+```
+
+> ***Note:** T' is a copy of T*
+
+**Edge:** It is the line connecting a node $N$ to any of its successors. A binary tree of $n$ nodes has exactly $n – 1$ edges because every node except the root node is connected to its parent via an edge.
+
+**Path:** A sequence of consecutive edges. For example, the path from the root node to the node $8$ is given as: $1, 2, 4,$ and $8$.
+
+**Depth:** The depth of a node $N$ is given as the length of the path from the root $R$ to the node $N$. The depth of the root node is zero.
+
+**Height of a Tree:** It is the total number of nodes on the path from the root node to the deepest node in the tree. A tree with only a root node has a height of $1$. A binary tree of height $h$ has at least $h$ nodes and at most $2^h \\ – \\ 1$ nodes. This is because every level will have at least one node and can have at most $2$ nodes. So, if every level has two nodes then a tree with height $h$ will have at the most $2^h \\ – \\ 1$ nodes as at level $0$, there is only one element called the root. The height of a binary tree with $n$ nodes is at least $log_{2}(n+1)$ and at most $n$.
+
+**In-degree/Out-degree of a Node:** It is the number of edges arriving at a node. The root node is the only node that has an in-degree equal to zero. Similarly, out-degree of a node is the number of edges leaving that node.
+
+#
+
+**Complete Binary Trees**
+
+A complete binary tree is characterized by two properties. Firstly, in a complete binary tree, every level, except possibly the last, is completely filled. Secondly, all nodes appear as far left as possible.
+
+In a complete binary tree $T_n$, there are exactly $n$ nodes, and level $r$ of $T$ can have at most $2^r$ nodes. Figure 9.7 illustrates a complete binary tree.
+
+```mermaid
+graph TD
+    A(1)
+    B(2)
+    C(3)
+    D(4)
+    E(5)
+    F(6)
+    G(7)
+    H(8)
+    I(9)
+    J(10)
+    K(11)
+    L(12)
+    M(13)
+
+    A --> B
+    A --> C
+    B --> D
+    B --> E
+    C --> F
+    C --> G
+    D --> H
+    D --> I
+    E --> J
+    E --> K
+    F --> L
+    F --> M
+```
+
+> ***Note:** Complete Binary Tree*
+
+In this example, level 0 has $2^0 = 1$ node, level 1 has $2^1 = 2$ nodes, level 2 has $2^2 = 4$ nodes, and level 3 has 6 nodes, which is less than the maximum of $2^3 = 8$ nodes.
+
+In this illustration, tree $T_{13}$ has exactly 13 nodes, labeled from 1 to 13 for clarity. This labeling facilitates finding the parent, right child, and left child nodes of a given node. The formulae for these relationships are as follows: if $K$ is a parent node, then its left child can be calculated as $2 \times K$, and its right child can be calculated as $2 \times K + 1$. 
+
+For instance, the children of node 4 are 8 ($2 \times 4$) and 9 ($2 \times 4 + 1$). Similarly, the parent of node $K$ can be calculated as $\left| \frac{K}{2} \right|$. Given node 4, its parent can be calculated as $\left| \frac{4}{2} \right| = 2$.
+
+The height of a tree $T_n$ with exactly $n$ nodes is given by:
+
+$$H_n = \left| \log_2(n + 1) \right|$$
+
+This means, if a tree T has 10,00,000 nodes, then its height is 21.
+
+#
+
+**Expression Tree**
+
+Binary trees are widely used to store algebraic expressions. For example, consider the algebraic expression given as:
+
+$$Exp = (a – b) + (c * d)$$
+
+This expression can be represented using a binary tree as shown below.
+
+```mermaid
+graph TD
+    A("+")
+    B("-")
+    C("a")
+    D("b")
+    E("*")
+    F("c")
+    G("d")
+
+    A --> B
+    B --> C
+    B --> D
+    A --> E
+    E --> F
+    E --> G
+```
+
+#
+
+### Traversing a Binary Tree
+
+Traversing a binary tree involves visiting each node in the tree exactly once in a systematic manner. Unlike linear data structures where elements are traversed sequentially, a tree is a nonlinear data structure, providing various ways to traverse its elements. Tree traversal algorithms differ in the order nodes are visited. In this section, we will explore these algorithms.
+
+**Pre-Order Traversal**
+
+To traverse a non-empty binary tree in pre-order, the following recursive operations are performed at each node:
+
+1. Visit the root node.
+2. Traverse the left sub-tree.
+3. Traverse the right sub-tree.
+
+```mermaid
+graph TD
+    A("+")
+    B("-")
+    C("3")
+    D("*")
+    E("2")
+    F("5")
+    G("4")
+
+    A --> B
+    B --> C
+    B --> D
+    D --> E
+    D --> F
+    A --> G
+```
+
+> ***Note:** Expression Tree*
+
+The pre-order traversal of the tree results in the sequence A, B, C. This traversal follows the order of visiting the root node first, then the left sub-tree, and finally the right sub-tree. Pre-order traversal is also referred to as depth-first traversal. In this algorithm, the left sub-tree is always traversed before the right sub-tree. The term 'pre' in pre-order signifies that the root node is accessed before any other nodes in the left and right sub-trees. The pre-order algorithm is alternatively known as the NLR traversal algorithm (Node-Left-Right).
+
+The algorithm for pre-order traversal is illustrated below.
+
+```r
+STEP 1: Repeat STEPS 2 to 4 while TREE != NULL
+STEP 2:   Write TREE->DATA
+STEP 3:   PREORDER(TREE->LEFT)
+STEP 4:   PREORDER(TREE->RIGHT)
+        [END OF LOOP]
+STEP 5: END
+```
+
+> ***Note:** Algorithm for pre-order traversal*
+
+Pre-order traversal algorithms find application in extracting a prefix notation from an expression tree. For instance, considering the expressions provided below. When we traverse the elements of a tree using the pre-order traversal algorithm, the resulting expression is a prefix expression.
+
+$$+ - 3 * \\ \\ 2 \\ \\ 5 \\ \\ 4$$
+
+#
+
+**In-Order Traversal**
+
+To traverse a non-empty binary tree in in-order, the following operations are performed recursively at each node. The algorithm works by:
+
+1. Traversing the left sub-tree,
+2. Visiting the root node, and finally
+3. Traversing the right sub-tree.
+
+Consider the tree given in Fig. 9.15. The in-order traversal of the tree is given as B, A, and C. Left sub-tree first, the root node next, and then the right sub-tree. In-order traversal is also called
+as symmetric traversal. In this algorithm, the left sub-tree is always traversed before the root node and the right sub-tree. The word "in" in the in-order specifies that the root node is accessed
+in between the left and the right sub-trees. In-order algorithm is also known as the LNR traversal algorithm (Left-Node-Right).
+
+The algorithm for in-order traversal is shown below.
+
+```r
+STEP 1: Repeat STEPS 2 to 4 while TREE != NULL
+STEP 2:   INORDER(TREE->LEFT)
+STEP 3:   Write TREE->DATA
+STEP 4:   INORDER(TREE->RIGHT)
+        [END OF LOOP]
+STEP 5: END
+```
+
+> ***Note:** Algorithm for in-order traversal*
+
+In-order traversal algorithm is usually used to display the elements of a binary search tree. Here, all the elements with a value lower than a given value are accessed before the elements with a higher value. When we traverse the elements of a tree using the in-order traversal algorithm, the resulting expression is a prefix expression.
+
+$$3 - 2 * \\ 5 \\ + \\ 4$$
+
+#
+
+**Post-Order Traversal**
+
+In this algorithm, the left sub-tree is always traversed before the right sub-tree and the root node. The word *post* in the post-order specifies that the root node is accessed after the left and the right sub-trees. 
+
+The algorithm for post-order traversal is shown below.
+
+```r
+STEP 1: Repeat STEPS 2 to 4 while TREE != NULL
+STEP 2:   POSTORDER(TREE->LEFT)
+STEP 3:   POSTORDER(TREE->RIGHT)
+STEP 4:   Write TREE->DATA
+        [END OF LOOP]
+STEP 5: END
+```
+
+> ***Note:** Algorithm for post-order traversal*
+
+Post-order algorithm is also known as the LRN traversal algorithm (Left-Right-Node). Post-order traversals are used to extract postfix notation from an expression tree. When we traverse the elements of a tree using the post-order traversal algorithm, the resulting expression is a prefix expression.
+
+$$3 \\ \\ 2 \\ \\ 5 * - \\ 4 +$$
+
+#
+
+### Application of Trees
+
+1. **Binary Search Trees (BST):** Used for efficient search operations. Each node has at most two children, and the binary search property is maintained, making it effective for search, insert, and delete operations with a time complexity of O(log n).
+
+2. **Heap Trees:** Implemented to create priority queues, where the element with the highest (or lowest) priority is always at the top of the tree. Heaps are commonly used in algorithms that require quick access to the maximum or minimum element.
+
+3. **Expression Trees:** Utilized to represent mathematical expressions in tree form. These trees simplify the evaluation of complex expressions and are often used in compilers and mathematical software.
+
+4. **Huffman Trees:** Applied in data compression to create Huffman codes. Huffman trees assign variable-length codes to characters based on their frequency, resulting in efficient compression of data.
+
+5. **Decision Trees:** Employed in machine learning for decision-making processes. Each node in the tree represents a decision or test on a feature, leading to different outcomes in the branches. Decision trees are used in classification and regression tasks.
+
+These applications showcase the versatility of trees in various computational domains, from data structures to algorithms and artificial intelligence.
 
 
 
